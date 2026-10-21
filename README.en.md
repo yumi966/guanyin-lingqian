@@ -31,10 +31,10 @@ Built with vanilla HTML, CSS, and JavaScript. Zero dependencies, one file, and r
 
 ## Live Demo
 
-After deploying to GitHub Pages, replace the placeholder below:
+The project is published on GitHub Pages:
 
 ```text
-https://<your-username>.github.io/<repo-name>/
+https://yumi966.github.io/guanyin-lingqian/
 ```
 
 You can also download `index.html` and open it locally.
