@@ -1,0 +1,45 @@
+# macOS / Windows
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build and generated files
+/data.js
+/观音灵签-单文件版.html
+/desktop-preview.png
+/desktop-result.png
+/mobile-initial.png
+/mobile-result.png
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+

@@ -1,0 +1,5129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10251e">
+<meta name="description" content="观音灵签，静心一问。传统文化与自我反思工具。">
+<title>观音灵签 · 静心一问</title>
+<style>
+  :root{
+    --night:#10251e;
+    --night-deep:#091611;
+    --night-soft:#19382f;
+    --paper:#f3ecd9;
+    --paper-light:#faf6e9;
+    --paper-deep:#e4d8bf;
+    --ink:#202a24;
+    --muted:#706b5e;
+    --gold:#b3925e;
+    --gold-soft:rgba(179,146,94,.35);
+    --cinnabar:#a43b29;
+    --cinnabar-deep:#7d291f;
+    --jade:#7d9b90;
+    --line:rgba(42,54,44,.15);
+    --display:"Songti SC","Noto Serif CJK SC","STSong","SimSun",serif;
+    --body:"FangSong","STFangsong","KaiTi","Kaiti SC","Noto Serif CJK SC",serif;
+    --sans:"FZLanTingHeiS-R-GB","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    min-width:0;
+    margin:0;
+    color:var(--paper);
+    background:
+      linear-gradient(118deg,rgba(112,148,131,.08),transparent 34%),
+      linear-gradient(302deg,rgba(164,59,41,.045),transparent 30%),
+      linear-gradient(155deg,var(--night-soft) 0%,var(--night) 42%,var(--night-deep) 100%);
+    font-family:var(--body);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    opacity:.42;
+    background-image:
+      repeating-linear-gradient(90deg,transparent 0 95px,rgba(230,218,191,.035) 96px),
+      repeating-linear-gradient(0deg,transparent 0 95px,rgba(230,218,191,.025) 96px);
+    mask-image:linear-gradient(to bottom,black,transparent 82%);
+  }
+
+  button,
+  textarea{
+    font:inherit;
+  }
+
+  button{
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  button:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .page{
+    width:min(1180px,calc(100% - 48px));
+    margin:0 auto;
+    padding:28px 0 48px;
+  }
+
+  .masthead{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    padding:0 2px 24px;
+    border-bottom:1px solid rgba(228,216,191,.16);
+    animation:rise-in .65s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+  }
+
+  .brand-seal{
+    position:relative;
+    display:grid;
+    place-items:center;
+    width:48px;
+    height:56px;
+    color:var(--paper-light);
+    background:var(--cinnabar);
+    border:1px solid rgba(255,255,255,.2);
+    font-family:var(--display);
+    font-size:1.55rem;
+    line-height:1;
+    box-shadow:inset 0 0 0 4px rgba(105,28,20,.16),0 8px 30px rgba(0,0,0,.15);
+    transform:rotate(-1.5deg);
+  }
+
+  .brand-seal::before,
+  .brand-seal::after{
+    content:"";
+    position:absolute;
+    background:rgba(250,246,233,.18);
+  }
+
+  .brand-seal::before{
+    width:1px;
+    inset:7px auto 7px 50%;
+  }
+
+  .brand-seal::after{
+    height:1px;
+    inset:50% 7px auto;
+  }
+
+  .brand-eyebrow{
+    margin:0 0 1px;
+    color:var(--gold);
+    font-family:var(--sans);
+    font-size:.68rem;
+    letter-spacing:.34em;
+  }
+
+  .brand h1{
+    margin:0;
+    color:var(--paper-light);
+    font-family:var(--display);
+    font-size:1.65rem;
+    font-weight:500;
+    letter-spacing:.16em;
+    line-height:1.35;
+  }
+
+  .header-note{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:rgba(243,236,217,.55);
+    font-size:.78rem;
+    letter-spacing:.15em;
+  }
+
+  .header-note i{
+    width:34px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+
+  .app-shell{
+    display:grid;
+    grid-template-columns:minmax(320px,.82fr) minmax(0,1.38fr);
+    gap:28px;
+    align-items:start;
+    padding-top:28px;
+  }
+
+  .query-column{
+    min-width:0;
+    animation:rise-in .72s .08s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  .query-deck{
+    position:relative;
+    overflow:hidden;
+    padding:29px 27px 26px;
+    color:var(--ink);
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.46),transparent 35%),
+      var(--paper);
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:4px;
+    box-shadow:0 28px 70px rgba(0,0,0,.23),inset 0 0 0 5px rgba(255,255,255,.17);
+  }
+
+  .query-deck::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:.2;
+    background:
+      repeating-linear-gradient(0deg,transparent 0 27px,rgba(72,62,46,.12) 28px),
+      radial-gradient(circle at 12% 0%,rgba(255,255,255,.8),transparent 35%);
+    mix-blend-mode:multiply;
+  }
+
+  .query-deck > *{
+    position:relative;
+    z-index:1;
+  }
+
+  .section-kicker{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:11px;
+    color:var(--cinnabar);
+    font-family:var(--sans);
+    font-size:.72rem;
+    letter-spacing:.26em;
+  }
+
+  .section-kicker span{
+    display:grid;
+    place-items:center;
+    width:24px;
+    height:24px;
+    border:1px solid currentColor;
+    border-radius:50%;
+    font-size:.67rem;
+    letter-spacing:0;
+  }
+
+  .query-deck h2{
+    margin:0;
+    font-family:var(--display);
+    font-size:1.6rem;
+    font-weight:600;
+    letter-spacing:.08em;
+    line-height:1.45;
+  }
+
+  .query-intro{
+    margin:8px 0 23px;
+    color:var(--muted);
+    font-size:.91rem;
+    line-height:1.8;
+  }
+
+  .cats{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+
+  .cat{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    min-height:48px;
+    padding:10px 11px;
+    color:#39433b;
+    background:rgba(255,255,255,.34);
+    border:1px solid rgba(47,59,49,.18);
+    border-radius:2px;
+    cursor:pointer;
+    text-align:left;
+    transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease;
+  }
+
+  .cat:hover{
+    color:var(--cinnabar-deep);
+    border-color:rgba(164,59,41,.48);
+    background:rgba(255,255,255,.58);
+    transform:translateY(-1px);
+  }
+
+  .cat-index{
+    color:rgba(84,78,64,.46);
+    font-family:var(--sans);
+    font-size:.62rem;
+    letter-spacing:.08em;
+    transition:color .2s ease;
+  }
+
+  .cat-name{
+    font-size:.94rem;
+    letter-spacing:.05em;
+  }
+
+  .cat.on{
+    color:var(--paper-light);
+    background:var(--cinnabar);
+    border-color:var(--cinnabar);
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.12);
+  }
+
+  .cat.on .cat-index{
+    color:rgba(250,246,233,.62);
+  }
+
+  .cat.on::after{
+    content:"";
+    position:absolute;
+    top:7px;
+    right:7px;
+    width:5px;
+    height:5px;
+    background:var(--paper-light);
+    border-radius:50%;
+  }
+
+  .question-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    margin:23px 0 8px;
+    color:#39433b;
+    font-size:.9rem;
+    letter-spacing:.04em;
+  }
+
+  .question-head em{
+    margin-left:7px;
+    color:rgba(84,78,64,.62);
+    font-family:var(--sans);
+    font-size:.68rem;
+    font-style:normal;
+    letter-spacing:.08em;
+  }
+
+  .question-count{
+    color:rgba(84,78,64,.55);
+    font-family:var(--sans);
+    font-size:.66rem;
+    letter-spacing:.04em;
+  }
+
+  .question-input{
+    display:block;
+    width:100%;
+    min-height:86px;
+    padding:11px 12px;
+    color:var(--ink);
+    background:
+      repeating-linear-gradient(0deg,transparent 0 25px,rgba(57,67,59,.12) 26px),
+      rgba(255,255,255,.28);
+    border:1px solid rgba(47,59,49,.18);
+    border-radius:2px;
+    outline:none;
+    resize:vertical;
+    font-family:var(--body);
+    font-size:.95rem;
+    line-height:26px;
+    transition:border-color .2s ease,background .2s ease;
+  }
+
+  .question-input::placeholder{
+    color:rgba(84,78,64,.46);
+  }
+
+  .question-input:focus{
+    border-color:var(--cinnabar);
+    background-color:rgba(255,255,255,.5);
+    outline:none;
+  }
+
+  .draw-button{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    min-height:62px;
+    margin-top:16px;
+    padding:10px 13px 10px 17px;
+    overflow:hidden;
+    color:var(--paper-light);
+    background:var(--night);
+    border:1px solid rgba(179,146,94,.65);
+    border-radius:2px;
+    box-shadow:0 12px 28px rgba(16,37,30,.18);
+    cursor:pointer;
+    transition:background .2s ease,transform .2s ease,opacity .2s ease;
+  }
+
+  .draw-button::before{
+    content:"";
+    position:absolute;
+    inset:4px;
+    border:1px solid rgba(243,236,217,.12);
+    pointer-events:none;
+  }
+
+  .draw-button:hover:not(:disabled){
+    background:var(--cinnabar-deep);
+    transform:translateY(-1px);
+  }
+
+  .draw-button:active:not(:disabled){
+    transform:translateY(0);
+  }
+
+  .draw-button:disabled{
+    color:rgba(243,236,217,.48);
+    background:#34423b;
+    border-color:rgba(179,146,94,.22);
+    box-shadow:none;
+    cursor:not-allowed;
+  }
+
+  .draw-copy{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    line-height:1.45;
+  }
+
+  .draw-copy strong{
+    font-family:var(--display);
+    font-size:1.02rem;
+    font-weight:500;
+    letter-spacing:.13em;
+  }
+
+  .draw-copy small{
+    margin-top:2px;
+    color:rgba(243,236,217,.52);
+    font-family:var(--sans);
+    font-size:.62rem;
+    letter-spacing:.12em;
+  }
+
+  .draw-glyph{
+    position:relative;
+    display:grid;
+    place-items:center;
+    width:38px;
+    height:38px;
+    color:var(--gold);
+    border:1px solid rgba(179,146,94,.38);
+    border-radius:50%;
+  }
+
+  .draw-glyph svg{
+    width:18px;
+    height:18px;
+  }
+
+  .draw-button.is-loading .draw-glyph{
+    animation:turn 1.1s linear infinite;
+  }
+
+  .history-panel{
+    margin-top:18px;
+    padding:17px 4px 3px;
+    border-top:1px solid rgba(228,216,191,.16);
+  }
+
+  .history-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+    color:rgba(243,236,217,.64);
+    font-family:var(--sans);
+    font-size:.7rem;
+    letter-spacing:.16em;
+  }
+
+  .clear-history{
+    padding:2px 0;
+    color:rgba(179,146,94,.72);
+    background:none;
+    border:0;
+    cursor:pointer;
+    font-family:var(--sans);
+    font-size:.65rem;
+    letter-spacing:.1em;
+  }
+
+  .clear-history:hover{
+    color:var(--paper-light);
+  }
+
+  .history-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    min-height:27px;
+    color:rgba(243,236,217,.47);
+    font-size:.78rem;
+  }
+
+  .history-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:3px 9px;
+    color:rgba(243,236,217,.76);
+    background:rgba(243,236,217,.06);
+    border:1px solid rgba(179,146,94,.2);
+    border-radius:2px;
+    font-size:.74rem;
+    letter-spacing:.04em;
+  }
+
+  .history-chip b{
+    color:var(--gold);
+    font-weight:400;
+  }
+
+  .page-disclaimer{
+    margin:19px 4px 0;
+    color:rgba(243,236,217,.4);
+    font-family:var(--sans);
+    font-size:.68rem;
+    line-height:1.8;
+  }
+
+  .page-disclaimer strong{
+    color:rgba(243,236,217,.58);
+    font-weight:500;
+  }
+
+  .oracle-panel{
+    position:relative;
+    min-width:0;
+    min-height:720px;
+    overflow:hidden;
+    color:var(--paper);
+    background:
+      linear-gradient(145deg,rgba(125,155,144,.11),transparent 42%),
+      rgba(5,16,12,.24);
+    border:1px solid rgba(179,146,94,.28);
+    border-radius:4px;
+    box-shadow:0 28px 80px rgba(0,0,0,.2),inset 0 0 0 5px rgba(243,236,217,.025);
+    animation:rise-in .78s .16s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  .oracle-panel::before{
+    content:"";
+    position:absolute;
+    inset:12px;
+    z-index:0;
+    border:1px solid rgba(179,146,94,.12);
+    pointer-events:none;
+  }
+
+  .panel-rule{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:16px 21px;
+    color:rgba(243,236,217,.48);
+    border-bottom:1px solid rgba(179,146,94,.18);
+    font-family:var(--sans);
+    font-size:.64rem;
+    letter-spacing:.25em;
+  }
+
+  .panel-rule::before,
+  .panel-rule::after{
+    content:"";
+    width:4px;
+    height:4px;
+    border:1px solid rgba(179,146,94,.45);
+    transform:rotate(45deg);
+  }
+
+  .panel-rule i{
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg,transparent,rgba(179,146,94,.2),transparent);
+  }
+
+  .empty-state{
+    position:relative;
+    z-index:1;
+    display:flex;
+    min-height:672px;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:20px 28px 48px;
+    transition:opacity .32s ease,transform .32s ease;
+  }
+
+  .empty-state.hide{
+    display:none;
+  }
+
+  .divination-stage{
+    position:relative;
+    display:grid;
+    place-items:center;
+    width:100%;
+    min-height:405px;
+    isolation:isolate;
+  }
+
+  .stage-word{
+    position:absolute;
+    top:48%;
+    left:50%;
+    z-index:-1;
+    color:rgba(243,236,217,.025);
+    font-family:var(--display);
+    font-size:17rem;
+    line-height:1;
+    transform:translate(-50%,-50%);
+    user-select:none;
+  }
+
+  .lotus-line{
+    position:absolute;
+    bottom:29px;
+    left:50%;
+    z-index:-1;
+    width:300px;
+    color:rgba(179,146,94,.26);
+    transform:translateX(-50%);
+  }
+
+  .lot-tube{
+    position:relative;
+    width:220px;
+    height:340px;
+    margin-top:26px;
+    filter:drop-shadow(0 26px 26px rgba(0,0,0,.3));
+    transform-origin:50% 92%;
+  }
+
+  .sticks{
+    position:absolute;
+    left:50%;
+    bottom:84px;
+    z-index:1;
+    width:188px;
+    height:202px;
+    transform:translateX(-50%);
+  }
+
+  .stick{
+    position:absolute;
+    bottom:0;
+    left:var(--x);
+    width:11px;
+    height:var(--h);
+    border:1px solid rgba(83,57,30,.38);
+    border-radius:6px 6px 2px 2px;
+    background:
+      linear-gradient(90deg,rgba(102,67,31,.85) 0%,#d7b57b 28%,#f1dda8 44%,#c19455 70%,#7b5129 100%);
+    box-shadow:inset 1px 0 rgba(255,255,255,.22),1px 0 4px rgba(0,0,0,.15);
+    transform:rotate(var(--r));
+    transform-origin:50% 100%;
+  }
+
+  .stick::before{
+    content:attr(data-n);
+    position:absolute;
+    top:17px;
+    left:50%;
+    color:rgba(84,36,25,.62);
+    font-family:var(--sans);
+    font-size:.38rem;
+    letter-spacing:-.03em;
+    line-height:1;
+    transform:translateX(-50%);
+  }
+
+  .stick:nth-child(1){--x:18px;--h:166px;--r:-4deg}
+  .stick:nth-child(2){--x:35px;--h:192px;--r:2deg}
+  .stick:nth-child(3){--x:53px;--h:174px;--r:-2deg}
+  .stick:nth-child(4){--x:71px;--h:200px;--r:4deg}
+  .stick:nth-child(5){--x:89px;--h:183px;--r:-1deg}
+  .stick:nth-child(6){--x:107px;--h:196px;--r:2deg}
+  .stick:nth-child(7){--x:125px;--h:169px;--r:-3deg}
+  .stick:nth-child(8){--x:143px;--h:188px;--r:1deg}
+  .stick:nth-child(9){--x:160px;--h:177px;--r:-2deg}
+
+  .tube-rim{
+    position:absolute;
+    top:156px;
+    left:50%;
+    z-index:4;
+    width:168px;
+    height:38px;
+    border:1px solid rgba(220,190,125,.75);
+    border-radius:50%;
+    background:
+      radial-gradient(ellipse at center,rgba(6,17,13,.92) 0 44%,#b4935f 46% 52%,#5e482b 54% 61%,#d0ae73 63% 67%,#20392f 69%);
+    box-shadow:0 5px 12px rgba(0,0,0,.28),inset 0 2px 3px rgba(255,255,255,.18);
+    transform:translateX(-50%);
+  }
+
+  .tube-body{
+    position:absolute;
+    top:174px;
+    left:50%;
+    z-index:3;
+    width:164px;
+    height:148px;
+    overflow:hidden;
+    border:1px solid rgba(205,171,106,.5);
+    border-radius:7px 7px 20px 20px / 6px 6px 25px 25px;
+    background:
+      linear-gradient(90deg,rgba(6,17,13,.98),#23493b 22%,#315b4a 48%,#1b3e32 75%,#071711 100%);
+    box-shadow:inset 10px 0 18px rgba(0,0,0,.2),inset -9px 0 16px rgba(0,0,0,.3);
+    transform:translateX(-50%);
+  }
+
+  .tube-body::before,
+  .tube-body::after{
+    content:"";
+    position:absolute;
+    left:0;
+    width:100%;
+    height:8px;
+    background:linear-gradient(180deg,#d1b171,#806337 50%,#d4b87f);
+    border-top:1px solid rgba(255,245,217,.34);
+    border-bottom:1px solid rgba(77,51,23,.55);
+  }
+
+  .tube-body::before{top:11px}
+  .tube-body::after{bottom:13px}
+
+  .tube-label{
+    position:absolute;
+    top:28px;
+    left:50%;
+    display:flex;
+    width:78px;
+    height:88px;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:var(--cinnabar-deep);
+    background:
+      linear-gradient(110deg,rgba(255,255,255,.24),transparent 50%),
+      #e9dfc8;
+    border:2px solid var(--cinnabar-deep);
+    box-shadow:0 2px 7px rgba(0,0,0,.22);
+    transform:translateX(-50%) rotate(.8deg);
+  }
+
+  .tube-label span{
+    font-family:var(--display);
+    font-size:1.48rem;
+    letter-spacing:.16em;
+    line-height:1.3;
+  }
+
+  .tube-label small{
+    margin-top:3px;
+    font-family:var(--sans);
+    font-size:.46rem;
+    letter-spacing:.28em;
+  }
+
+  .tube-base{
+    position:absolute;
+    bottom:13px;
+    left:50%;
+    z-index:2;
+    width:150px;
+    height:20px;
+    border-radius:50%;
+    background:linear-gradient(180deg,#85683b,#2b3828);
+    box-shadow:0 12px 14px rgba(0,0,0,.35);
+    transform:translateX(-50%);
+  }
+
+  .empty-copy{
+    margin-top:2px;
+    text-align:center;
+  }
+
+  .quiet-seal{
+    display:grid;
+    place-items:center;
+    width:32px;
+    height:32px;
+    margin:0 auto 12px;
+    color:var(--cinnabar);
+    border:1px solid rgba(164,59,41,.72);
+    font-family:var(--display);
+    font-size:1rem;
+    line-height:1;
+    transform:rotate(-3deg);
+  }
+
+  .oracle-verse{
+    margin:0;
+    color:var(--paper-light);
+    font-family:var(--display);
+    font-size:1.28rem;
+    letter-spacing:.17em;
+    line-height:1.7;
+  }
+
+  .oracle-hint{
+    margin:8px 0 0;
+    color:rgba(243,236,217,.44);
+    font-size:.84rem;
+    letter-spacing:.08em;
+  }
+
+  .oracle-panel.is-drawing .lot-tube{
+    animation:tube-shake .12s linear infinite alternate;
+  }
+
+  .oracle-panel.is-drawing .stick{
+    animation:stick-peek .28s ease-in-out infinite alternate;
+    animation-delay:calc(var(--x) * -3ms);
+  }
+
+  .oracle-panel.is-drawing .oracle-verse{
+    opacity:.4;
+  }
+
+  .result{
+    position:relative;
+    z-index:1;
+    display:none;
+    padding:26px 28px 30px;
+  }
+
+  .result.show{
+    display:block;
+    animation:ink-reveal .55s cubic-bezier(.18,.78,.22,1) both;
+  }
+
+  .sign-paper{
+    position:relative;
+    overflow:hidden;
+    padding:32px 32px 26px;
+    color:var(--ink);
+    background:
+      linear-gradient(110deg,rgba(255,255,255,.48),transparent 38%),
+      var(--paper);
+    border-radius:2px;
+    box-shadow:0 20px 60px rgba(0,0,0,.26);
+  }
+
+  .sign-paper::before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    pointer-events:none;
+    border:1px solid rgba(111,90,55,.18);
+  }
+
+  .sign-paper::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:.23;
+    background:
+      repeating-linear-gradient(0deg,transparent 0 28px,rgba(65,55,40,.09) 29px),
+      radial-gradient(circle at 90% 0%,rgba(179,146,94,.26),transparent 28%);
+    mix-blend-mode:multiply;
+  }
+
+  .sign-paper > *{
+    position:relative;
+    z-index:1;
+  }
+
+  .paper-topline{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:23px;
+    color:rgba(87,77,62,.66);
+    font-family:var(--sans);
+    font-size:.62rem;
+    letter-spacing:.27em;
+  }
+
+  .paper-topline::before,
+  .paper-topline::after{
+    content:"";
+    height:1px;
+    flex:1;
+    background:rgba(111,90,55,.22);
+  }
+
+  .sign-header{
+    display:grid;
+    grid-template-columns:70px minmax(0,1fr) 48px;
+    gap:19px;
+    align-items:center;
+    padding-bottom:22px;
+    border-bottom:1px solid rgba(111,90,55,.25);
+  }
+
+  .number-seal{
+    display:flex;
+    width:66px;
+    height:76px;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:var(--cinnabar);
+    border:2px solid var(--cinnabar);
+    line-height:1.05;
+    transform:rotate(-1deg);
+  }
+
+  .number-seal span{
+    font-family:var(--sans);
+    font-size:.58rem;
+    letter-spacing:.12em;
+  }
+
+  .number-seal strong{
+    margin:3px 0;
+    font-family:var(--display);
+    font-size:1.65rem;
+    font-weight:500;
+  }
+
+  .title-wrap p{
+    margin:0 0 5px;
+    color:var(--cinnabar);
+    font-family:var(--sans);
+    font-size:.61rem;
+    letter-spacing:.28em;
+  }
+
+  .title-wrap h2{
+    margin:0;
+    font-family:var(--display);
+    font-size:1.6rem;
+    font-weight:600;
+    letter-spacing:.06em;
+    line-height:1.45;
+    overflow-wrap:anywhere;
+  }
+
+  .level-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:9px;
+    padding:2px 9px;
+    color:var(--cinnabar-deep);
+    border:1px solid rgba(164,59,41,.4);
+    border-radius:2px;
+    font-family:var(--sans);
+    font-size:.68rem;
+    letter-spacing:.12em;
+  }
+
+  .level-tag::before{
+    content:"";
+    width:4px;
+    height:4px;
+    background:currentColor;
+    transform:rotate(45deg);
+  }
+
+  .level-tag.is-mid{
+    color:#796132;
+    border-color:rgba(121,97,50,.4);
+  }
+
+  .level-tag.is-low{
+    color:#5c5c55;
+    border-color:rgba(92,92,85,.32);
+  }
+
+  .title-stamp{
+    display:grid;
+    place-items:center;
+    width:44px;
+    height:44px;
+    color:rgba(164,59,41,.84);
+    border:1px solid rgba(164,59,41,.58);
+    font-family:var(--display);
+    font-size:.78rem;
+    line-height:1.15;
+    text-align:center;
+    transform:rotate(3deg);
+  }
+
+  .poem-block{
+    position:relative;
+    padding:31px 5px 26px;
+    text-align:center;
+  }
+
+  .poem-block::before,
+  .poem-block::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    width:1px;
+    height:15px;
+    background:rgba(111,90,55,.3);
+    transform:translateX(-50%);
+  }
+
+  .poem-block::before{top:10px}
+  .poem-block::after{bottom:2px}
+
+  .poem-line{
+    font-family:var(--display);
+    font-size:1.38rem;
+    letter-spacing:.13em;
+    line-height:2.05;
+    white-space:nowrap;
+  }
+
+  .xiang{
+    margin:18px auto 0;
+    max-width:470px;
+    color:var(--cinnabar-deep);
+    font-size:.88rem;
+    letter-spacing:.05em;
+    line-height:1.8;
+  }
+
+  .query-echo{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin:0 0 25px;
+    padding:12px 14px;
+    color:#4d4b42;
+    background:rgba(179,146,94,.1);
+    border-left:2px solid var(--gold);
+    font-size:.88rem;
+    line-height:1.75;
+  }
+
+  .query-echo span{
+    flex:none;
+    color:var(--cinnabar);
+    font-family:var(--sans);
+    font-size:.64rem;
+    letter-spacing:.16em;
+  }
+
+  .query-echo p{
+    margin:0;
+    overflow-wrap:anywhere;
+  }
+
+  .reading-section{
+    margin-top:2px;
+  }
+
+  .reading-title{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    margin-bottom:10px;
+  }
+
+  .reading-title b{
+    display:grid;
+    place-items:center;
+    width:25px;
+    height:25px;
+    color:var(--paper-light);
+    background:var(--night);
+    font-family:var(--display);
+    font-size:.7rem;
+    font-weight:400;
+  }
+
+  .reading-title h3{
+    margin:0;
+    font-family:var(--display);
+    font-size:1.02rem;
+    font-weight:500;
+    letter-spacing:.1em;
+  }
+
+  .reading-title::after{
+    content:"";
+    height:1px;
+    flex:1;
+    background:rgba(111,90,55,.18);
+  }
+
+  .item-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0 26px;
+  }
+
+  .item-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:18px;
+    min-height:42px;
+    padding:9px 0;
+    border-bottom:1px solid rgba(111,90,55,.17);
+  }
+
+  .item-key{
+    color:var(--muted);
+    font-size:.86rem;
+    letter-spacing:.05em;
+  }
+
+  .item-value{
+    color:var(--ink);
+    font-family:var(--display);
+    font-size:.94rem;
+    font-weight:600;
+    text-align:right;
+  }
+
+  .advice{
+    position:relative;
+    margin-top:24px;
+    padding:17px 19px 17px 54px;
+    background:rgba(164,59,41,.055);
+    border-top:1px solid rgba(164,59,41,.2);
+    border-bottom:1px solid rgba(164,59,41,.12);
+    font-size:.91rem;
+    line-height:1.9;
+  }
+
+  .advice-mark{
+    position:absolute;
+    top:17px;
+    left:16px;
+    display:grid;
+    place-items:center;
+    width:24px;
+    height:24px;
+    color:var(--cinnabar);
+    border:1px solid rgba(164,59,41,.48);
+    font-family:var(--display);
+    font-size:.72rem;
+  }
+
+  .advice p{
+    margin:0;
+  }
+
+  .advice p + p{
+    margin-top:7px;
+    color:#4c4c43;
+  }
+
+  .detail-stack{
+    margin-top:20px;
+    border-top:1px solid rgba(111,90,55,.2);
+  }
+
+  .detail-item{
+    border-bottom:1px solid rgba(111,90,55,.17);
+  }
+
+  .detail-item summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:12px 2px;
+    color:var(--cinnabar-deep);
+    cursor:pointer;
+    font-size:.88rem;
+    letter-spacing:.06em;
+    list-style:none;
+  }
+
+  .detail-item summary::-webkit-details-marker{
+    display:none;
+  }
+
+  .detail-item summary::after{
+    content:"＋";
+    color:var(--gold);
+    font-family:var(--sans);
+    font-size:1rem;
+    transition:transform .2s ease;
+  }
+
+  .detail-item[open] summary::after{
+    transform:rotate(45deg);
+  }
+
+  .detail-item p{
+    margin:0;
+    padding:0 2px 16px;
+    color:#514f45;
+    font-size:.86rem;
+    line-height:2;
+  }
+
+  .result-note{
+    margin:18px 0 0;
+    color:rgba(84,78,64,.62);
+    font-family:var(--sans);
+    font-size:.64rem;
+    line-height:1.75;
+  }
+
+  @keyframes rise-in{
+    from{opacity:0;transform:translateY(14px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  @keyframes ink-reveal{
+    from{opacity:0;transform:translateY(16px) scale(.992);filter:blur(3px)}
+    to{opacity:1;transform:none;filter:none}
+  }
+
+  @keyframes tube-shake{
+    from{transform:rotate(-2.4deg)}
+    to{transform:rotate(2.4deg)}
+  }
+
+  @keyframes stick-peek{
+    from{translate:0 0}
+    to{translate:0 -5px}
+  }
+
+  @keyframes turn{
+    to{transform:rotate(360deg)}
+  }
+
+  @media (max-width:900px){
+    .page{
+      width:min(720px,calc(100% - 32px));
+    }
+
+    .app-shell{
+      grid-template-columns:1fr;
+    }
+
+    .oracle-panel{
+      min-height:660px;
+    }
+
+    .empty-state{
+      min-height:612px;
+    }
+  }
+
+  @media (max-width:600px){
+    .page{
+      width:calc(100% - 24px);
+      padding:16px 0 30px;
+    }
+
+    .masthead{
+      padding:0 2px 16px;
+    }
+
+    .brand{
+      gap:11px;
+    }
+
+    .brand-seal{
+      width:40px;
+      height:47px;
+      font-size:1.28rem;
+    }
+
+    .brand h1{
+      font-size:1.35rem;
+      letter-spacing:.12em;
+    }
+
+    .brand-eyebrow{
+      font-size:.61rem;
+    }
+
+    .header-note{
+      display:none;
+    }
+
+    .app-shell{
+      gap:18px;
+      padding-top:18px;
+    }
+
+    .query-deck{
+      padding:23px 18px 20px;
+    }
+
+    .query-deck h2{
+      font-size:1.42rem;
+    }
+
+    .category-grid,
+    .cats{
+      gap:7px;
+    }
+
+    .cat{
+      min-height:46px;
+      padding:8px 9px;
+    }
+
+    .cat-name{
+      font-size:.87rem;
+    }
+
+    .oracle-panel{
+      min-height:590px;
+    }
+
+    .panel-rule{
+      padding:14px 16px;
+    }
+
+    .empty-state{
+      min-height:540px;
+      padding:8px 14px 36px;
+    }
+
+    .divination-stage{
+      min-height:330px;
+    }
+
+    .stage-word{
+      font-size:13rem;
+    }
+
+    .lot-tube{
+      width:194px;
+      height:294px;
+      margin-top:12px;
+      transform:scale(.9);
+    }
+
+    .sticks{
+      bottom:72px;
+      transform:translateX(-50%) scale(.9);
+    }
+
+    .tube-rim{
+      top:136px;
+      left:50%;
+    }
+
+    .tube-body{
+      top:153px;
+    }
+
+    .tube-base{
+      bottom:17px;
+    }
+
+    .lotus-line{
+      width:240px;
+      bottom:13px;
+    }
+
+    .oracle-verse{
+      font-size:1.14rem;
+    }
+
+    .result{
+      padding:14px;
+    }
+
+    .sign-paper{
+      padding:23px 18px 21px;
+    }
+
+    .sign-paper::before{
+      inset:5px;
+    }
+
+    .paper-topline{
+      margin-bottom:18px;
+    }
+
+    .sign-header{
+      grid-template-columns:55px minmax(0,1fr);
+      gap:13px;
+    }
+
+    .number-seal{
+      width:52px;
+      height:65px;
+    }
+
+    .number-seal strong{
+      font-size:1.35rem;
+    }
+
+    .title-wrap h2{
+      font-size:1.32rem;
+    }
+
+    .title-stamp{
+      display:none;
+    }
+
+    .poem-block{
+      padding:26px 0 23px;
+    }
+
+    .poem-line{
+      font-size:1.08rem;
+      letter-spacing:.08em;
+    }
+
+    .xiang{
+      margin-top:15px;
+      font-size:.81rem;
+    }
+
+    .item-grid{
+      grid-template-columns:1fr;
+    }
+
+    .advice{
+      padding:15px 14px 15px 47px;
+      font-size:.86rem;
+    }
+  }
+
+  @media (max-width:360px){
+    .cats{
+      grid-template-columns:1fr;
+    }
+
+    .poem-line{
+      font-size:1rem;
+      letter-spacing:.03em;
+    }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,
+    *::before,
+    *::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div class="brand">
+        <span class="brand-seal" aria-hidden="true">觀</span>
+        <div>
+          <p class="brand-eyebrow">南海古籤</p>
+          <h1>观音灵签</h1>
+        </div>
+      </div>
+      <div class="header-note" aria-hidden="true">
+        <span>心诚则灵</span>
+        <i></i>
+        <span>静而后问</span>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <div class="query-column">
+        <section class="query-deck" aria-labelledby="queryTitle">
+          <div class="section-kicker"><span>壹</span>所问之事</div>
+          <h2 id="queryTitle">此刻，你想问什么？</h2>
+          <p class="query-intro">择一事，诚其意。问题不必写下，也能抽签。</p>
+
+          <div class="cats" id="cats" role="group" aria-label="请选择所问之事"></div>
+
+          <label class="question-head" for="question">
+            <span>心事留白<em>选填</em></span>
+            <span class="question-count" id="questionCount">0 / 60</span>
+          </label>
+          <textarea
+            class="question-input"
+            id="question"
+            maxlength="60"
+            placeholder="例如：最近工作上是否该换方向？"
+          ></textarea>
+
+          <button class="draw-button" id="drawBtn" type="button" disabled>
+            <span class="draw-copy">
+              <strong id="drawLabel">静心，抽一签</strong>
+              <small id="drawHint">先择所问之事</small>
+            </span>
+            <span class="draw-glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 3h8v6.5l2.1 8.5a2 2 0 0 1-1.94 2.5H7.84A2 2 0 0 1 5.9 18L8 9.5V3Z"/>
+                <path d="M8 9h8M9.7 13.2h4.6M10.2 16.3h3.6"/>
+              </svg>
+            </span>
+          </button>
+        </section>
+
+        <section class="history-panel" aria-labelledby="historyTitle">
+          <div class="history-head">
+            <span id="historyTitle">最近所得</span>
+            <button class="clear-history" id="clearHistory" type="button" hidden>清空</button>
+          </div>
+          <div class="history-list" id="hist">尚无记录</div>
+        </section>
+
+        <p class="page-disclaimer">
+          <strong>温馨提示：</strong>签文整理自民间流传版本，未经严格校勘。抽签结果不构成医疗、法律、投资或心理建议，也不能预测未来。请勿反复抽签追问同一问题。
+        </p>
+      </div>
+
+      <section class="oracle-panel" id="oraclePanel" aria-labelledby="oracleTitle">
+        <div class="panel-rule">
+          <span id="oracleTitle">未问</span>
+          <i></i>
+          <span>签在静中</span>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <div class="divination-stage">
+            <span class="stage-word" aria-hidden="true">籤</span>
+            <svg class="lotus-line" viewBox="0 0 320 92" fill="none" aria-hidden="true">
+              <path d="M160 82c-18-15-19-35 0-53 19 18 18 38 0 53Z" stroke="currentColor" stroke-width="1"/>
+              <path d="M160 82c-24-4-39-19-42-42 22 4 37 18 42 42ZM160 82c24-4 39-19 42-42-22 4-37 18-42 42Z" stroke="currentColor" stroke-width="1"/>
+              <path d="M160 82c-29 5-53-1-70-21 21-9 45-4 70 21ZM160 82c29 5 53-1 70-21-21-9-45-4-70 21Z" stroke="currentColor" stroke-width="1"/>
+              <path d="M26 82c34-9 72-9 134 0 62-9 100-9 134 0" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+
+            <div class="lot-tube" aria-hidden="true">
+              <div class="sticks">
+                <span class="stick" data-n="17"></span>
+                <span class="stick" data-n="48"></span>
+                <span class="stick" data-n="06"></span>
+                <span class="stick" data-n="92"></span>
+                <span class="stick" data-n="31"></span>
+                <span class="stick" data-n="73"></span>
+                <span class="stick" data-n="55"></span>
+                <span class="stick" data-n="24"></span>
+                <span class="stick" data-n="88"></span>
+              </div>
+              <div class="tube-rim"></div>
+              <div class="tube-body">
+                <div class="tube-label">
+                  <span>觀音</span>
+                  <small>靈籤</small>
+                </div>
+              </div>
+              <div class="tube-base"></div>
+            </div>
+          </div>
+
+          <div class="empty-copy">
+            <div class="quiet-seal" aria-hidden="true">靜</div>
+            <p class="oracle-verse">心有所惑，先静其神</p>
+            <p class="oracle-hint">一签只问一事，得一解，且行且观。</p>
+          </div>
+        </div>
+
+        <div class="result" id="result" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+/* 内嵌观音灵签 1-100 签完整数据 */
+window.SIGNS = [
+ {
+  "id": 1,
+  "title": "宋太祖黃袍加身",
+  "level": "上上",
+  "levelRaw": "宋太祖黃袍加身　　　　　上上",
+  "poem": [
+   "天開地闢結良緣",
+   "日吉時良萬事全",
+   "若得此籤非小可",
+   "人行中正帝王宣"
+  ],
+  "gloss": "天地開創之時，凡事充滿了新氣象，正是良辰吉時，萬事都已準備周全；能求得此籤之人，非同小可，帝王曾親宣無私公正之法，若能依理遵循，更行修身積善，相信好運更上層樓，持續久遠不斷。",
+  "xiang": "此籤天開地闢之象，凡事大吉利也。",
+  "commentary": "天開地闢。結良緣是天地開創之象。為大吉大利之象也。日吉時良。萬事俱全順遂之命。能蒙神指示為此籤之人。非小可也。勸君必行中正帝王亦宣言曰。如能行之正直。積善。修身時。必能持之恆久。如宋太祖。趙匡胤之黃袍加身。急速非速言來時值觀音降事報與君之者。",
+  "items": {
+   "交易": "成交",
+   "婚姻": "成合",
+   "求財": "秋冬",
+   "自身": "秋冬吉",
+   "家宅": "祈保六畜－興旺",
+   "田蠶": "良好",
+   "尋人": "得見",
+   "行人": "得至",
+   "六甲": "生男",
+   "山墳": "向吉",
+   "訟詞": "吉利",
+   "疾病": "送醫",
+   "失物": "東方",
+   "移徒": "吉昌"
+  },
+  "raw": "第一首：宋太祖黃袍加身　　　　　上上　　　　　　　　　　　　　　　　　　\n天開地闢結良緣，日吉時良萬事全\n若得此籤非小可，人行中正帝王宣　　　\n（四句淺釋：天地開創之時，凡事充滿了新氣象，正是良辰吉時，萬事都已準備周全；能求得此籤之人，非同小可，帝王曾親宣無私公正之法，若能依理遵循，更行修身積善，相信好運更上層樓，持續久遠不斷。）\n急速非速，言來時值，觀音降事，報與君知。此籤天開地闢之象，凡事大吉利也。\n靈籤之曰：天開地闢。結良緣是天地開創之象。為大吉大利之象也。日吉時良。萬事俱全順遂之命。能蒙神指示為此籤之人。非小可也。勸君必行中正帝王亦宣言曰。如能行之正直。積善。修身時。必能持之恆久。如宋太祖。趙匡胤之黃袍加身。急速非速言來時值觀音降事報與君之者。\n交易－成交　婚姻－成合　求財－秋冬　自身－秋冬吉　家宅－祈保六畜－興旺　田蠶－良好　尋人－得見　行人－得至　六甲－生男　山墳－向吉　訟詞－吉利　疾病－送醫　失物－東方　移徒－吉昌"
+ },
+ {
+  "id": 2,
+  "title": "姜太公渭水垂釣",
+  "level": "中",
+  "levelRaw": "姜太公渭水垂釣　　　　中",
+  "poem": [
+   "鯨魚未化守江湖",
+   "未許升騰離碧波",
+   "異日崢嶸身變態",
+   "從教一躍禹門過"
+  ],
+  "gloss": "就像魚兒尚未成熟，還不到可以離水飛昇的程度；此時忍耐守靜則吉，等到時機來臨之日，蛻變之時，必可大展身手，一躍過龍門。",
+  "xiang": "此籤鯨魚未變之象，凡事進退待時。",
+  "commentary": "鯨魚未化守江湖。姜太公之受難時也。為大鯨未變之象。凡事進退待時。不可輕舉妄動。動則凶。靜則吉。君爾也。得忍且忍。得耐且耐身不而忙。功名自在者。來日崢嶸蛻身時。一躍可過禹門者。",
+  "items": {
+   "交易": "無利",
+   "婚姻": "難合",
+   "求財": "欠利",
+   "自身": "還愿",
+   "家宅": "不安",
+   "六畜": "不利",
+   "田蠶": "吉利",
+   "尋人": "見",
+   "行人": "平安",
+   "六甲": "求福",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "祈保",
+   "失物": "東方",
+   "移徒": "吉"
+  },
+  "raw": "第二首：姜太公渭水垂釣　　　　中　　　　　　　　　　　　　　　　　　\n鯨魚未化守江湖，未許升騰離碧波　\n異日崢嶸身變態，從教一躍禹門過　　　\n（四句淺釋：就像魚兒尚未成熟，還不到可以離水飛昇的程度；此時忍耐守靜則吉，等到時機來臨之日，蛻變之時，必可大展身手，一躍過龍門。）\n得忍且忍，得耐且耐，身不用忙，功名自在。此籤鯨魚未變之象，凡事進退待時。\n靈籤之曰：鯨魚未化守江湖。姜太公之受難時也。為大鯨未變之象。凡事進退待時。不可輕舉妄動。動則凶。靜則吉。君爾也。得忍且忍。得耐且耐身不而忙。功名自在者。來日崢嶸蛻身時。一躍可過禹門者。\n交易－無利　婚姻－難合　求財－欠利　自身－還愿　家宅－不安　六畜－不利　田蠶－吉利　尋人－見　行人－平安　六甲－求福　山墳－吉　訟詞－和　疾病－祈保　失物－東方　移徒－吉"
+ },
+ {
+  "id": 3,
+  "title": "燕將獨守聊城",
+  "level": "",
+  "levelRaw": "燕將獨守聊城",
+  "poem": [
+   "衝風冒雨去還歸",
+   "役役勞身似燕兒",
+   "啣得泥來成疊後",
+   "到頭疊壞復成泥"
+  ],
+  "gloss": "頂著風冒著雨來來回回，就像燕子般辛勤奔波不歇；忙碌費力含來的小泥團，好不容易堆砌成土塊，有個樣子了，哪裡知道最後卻又崩壞，土塊再度變回泥團。",
+  "xiang": "此籤燕子啣泥之象，凡事空心勞力。",
+  "commentary": "衝風冒雨去還歸。役役勞心似燕兒。君爾之運逢燕子啣泥築巢之象耶。空心徒勞。無益者。為先難後甘之運。唯應小心。本籤之總結也。千方百計。晨昏碌碌不停。誰知此事到底無以可成者。修之。悟之。",
+  "items": {
+   "交易": "成",
+   "婚姻": "不成",
+   "求財": "秋冬有利",
+   "自身": "謹防",
+   "家宅": "先凶後吉",
+   "六畜": "有利",
+   "田蠶": "有利",
+   "尋人": "見",
+   "行人": "吉",
+   "六甲": "生男",
+   "山墳": "向吉",
+   "訟詞": "有理",
+   "疾病": "還愿",
+   "失物": "見",
+   "移徒": "平安"
+  },
+  "raw": "第三首：燕將獨守聊城　　　　　　　　　　　　　　　　　　　　\n衝風冒雨去還歸，役役勞身似燕兒\n啣得泥來成疊後，到頭疊壞復成泥　　　\n（四句淺釋：頂著風冒著雨來來回回，就像燕子般辛勤奔波不歇；忙碌費力含來的小泥團，好不容易堆砌成土塊，有個樣子了，哪裡知道最後卻又崩壞，土塊再度變回泥團。）\n千般用計，晨昏不停，誰知此事，到底無成。此籤燕子啣泥之象，凡事空心勞力。　　\n靈籤之曰：衝風冒雨去還歸。役役勞心似燕兒。君爾之運逢燕子啣泥築巢之象耶。空心徒勞。無益者。為先難後甘之運。唯應小心。本籤之總結也。千方百計。晨昏碌碌不停。誰知此事到底無以可成者。修之。悟之。　\n交易－成　婚姻－不成　求財－秋冬有利　自身－謹防　家宅－先凶後吉　六畜－有利　田蠶－有利　尋人－見　行人－吉　六甲－生男　山墳－向吉　訟詞－有理　疾病－還愿　失物－見　移徒－平安"
+ },
+ {
+  "id": 4,
+  "title": "長樂老歷相五代",
+  "level": "中中",
+  "levelRaw": "長樂老歷相五代　　　　中中",
+  "poem": [
+   "菱花鏡破復重圓",
+   "女再求夫男再婚",
+   "自此門閭重改換",
+   "更添福祿與兒孫"
+  ],
+  "gloss": "菱花破鏡如何能夠重圓，男女各有欲追求的姻緣；此後將有一番新氣象，惟再積德修善，功德更添福祿，並有助後代兒孫安康。",
+  "xiang": "此籤破鏡重圓之象，凡事成就則吉。",
+  "commentary": "菱花鏡破鏡重圓。為破鏡重圓之象。凡事成就吉者也。不是上上者。為中中之籤。是先凶後吉之籤。交易持公平。求財亦在秋冬轉旺。如逢如此之中中運也。可積極為善。積德。當有轉吉之機。",
+  "items": {
+   "交易": "成允",
+   "婚姻": "成",
+   "求財": "秋冬旺",
+   "自身": "秋冬",
+   "家宅": "欠利",
+   "六畜": "養",
+   "田蠶": "可養",
+   "尋人": "見",
+   "行人": "至",
+   "六甲": "祈保",
+   "山墳": "吉",
+   "訟詞": "不利",
+   "疾病": "祈福",
+   "失物": "遲見",
+   "移徒": "守舊"
+  },
+  "raw": "第四首：長樂老歷相五代　　　　中中　　　　　　　　　　　　\n菱花鏡破復重圓，女再求夫男再婚　\n自此門閭重改換，更添福祿與兒孫　　　\n(四句淺釋：菱花破鏡如何能夠重圓，男女各有欲追求的姻緣；此後將有一番新氣象，惟再積德修善，功德更添福祿，並有助後代兒孫安康。）　\n五五念五，騎龍跨虎，事雖勞心，於中有補。此籤破鏡重圓之象，凡事成就則吉。　\n靈籤之曰：菱花鏡破鏡重圓。為破鏡重圓之象。凡事成就吉者也。不是上上者。為中中之籤。是先凶後吉之籤。交易持公平。求財亦在秋冬轉旺。如逢如此之中中運也。可積極為善。積德。當有轉吉之機。　　　\n交易－成允　婚姻－成　求財－秋冬旺　自身－秋冬　家宅－欠利　　　六畜－養　田蠶－可養　尋人－見　行人－至　六甲－祈保　　　山墳－吉　訟詞－不利　疾病－祈福　失物－遲見　移徒－守舊"
+ },
+ {
+  "id": 5,
+  "title": "燕昭王為郭隗築黃金臺",
+  "level": "中平",
+  "levelRaw": "燕昭王為郭隗築黃金臺　　中平",
+  "poem": [
+   "一鋤掘地要求泉",
+   "努力求之得最先",
+   "無意俄然遇知己",
+   "相逢攜手上青天"
+  ],
+  "gloss": "想要靠一支鋤頭挖得泉水，必定要非常努力才有可能得到；積極努力奮鬥，在無意間遇到了夥伴知己，互相幫助合作，必定可以成功，攜手共創前程。",
+  "xiang": "此籤堀土求泉之象，凡事勞心成就。",
+  "commentary": "一鋤掘地妥求泉水。此象則表徵君之運途。是凡事謀略之後。勞心方有成就者也。努力向前必有化凶為吉之時。自勵奮鬥。偶然遇知己。彼時即是君爾。得貴人之刻。在伊人扶持下。必能上青天矣。",
+  "items": {
+   "交易": "好",
+   "婚姻": "合",
+   "求財": "有",
+   "自身": "安",
+   "家宅": "祈福",
+   "六畜": "損",
+   "田蠶": "宜早種",
+   "尋人": "見",
+   "行人": "遲",
+   "六甲": "安",
+   "山墳": "吉",
+   "訟詞": "早和",
+   "疾病": "祭星",
+   "失物": "不見",
+   "移徒": "遷好吉"
+  },
+  "raw": "第五首：燕昭王為郭隗築黃金臺　　中平　　　　　　　　　　　　　　　　\n一鋤掘地要求泉，努力求之得最先\n無意俄然遇知己，相逢攜手上青天　　　\n(四句淺釋：想要靠一支鋤頭挖得泉水，必定要非常努力才有可能得到；積極努力奮鬥，在無意間遇到了夥伴知己，互相幫助合作，必定可以成功，攜手共創前程。）　\n望中心事，今可方求，百事營謀，立地堪求。此籤堀土求泉之象，凡事勞心成就。　\n靈籤之曰：一鋤掘地妥求泉水。此象則表徵君之運途。是凡事謀略之後。勞心方有成就者也。努力向前必有化凶為吉之時。自勵奮鬥。偶然遇知己。彼時即是君爾。得貴人之刻。在伊人扶持下。必能上青天矣。　\n交易－好　婚姻－合　求財－有　自身－安　家宅－祈福　　六畜－損　田蠶－宜早種　尋人－見　行人－遲　六甲－安　山墳－吉　訟詞－早和　疾病－祭星　失物－不見　移徒－遷好吉"
+ },
+ {
+  "id": 6,
+  "title": "藺相如完璧歸趙",
+  "level": "中平",
+  "levelRaw": "藺相如完璧歸趙　　　　中平",
+  "poem": [
+   "投身巖下飼於菟",
+   "須是還他大丈夫",
+   "捨己也應難再得",
+   "通行天下此人無"
+  ],
+  "gloss": "將自己丟在險峻的山崖下餵飼於老虎，仍然不會改變他大丈夫的情操；願意這樣捨身的人恐怕再也難以遇到，走遍天下也找不到第二個相同的人了吧。",
+  "xiang": "此籤岩下飼菟之象，凡事宜順則吉。",
+  "commentary": "於巖下飼於菟者。是凡事宜順則吉之表徵也。得本籤之君。應知。為人宜守舊。不可輕舉妄動者也。不可貪求非份之外之財。或捨近圖遠者。皆避免之。予以君知者。使非常清身。豈貧待他時至祥。",
+  "items": {
+   "交易": "難",
+   "婚姻": "平平",
+   "求財": "中平",
+   "自身": "中平",
+   "家宅": "不利",
+   "六畜": "損",
+   "田蠶": "早種",
+   "尋人": "見",
+   "行人": "近日回",
+   "六甲": "安",
+   "山墳": "安",
+   "訟詞": "有理",
+   "疾病": "設送",
+   "失物": "見",
+   "移徒": "吉"
+  },
+  "raw": "第六首：藺相如完璧歸趙　　　　中平　　　　　　　　　　　　　　　　\n投身巖下飼於菟，須是還他大丈夫\n捨己也應難再得，通行天下此人無　　　\n（四句淺釋：將自己丟在險峻的山崖下餵飼於老虎，仍然不會改變他大丈夫的情操；願意這樣捨身的人恐怕再也難以遇到，走遍天下也找不到第二個相同的人了吧。）　\n為使非常，身清豈貧，待他時至，詳與君知。此籤岩下飼菟之象，凡事宜順則吉。　　\n靈籤之曰：於巖下飼於菟者。是凡事宜順則吉之表徵也。得本籤之君。應知。為人宜守舊。不可輕舉妄動者也。不可貪求非份之外之財。或捨近圖遠者。皆避免之。予以君知者。使非常清身。豈貧待他時至祥。　　　\n交易－難　婚姻－平平　求財－中平　自身－中平　家宅－不利　六畜－損　田蠶－早種　尋人－見　行人－近日回　六甲－安　山墳－安　訟詞－有理　疾病－設送　失物－見　移徒－吉"
+ },
+ {
+  "id": 7,
+  "title": "廉將軍思用趙人",
+  "level": "",
+  "levelRaw": "廉將軍思用趙人",
+  "poem": [
+   "奔波役役重重險",
+   "帶水拖泥又渡山",
+   "更慮他方求別用",
+   "千山萬水未能還"
+  ],
+  "gloss": "路途危險又波折，拖泥帶水還得攀越重重山頭；雖然想要找出其它更好的辦法來走，只可惜最終恐怕無法回頭。",
+  "xiang": "此籤渡水拖泥之象，凡事正直則吉。",
+  "commentary": "奔波役役重重險。帶水拖泥又渡山之運途也。凡事必須謹慎。準備酌理。探取根源。明其是非者。審一己之進退。方向者。心存惡者得禍。存直者即可為獲福矣。禍福者皆由人作之。退身可得進步難為。只宜守田切莫高扳。",
+  "items": {
+   "交易": "平平",
+   "婚姻": "求福",
+   "求財": "秋冬",
+   "自身": "求福",
+   "家宅": "不利",
+   "六畜": "不利",
+   "田蠶": "不利",
+   "尋人": "難",
+   "行人": "阻",
+   "六甲": "求福",
+   "山墳": "不利",
+   "訟詞": "虧",
+   "疾病": "祈福",
+   "失物": "見",
+   "移徒": "吉"
+  },
+  "raw": "第七首：廉將軍思用趙人　　　　　　　　　　　　　　　　\n奔波役役重重險，帶水拖泥又渡山　\n更慮他方求別用，千山萬水未能還　　　\n（四句淺釋：路途危險又波折，拖泥帶水還得攀越重重山頭；雖然想要找出其它更好的辦法來走，只可惜最終恐怕無法回頭。）　\n退身可得，進步難為，只宜守田，切莫高扳。此籤渡水拖泥之象，凡事正直則吉。　　\n靈簽之曰：奔波役役重重險。帶水拖泥又渡山之運途也。凡事必須謹慎。準備酌理。探取根源。明其是非者。審一己之進退。方向者。心存惡者得禍。存直者即可為獲福矣。禍福者皆由人作之。退身可得進步難為。只宜守田切莫高扳。　　　\n交易－平平　婚姻－求福　求財－秋冬　自身－求福　家宅－不利　六畜－不利　田蠶－不利　尋人－難　行人－阻　六甲－求福　山墳－不利　訟詞－虧　疾病－祈福　失物－見　移徒－吉"
+ },
+ {
+  "id": 8,
+  "title": "范文公斷虀畫粥",
+  "level": "上上",
+  "levelRaw": "范文公斷虀畫粥　　　　上上",
+  "poem": [
+   "歲寒松柏古栽培",
+   "雨雪風霜總不摧",
+   "異日必當成大用",
+   "功名作個棟樑材"
+  ],
+  "gloss": "猶如歲寒中的松柏，根深穩固，縱使天候惡劣、飽受風霜雨淋，也不會因此而被摧折；相信將來有一天一定可以有很大的用途，成為功成名就的棟樑之材。",
+  "xiang": "此籤松柏茂葉之象，凡事正直則吉。",
+  "commentary": "本籤為松柏之歲寒者。任何之樹木枯之後。仍挺具秀者。各面均呈祥。當異日成大材老焉。是大器晚成型。惟不可因此滿足。必須因此更加培植。事事積德。方可有更好之明日。要之。象徵平地風光夙緣有定。豐熟田稻家獲餘慶。交易－旺婚姻－成求財－順利自身－順利家宅－吉六畜－損田蠶－利尋人－至行人－有信六甲－生男山墳－吉訟詞－有理疾病－安失物－見移徒－吉",
+  "items": {
+   "交易": "旺",
+   "婚姻": "成",
+   "求財": "順利",
+   "自身": "順利",
+   "家宅": "吉",
+   "六畜": "損",
+   "田蠶": "利",
+   "尋人": "至",
+   "行人": "有信",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "安",
+   "失物": "見",
+   "移徒": "吉"
+  },
+  "raw": "第八首：范文公斷虀畫粥　　　　上上　　　　　　　　　　　　\n歲寒松柏古栽培，雨雪風霜總不摧　　\n異日必當成大用，功名作個棟樑材　　　\n（四句淺釋：猶如歲寒中的松柏，根深穩固，縱使天候惡劣、飽受風霜雨淋，也不會因此而被摧折；相信將來有一天一定可以有很大的用途，成為功成名就的棟樑之材。）\n平地風光，夙緣有定，豐熟田稻，家獲餘慶。此籤松柏茂葉之象，凡事正直則吉。\n靈籤之曰：本籤為松柏之歲寒者。任何之樹木枯之後。仍挺具秀者。各面均呈祥。當異日成大材老焉。是大器晚成型。惟不可因此滿足。必須因此更加培植。事事積德。方可有更好之明日。要之。象徵平地風光夙緣有定。豐熟田稻家獲餘慶。　　　交易－旺　婚姻－成　求財－順利　自身－順利　家宅－吉　六畜－損　田蠶－利　尋人－至　行人－有信　六甲－生男　山墳－吉　訟詞－有理　疾病－安　失物－見　移徒－吉"
+ },
+ {
+  "id": 9,
+  "title": "趙韓王半部論語定天下",
+  "level": "上上",
+  "levelRaw": "趙韓王半部論語定天下　　上上",
+  "poem": [
+   "勞君問我心中事",
+   "此意偏宜說向公",
+   "一片靈臺明似鏡",
+   "恰如明月正當空"
+  ],
+  "gloss": "辛苦你來問我心中疑慮的事，若能執中無私往這個道理最好；如果心裡清澄如鏡就能透澈事理，就好似天上皎潔的月亮照耀了整個夜空。",
+  "xiang": "此籤皎月當空之象，凡事正直則吉。",
+  "commentary": "本籤者皎月當空之象也。凡事正直則吉之籤。雖是前運不佳。前事去之後。漸見順利者。君爾幸獲此籤之示者。平素之存心種德之所由成。後得如此之佳境。亦即是心中正直。理順法寬天無私意莫空虛看。",
+  "items": {
+   "交易": "旺",
+   "婚姻": "成",
+   "求財": "平平",
+   "自身": "順利",
+   "家宅": "吉",
+   "六畜": "損",
+   "田蠶": "利",
+   "尋人": "至",
+   "行人": "動",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "得安",
+   "失物": "祈福",
+   "移徒": "吉"
+  },
+  "raw": "第九首：趙韓王半部論語定天下　　上上　　　　　　　　　　　\n勞君問我心中事，此意偏宜說向公　\n一片靈臺明似鏡，恰如明月正當空　　　\n（四句淺釋：辛苦你來問我心中疑慮的事，若能執中無私往這個道理最好；如果心裡清澄如鏡就能透澈事理，就好似天上皎潔的月亮照耀了整個夜空。）　\n心中正直，理順法寬，天無私意，莫空虛看。此籤皎月當空之象，凡事正直則吉。\n靈籤之曰：本籤者皎月當空之象也。凡事正直則吉之籤。雖是前運不佳。前事去之後。漸見順利者。君爾幸獲此籤之示者。平素之存心種德之所由成。後得如此之佳境。亦即是心中正直。理順法寬天無私意莫空虛看。　　\n交易－旺　婚姻－成　求財－平平　自身－順利　家宅－吉　六畜－損　田蠶－利　尋人－至　行人－動　六甲－生男　山墳－吉　訟詞－有理　疾病－得安　失物－祈福　移徒－吉"
+ },
+ {
+  "id": 10,
+  "title": "秦昭王連城求趙璧",
+  "level": "",
+  "levelRaw": "秦昭王連城求趙璧",
+  "poem": [
+   "櫝藏無價寶和珍",
+   "只管他鄉外處尋",
+   "好似將燈來覓火",
+   "不如安靜莫勞心"
+  ],
+  "gloss": "木盒裡就暗藏難以計價珍奇的寶物，卻只會想著往外鄉異地去尋找；就好似已把了盞燈卻還到處找火，還不如先冷靜下來別再勞心。",
+  "xiang": "此籤將燈覓火之象，凡事自就。",
+  "commentary": "將燈不見火之象，凡事自就之表徵者，逢此下下之時，宜頂天拜地，始可得無災，是謀望之不成，修吾身後，積德，佈施，後必有回天之機，亦即是機緣若遇何事不成春無限意眼前似真此者也。",
+  "items": {
+   "交易": "難",
+   "婚姻": "合",
+   "求財": "難",
+   "自身": "安",
+   "家宅": "欠利",
+   "六畜": "難養",
+   "田蠶": "秋吉",
+   "尋人": "見",
+   "行人": "動",
+   "六甲": "生女",
+   "山墳": "平",
+   "訟詞": "虧",
+   "疾病": "設送",
+   "失物": "難見",
+   "移徒": "守舊"
+  },
+  "raw": "第十首：秦昭王連城求趙璧　　　　　　　　　　　\n櫝藏無價寶和珍，只管他鄉外處尋　\n好似將燈來覓火，不如安靜莫勞心　\n（四句淺釋：木盒裡就暗藏難以計價珍奇的寶物，卻只會想著往外鄉異地去尋找；就好似已把了盞燈卻還到處找火，還不如先冷靜下來別再勞心。）\n機緣若遇，何事不成，春無限前似真。此籤將燈覓火之象，凡事自就。　　\n靈籤之曰：將燈不見火之象，凡事自就之表徵者，逢此下下之時，宜頂天拜地，始可得無災，是謀望之不成，修吾身後，積德，佈施，後必有回天之機，亦即是機緣若遇何事不成春無限意眼前似真此者也。　　　\n交易－難　婚姻－合　求財－難　自身－安　家宅－欠利　六畜－難養　田蠶－秋吉　尋人－見　行人－動　六甲－生女　山墳－平　訟詞－虧　疾病－設送　失物－難見　移徒－守舊"
+ },
+ {
+  "id": 11,
+  "title": "劉先生入贅東吳",
+  "level": "上上",
+  "levelRaw": "劉先生入贅東吳　　　上上",
+  "poem": [
+   "欲求好事喜非常",
+   "爭奈姻親只暫忙",
+   "畢竟到頭成好事",
+   "貴人接引貴人鄉"
+  ],
+  "gloss": "盼望求得佳事因而欣喜異常，奈何忙碌一時成為親屬的願望還是暫無消息；須知到最後畢竟好事成雙，自有貴人接引前往貴人鄉。",
+  "xiang": "此籤因禍致福之象。",
+  "commentary": "因禍致福之籤。凡事則吉者也。曰欲求好事喜非常。暫時安當守份之時。雖是不合之時。亦可有成之時。貴人自有貴人引導之者。因此。君爾之前途是極光明者。有事盼望到底如斯若問此事貴人提攜耶。",
+  "items": {
+   "交易": "成",
+   "婚姻": "合",
+   "求財": "有",
+   "自身": "順利",
+   "家宅": "吉",
+   "六畜": "中平",
+   "田蠶": "中平",
+   "尋人": "見",
+   "行人": "未至",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "祭星",
+   "失物": "東方",
+   "移徒": "旺"
+  },
+  "raw": "第十一首：劉先生入贅東吳　　　上上　　　　　　　　　\n欲求好事喜非常，爭奈姻親只暫忙　\n畢竟到頭成好事，貴人接引貴人鄉　　\n（四句淺釋：盼望求得佳事因而欣喜異常，奈何忙碌一時成為親屬的願望還是暫無消息；須知到最後畢竟好事成雙，自有貴人接引前往貴人鄉。）\n有事盼望，到底如斯，若問此事，貴人提攜。此籤因禍致福之象。凡事則吉。　　\n靈籤之曰：因禍致福之籤。凡事則吉者也。曰欲求好事喜非常。暫時安當守份之時。雖是不合之時。亦可有成之時。貴人自有貴人引導之者。因此。君爾之前途是極光明者。有事盼望到底如斯若問此事貴人提攜耶。\n交易－成　婚姻－合　求財－有　自身－順利　家宅－吉　六畜－中平　田蠶－中平　尋人－見　行人－未至　六甲－生男　山墳－吉　訟詞－有理　疾病－祭星　失物－東方　移徒－旺"
+ },
+ {
+  "id": 12,
+  "title": "包胥九頓泣秦庭",
+  "level": "上上",
+  "levelRaw": "包胥九頓泣秦庭　　　　上上",
+  "poem": [
+   "時臨否極泰當來",
+   "抖擻從君出暗埃",
+   "若遇卯寅佳信至",
+   "管教立志事和諧"
+  ],
+  "gloss": "壞運已經走到了盡頭，好運就要來臨，請振作精神走出灰暗的陰霾；遇卯寅時自有好消息到來，堅定信念定可順心和諧。",
+  "xiang": "此籤禍去福來之象，凡事先凶後吉。",
+  "commentary": "時臨否極泰當來。多年來之惡運。霉運已去。吉星高照之時。事事順利。一路順風。毫無阻礙者。將身上抖之擻之。身上之暗埃盡去。尤在卯寅佳信至時。要之。麻換得絲是笑雖哭。要見分明是見為福。",
+  "items": {
+   "交易": "宜遲",
+   "婚姻": "成",
+   "求財": "吉",
+   "自身": "吉",
+   "家宅": "安",
+   "六畜": "不吉",
+   "田蠶": "有利",
+   "尋人": "見到",
+   "行人": "末回",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "吉",
+   "疾病": "秋吉",
+   "失物": "見",
+   "移徒": "守舊"
+  },
+  "raw": "第十二首：包胥九頓泣秦庭　　　　上上　\n時臨否極泰當來，抖擻從君出暗埃　　\n若遇卯寅佳信至，管教立志事和諧　　\n（四句淺釋：壞運已經走到了盡頭，好運就要來臨，請振作精神走出灰暗的陰霾；遇卯寅時自有好消息到來，堅定信念定可順心和諧。）\n麻換得絲，是笑雖哭，要見分明，是見為福。此籤禍去福來之象，凡事先凶後吉。　　\n靈籤之曰：時臨否極泰當來。多年來之惡運。霉運已去。吉星高照之時。事事順利。一路順風。毫無阻礙者。將身上抖之擻之。身上之暗埃盡去。尤在卯寅佳信至時。要之。麻換得絲是笑雖哭。要見分明是見為福。　　\n交易－宜遲　婚姻－成　求財－吉　自身－吉　家宅－安　　六畜－不吉　田蠶－有利　尋人－見到　行人－末回　六甲－生男　山墳－吉　訟詞－吉　疾病－秋吉　失物－見　移徒－守舊"
+ },
+ {
+  "id": 13,
+  "title": "信陵君存趙辭封",
+  "level": "上上",
+  "levelRaw": "信陵君存趙辭封　　　上上",
+  "poem": [
+   "自小生身富貴家",
+   "眼前萬事總奢華",
+   "要君賜受金魚袋",
+   "四海傳名足可誇"
+  ],
+  "gloss": "從小生長在富有的家庭，身邊的一切所見必然極盡奢華；受邀接受國家的封賜也不居功，這樣的謙讓真足以名揚四海眾人皆誇。",
+  "xiang": "",
+  "commentary": "君爾也。自小生身富貴之家。於是君汝之生活也。總是奢華之世界者。謀望皆成。惟有貴人之扶持者。必能稱意。且不勞而成者。易言之。囚徙得赦。病遇良醫。龍門得過。名顯皇都之象。凡事變化則吉也。",
+  "items": {
+   "交易": "宜遲",
+   "婚姻": "成合",
+   "求財": "秋冬",
+   "自身": "祈福",
+   "家宅": "吉",
+   "六畜": "平",
+   "田蠶": "中平",
+   "尋人": "見",
+   "行人": "祈保",
+   "六甲": "生女",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "得安",
+   "失物": "東方",
+   "移徒": "守舊"
+  },
+  "raw": "第十三首：信陵君存趙辭封　　　上上　　　　　　　　　\n自小生身富貴家，眼前萬事總奢華　\n要君賜受金魚袋，四海傳名足可誇　　\n（四句淺釋：從小生長在富有的家庭，身邊的一切所見必然極盡奢華；受邀接受國家的封賜也不居功，這樣的謙讓真足以名揚四海眾人皆誇。）\n囚徒得赦，病遇良醫，龍門得過，名顯皇都之象。凡事變化則吉。　　\n靈籤之曰：君爾也。自小生身富貴之家。於是君汝之生活也。總是奢華之世界者。謀望皆成。惟有貴人之扶持者。必能稱意。且不勞而成者。易言之。囚徙得赦。病遇良醫。龍門得過。名顯皇都之象。凡事變化則吉也。　\n交易－宜遲　婚姻－成合　求財－秋冬　自身－祈福　家宅－吉　六畜－平　田蠶－中平　尋人－見　行人－祈保　六甲－生女　山墳－吉　訟詞－有理　疾病－得安　失物－東方　移徒－守舊"
+ },
+ {
+  "id": 14,
+  "title": "管仲三熏三沐見齊桓",
+  "level": "大吉",
+  "levelRaw": "管仲三熏三沐見齊桓　　大吉",
+  "poem": [
+   "宛如仙鶴出樊籠",
+   "脫卻羈縻處處通",
+   "南北東西無障礙",
+   "任君直上九霄中"
+  ],
+  "gloss": "好似仙鶴飛出了牢籠，終於掙脫長久羈絆痛苦的束縛；無論東西南北都將暢行無阻，任你展翅翱遊直上九霄雲外去。",
+  "xiang": "此籤白鶴沖霄之象，凡事先憂後吉。",
+  "commentary": "為白鶴沖霄之象也。凡事先憂後吉之大吉籤。功名成就。生意鼎盛。婚姻完滿。財路亨通之時。宜再多閱聖賢書。修吾身。積吾德。必有喜訊連連之日來也。要之。從心無慮遠達亨衢道心自在任意所如者耶。",
+  "items": {
+   "交易": "合",
+   "婚姻": "合",
+   "求財": "合",
+   "自身": "還愿",
+   "家宅": "不安",
+   "六畜": "損",
+   "田蠶": "秋吉",
+   "尋人": "見",
+   "行人": "阻",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "宜和",
+   "疾病": "設送",
+   "失物": "東南",
+   "移徒": "吉"
+  },
+  "raw": "第十四首：管仲三熏三沐見齊桓　　大吉　　　　　　　　　\n宛如仙鶴出樊籠，脫卻羈縻處處通　\n南北東西無障礙，任君直上九霄中　　\n（四句淺釋：好似仙鶴飛出了牢籠，終於掙脫長久羈絆痛苦的束縛；無論東西南北都將暢行無阻，任你展翅翱遊直上九霄雲外去。）　\n從心無慮，遠達亨衢，道心自在，任意所如。此籤白鶴沖霄之象，凡事先憂後吉。　\n靈籤之曰：為白鶴沖霄之象也。凡事先憂後吉之大吉籤。功名成就。生意鼎盛。婚姻完滿。財路亨通之時。宜再多閱聖賢書。修吾身。積吾德。必有喜訊連連之日來也。要之。從心無慮遠達亨衢道心自在任意所如者耶。　　\n交易－合　婚姻－合　求財－合　自身－還愿　家宅－不安　六畜－損　田蠶－秋吉　尋人－見　行人－阻　六甲－生男　山墳－吉　訟詞－宜和　疾病－設送　失物－東南　移徒－吉"
+ },
+ {
+  "id": 15,
+  "title": "商君不聽趙良言",
+  "level": "",
+  "levelRaw": "商君不聽趙良言",
+  "poem": [
+   "觸人口氣最難吞",
+   "忽有災危禍到門",
+   "卵破巢空無宿處",
+   "深為穩便把心存"
+  ],
+  "gloss": "與人口角的怒怨之氣最難以吞嚥，卻不知禍從口出；細想卵破巢空之後哪裡還有棲歇之地，自保之道只在於修身養性罷了。",
+  "xiang": "此籤卵破巢空之象，凡事守舊則吉。",
+  "commentary": "本籤示之於弟子曰。觸人口氣最難吞。如交友中盛氣凌人者。令人難以容忍者。亦即是災厄臨時之兆。不可不知也。得罪於人者。如覆巢之禍。爰之。勸君穩便一語存於心。方能有吉。易言之。若得人怨何事可伸。如言不信到底為勞心。巢空之象。因此。凡事守舊則吉者也。",
+  "items": {
+   "交易": "成",
+   "婚姻": "阻",
+   "求財": "吉",
+   "自身": "謹防",
+   "家宅": "先凶後吉",
+   "六畜": "旺",
+   "田蠶": "利",
+   "尋人": "見",
+   "行人": "順",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "還愿",
+   "失物": "難見",
+   "移徒": "難"
+  },
+  "raw": "第十五首：商君不聽趙良言　　\n觸人口氣最難吞，忽有災危禍到門　\n卵破巢空無宿處，深為穩便把心存　　\n（四句淺釋：與人口角的怒怨之氣最難以吞嚥，卻不知禍從口出；細想卵破巢空之後哪裡還有棲歇之地，自保之道只在於修身養性罷了。）\n若得人怨，何事可伸，如言不信，到底勞心。此籤卵破巢空之象，凡事守舊則吉。　　\n靈籤之曰：本籤示之於弟子曰。觸人口氣最難吞。如交友中盛氣凌人者。令人難以容忍者。亦即是災厄臨時之兆。不可不知也。得罪於人者。如覆巢之禍。爰之。勸君穩便一語存於心。方能有吉。易言之。若得人怨何事可伸。如言不信到底為勞心。巢空之象。因此。凡事守舊則吉者也。\n交易－成　婚姻－阻　求財－吉　自身－謹防　家宅－先凶後吉　六畜－旺　田蠶－利　尋人－見　行人－順　六甲－生男　山墳－吉　訟詞－有理　疾病－還愿　失物－難見　移徒－難"
+ },
+ {
+  "id": 16,
+  "title": "明神宗要活海瑞",
+  "level": "中上",
+  "levelRaw": "明神宗要活海瑞　　　　中上",
+  "poem": [
+   "攢眉思慮暫時開",
+   "咫尺雲開見日來",
+   "宛似污泥中片玉",
+   "良工一舉出塵埃"
+  ],
+  "gloss": "拋去心中的憂愁不再愁眉不展，從此運程向吉撥雲見日；就好像那原本埋沒在污泥中的清玉，待得良匠視出掘起便遠離了塵垢。",
+  "xiang": "此籤如玉在泥之象，凡事遇貴則吉。",
+  "commentary": "如玉在污泥中之象。如獲良工貴人一舉。牽成時。出污泥則。可獲吉也。亦即是表明君之今也。咫尺眼前之雲撥開即得見日者。時運將到者。曰：得處無偽損中有益順逆吉凶君子得吉之籤。",
+  "items": {
+   "交易": "成合",
+   "婚姻": "成",
+   "求財": "冬吉",
+   "自身": "秋冬吉",
+   "家宅": "不安",
+   "六畜": "平",
+   "田蠶": "祈福",
+   "尋人": "見",
+   "行人": "至",
+   "六甲": "虛",
+   "山墳": "安",
+   "訟詞": "不利",
+   "疾病": "祈福",
+   "失物": "阻",
+   "移徒": "守舊"
+  },
+  "raw": "第十六首：明神宗要活海瑞　　　　中上　　　　　\n攢眉思慮暫時開，咫尺雲開見日來　\n宛似污泥中片玉，良工一舉出塵埃　　\n（四句淺釋：拋去心中的憂愁不再愁眉不展，從此運程向吉撥雲見日；就好像那原本埋沒在污泥中的清玉，待得良匠視出掘起便遠離了塵垢。）\n得處無偽，損中有益，順逆吉凶，君子得吉。此籤如玉在泥之象，凡事遇貴則吉。　\n靈籤之曰：如玉在污泥中之象。如獲良工貴人一舉。牽成時。出污泥則。可獲吉也。亦即是表明君之今也。咫尺眼前之雲撥開即得見日者。時運將到者。曰：得處無偽損中有益順逆吉凶君子得吉之籤。　　\n交易－成合　婚姻－成　求財－冬吉　自身－秋冬吉　家宅－不安　六畜－平　田蠶－祈福　尋人－見　行人－至　六甲－虛　山墳－安　訟詞－不利　疾病－祈福　失物－阻　移徒－守舊"
+ },
+ {
+  "id": 17,
+  "title": "李斯遺藥殺韓非",
+  "level": "中",
+  "levelRaw": "李斯遺藥殺韓非　　　中",
+  "poem": [
+   "莫聽閑言與是非",
+   "晨昏只好念阿彌",
+   "若將妄語為真實",
+   "畫餅如何療得飢"
+  ],
+  "gloss": "別聽那些流言蜚語是是非非，日夜勤行專唸佛號安定自己的身心；如果把一切的虛妄執著假象都信以為真，就好像在紙上畫的大餅要如何能夠止住飢餓。",
+  "xiang": "",
+  "commentary": "如心中不定則看經也枉費心神是已。何以為之。又如人之妄語信之為真。豈非如畫餅之充飢。焉得飽食。因時運之未到。時有吉。時有凶。勸爾宜晨昏多念阿彌陀佛。莫聽閒言及是非。方可安行。凡事虛少實也。",
+  "items": {
+   "交易": "順利",
+   "婚姻": "阻",
+   "求財": "有",
+   "自身": "吉",
+   "家宅": "祈福",
+   "六畜": "不利",
+   "田蠶": "宜早",
+   "尋人": "見",
+   "行人": "遲",
+   "六甲": "安",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "還愿",
+   "失物": "不見",
+   "移徒": "守舊"
+  },
+  "raw": "第十七首：李斯遺藥殺韓非　　　中　　　　　\n莫聽閑言與是非，晨昏只好念阿彌　\n若將妄語為真實，畫餅如何療得飢　　\n（四句淺釋：別聽那些流言蜚語是是非非，日夜勤行專唸佛號安定自己的身心；如果把一切的虛妄執著假象都信以為真，就好像在紙上畫的大餅要如何能夠止住飢餓。）　\n心中不定，枉費看經，只是畫餅充飢之象。凡事虛少實。　　\n靈籤之曰：如心中不定則看經也枉費心神是已。何以為之。又如人之妄語信之為真。豈非如畫餅之充飢。焉得飽食。因時運之未到。時有吉。時有凶。勸爾宜晨昏多念阿彌陀佛。莫聽閒言及是非。方可安行。凡事虛少實也。\n交易－順利　婚姻－阻　求財－有　自身－吉　家宅－祈福　六畜－不利　田蠶－宜早　尋人－見　行人－遲　六甲－安　山墳－吉　訟詞－和　疾病－還愿　失物－不見　移徒－守舊"
+ },
+ {
+  "id": 18,
+  "title": "鬼谷子演課",
+  "level": "上上",
+  "levelRaw": "鬼谷子演課　　　　上上",
+  "poem": [
+   "金烏西墜兔東臨",
+   "日夜循環恆古今",
+   "僧道得之無不利",
+   "工商農士各開心"
+  ],
+  "gloss": "太陽西沉月亮就初昇，從古至今日夜交替循環不歇；僧道之士體悟了這種自然運行的法則因而無所罣礙，即便是士農工商三百六十行又有什麼分別呢",
+  "xiang": "此籤皎月東升之象，凡事亨泰如意。",
+  "commentary": "皎月當夜空，繇東方上昇之象。爰之事事亨泰如意者。心中無事。所作皆奏功。又如上弓之一箭。發之即中也。君之今堪稱如日月日夜循環亙古今。僧道得之無不利。因此。工商農士無不一一笑顏逐開者。",
+  "items": {
+   "交易": "成",
+   "婚姻": "合",
+   "求財": "順",
+   "自身": "吉",
+   "家宅": "安",
+   "六畜": "欠利",
+   "田蠶": "早種",
+   "尋人": "至",
+   "行人": "至",
+   "六甲": "生男",
+   "山墳": "大吉",
+   "訟詞": "有理",
+   "疾病": "設送",
+   "失物": "遲見",
+   "移徒": "吉"
+  },
+  "raw": "第十八首：鬼谷子演課　　　　上上　　　　　\n金烏西墜兔東臨，日夜循環恆古今　\n僧道得之無不利，工商農士各開心　\n（四句淺釋：太陽西沉月亮就初昇，從古至今日夜交替循環不歇；僧道之士體悟了這種自然運行的法則因而無所罣礙，即便是士農工商三百六十行又有什麼分別呢）　\n心中無事，所作有功，如弓上箭，一發當中。此籤皎月東升之象，凡事亨泰如意。　\n靈籤之曰：皎月當夜空，繇東方上昇之象。爰之事事亨泰如意者。心中無事。所作皆奏功。又如上弓之一箭。發之即中也。君之今堪稱如日月日夜循環亙古今。僧道得之無不利。因此。工商農士無不一一笑顏逐開者。　　\n交易－成　婚姻－合　求財－順　自身－吉　家宅－安　六畜－欠利　田蠶－早種　尋人－至　行人－至　六甲－生男　山墳－大吉　訟詞－有理　疾病－設送　失物－遲見　移徒－吉"
+ },
+ {
+  "id": 19,
+  "title": "楊雄仕新為莽大夫",
+  "level": "中",
+  "levelRaw": "楊雄仕新為莽大夫　　　中",
+  "poem": [
+   "急水灘頭放艇時",
+   "狂風作浪欲何為",
+   "待他浪靜風停後",
+   "穩載船歸過不危"
+  ],
+  "gloss": "在天候惡劣之時欲駕小船，然而此刻狂風大浪，能有什麼作為呢？等待風止浪歇之後，相信才可以平安地滿載而歸。",
+  "xiang": "此籤行舟浪淘之象，凡事守舊則吉。",
+  "commentary": "行舟浪淘之象。亦即是險境者。要之。君爾應知目下宜守舊。願遵守靜則吉。妄為則凶也。楊雄之仕王莽之朝為大夫。何以能勝大任。如在急水灘頭放水之險行。待時若問營謀。時至方可為。千萬叵輕舉妄動。",
+  "items": {
+   "交易": "未成",
+   "婚姻": "不就",
+   "求財": "未成",
+   "自身": "祈福",
+   "家宅": "祈福",
+   "六畜": "損",
+   "田蠶": "吉",
+   "尋人": "難",
+   "行人": "至",
+   "六甲": "虛驚",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "祈福",
+   "失物": "難尋",
+   "移徒": "守舊"
+  },
+  "raw": "第十九首：楊雄仕新為莽大夫　　　中　　　　　\n急水灘頭放艇時，狂風作浪欲何為　\n待他浪靜風停後，穩載船歸過不危　　\n（四句淺釋：在天候惡劣之時欲駕小船，然而此刻狂風大浪，能有什麼作為呢？等待風止浪歇之後，相信才可以平安地滿載而歸。）\n急水放船，險行待時，若問營謀，時至可為。此籤行舟浪淘之象，凡事守舊則吉。　\n靈籤之曰：行舟浪淘之象。亦即是險境者。要之。君爾應知目下宜守舊。願遵守靜則吉。妄為則凶也。楊雄之仕王莽之朝為大夫。何以能勝大任。如在急水灘頭放水之險行。待時若問營謀。時至方可為。千萬叵輕舉妄動。　\n交易－未成　婚姻－不就　求財－未成　自身－祈福　家宅－祈福　六畜－損　田蠶－吉　尋人－難　行人－至　六甲－虛驚　山墳－吉　訟詞－和　疾病－祈福　失物－難尋　移徒－守舊"
+ },
+ {
+  "id": 20,
+  "title": "蘇武援官典屬國",
+  "level": "上上",
+  "levelRaw": "蘇武援官典屬國　　　　上上",
+  "poem": [
+   "當春久雨喜初晴",
+   "玉兔金烏漸漸明",
+   "舊事已成新事遂",
+   "看看一跳入蓬瀛"
+  ],
+  "gloss": "春天下了好久的雨終於止歇，月亮與太陽也因雲霧散去而漸漸恢復了光明；想做的事情慢慢也會達到目的，很快地便可以跳入新的格局境界了。",
+  "xiang": "此籤久雨初晴之象，凡事亨通。",
+  "commentary": "本籤者也。久雨初晴之象。為萬事可成之兆。惟得此吉籤。必須早植因緣。之後當有莫大利益。君爾在交友之中。宜留意者。必須選中之一為貴人。彼將成王公封爵之貴。將有大成之日。汝必能攀附上。易言之。佛神護佑百事無憂想平生事到底勝初者。",
+  "items": {
+   "交易": "待時",
+   "婚姻": "隨意",
+   "求財": "未遇",
+   "自身": "祈福",
+   "家宅": "中平",
+   "六畜": "阻",
+   "田蠶": "阻",
+   "尋人": "遲",
+   "行人": "阻",
+   "六甲": "生女",
+   "山墳": "舊吉",
+   "訟詞": "和",
+   "疾病": "祭星",
+   "失物": "見",
+   "移徒": "吉"
+  },
+  "raw": "第二十首：蘇武援官典屬國　　　　上上　　　　　\n當春久雨喜初晴，玉兔金烏漸漸明　　\n舊事已成新事遂，看看一跳入蓬瀛　　\n（四句淺釋：春天下了好久的雨終於止歇，月亮與太陽也因雲霧散去而漸漸恢復了光明；想做的事情慢慢也會達到目的，很快地便可以跳入新的格局境界了。）　\n佛神護佑，百事無虛，想平生事，到底勝初。此籤久雨初晴之象，凡事亨通。　\n靈籤之曰：本籤者也。久雨初晴之象。為萬事可成之兆。惟得此吉籤。必須早植因緣。之後當有莫大利益。君爾在交友之中。宜留意者。必須選中之一為貴人。彼將成王公封爵之貴。將有大成之日。汝必能攀附上。易言之。佛神護佑百事無憂想平生事到底勝初者。　　\n交易－待時　婚姻－隨意　求財－未遇　自身－祈福　家宅－中平　六畜－阻　田蠶－阻　尋人－遲　行人－阻　六甲－生女　山墳－舊吉　訟詞－和　疾病－祭星　失物－見　移徒－吉"
+ },
+ {
+  "id": 21,
+  "title": "邵康節定陰陽",
+  "level": "上吉",
+  "levelRaw": "邵康節定陰陽　　　　上吉",
+  "poem": [
+   "陰陽道合總由天",
+   "女嫁男婚豈偶然",
+   "但看龍蛇堪運動",
+   "熊羆叶夢喜團圓"
+  ],
+  "gloss": "陰陽和合因果交替循環，這是自然不變的道理，男女之間的姻緣婚配難道只是巧合？且看龍騰蛇行交會之時，吉夢維何？維熊維羆，這是很好的吉兆啊。",
+  "xiang": "此籤陰陽道合之象，凡事和合大吉。",
+  "commentary": "陰陽道合之簽也。凡事和合而大吉者。君逢此爲上吉之運。凡事漸獲進步。惟不可欲速成。更不得存有欺人之心。今之形成者。獲來不易。佳境之時。宜更修之。省之。積吾善可也。易言之。君之今。營謀皆逐。婚姻孕男。資財積聚更吉田畝之收。",
+  "items": {
+   "交易": "成",
+   "婚姻": "合",
+   "求財": "有",
+   "自身": "吉",
+   "家宅": "安",
+   "六畜": "旺",
+   "田蠶": "旺",
+   "尋人": "見",
+   "行人": "至",
+   "六甲": "生男",
+   "山墳": "大吉",
+   "訟詞": "有理",
+   "疾病": "遇良",
+   "失物": "得見",
+   "移徒": "昌盛"
+  },
+  "raw": "第二十一首：邵康節定陰陽　　　　上吉　　　　　\n陰陽道合總由天，女嫁男婚豈偶然　　\n但看龍蛇堪運動，熊羆叶夢喜團圓　　\n（四句淺釋：陰陽和合因果交替循環，這是自然不變的道理，男女之間的姻緣婚配難道只是巧合？且看龍騰蛇行交會之時，吉夢維何？維熊維羆，這是很好的吉兆啊。）　\n營謀皆遂，婚姻孕男，資財積聚，更吉田蠶。此籤陰陽道合之象，凡事和合大吉。　\n靈籤之曰：陰陽道合之簽也。凡事和合而大吉者。君逢此爲上吉之運。凡事漸獲進步。惟不可欲速成。更不得存有欺人之心。今之形成者。獲來不易。佳境之時。宜更修之。省之。積吾善可也。易言之。君之今。營謀皆逐。婚姻孕男。資財積聚更吉田畝之收。　　\n交易－成　婚姻－合　求財－有　自身－吉　家宅－安　六畜－旺　田蠶－旺　尋人－見　行人－至　六甲－生男　山墳－大吉　訟詞－有理　疾病－遇良　失物－得見　移徒－昌盛"
+ },
+ {
+  "id": 22,
+  "title": "王孝先為民祈禱",
+  "level": "上吉",
+  "levelRaw": "王孝先為民祈禱　　　上吉",
+  "poem": [
+   "四郊田畝皆枯竭",
+   "久旱俄然三日霖",
+   "花果草芽俱潤澤",
+   "始知一雨值千金"
+  ],
+  "gloss": "四周郊野的田地因為許久的乾旱導致寸草不生，忽然下起了三日的雨；花果根草樹芽因為甘霖的滋潤而重現生機，這才知道一場雨是這麼的值錢。",
+  "xiang": "此籤久旱逢雨之象，凡事難中有救。",
+  "commentary": "",
+  "items": {
+   "交易": "遲",
+   "婚姻": "合",
+   "求財": "頗有",
+   "自身": "安",
+   "家宅": "祈保",
+   "六畜": "利",
+   "田蠶": "利",
+   "尋人": "難",
+   "行人": "有阻",
+   "六甲": "生女",
+   "山墳": "安吉",
+   "訟詞": "虧",
+   "疾病": "設送",
+   "失物": "西方",
+   "移徒": "守舊"
+  },
+  "raw": "第二十二首：王孝先為民祈禱　　　上吉　　　　　　　　　　　\n四郊田畝皆枯竭，久旱俄然三日霖　\n花果草芽俱潤澤，始知一雨值千金　\n（四句淺釋：四周郊野的田地因為許久的乾旱導致寸草不生，忽然下起了三日的雨；花果根草樹芽因為甘霖的滋潤而重現生機，這才知道一場雨是這麼的值錢。）　\n田禾倍收，謀望相宜，病逢妙藥，行人便歸。此籤久旱逢雨之象，凡事難中有救。　\n靈籤之日：久旱逢雨之象。簡易之。遇難中有貴人救之象也。因之。凡事遇難。千萬不能餒志。不能心灰意懶。垂頭喪氣。君汝之命中。凡逢難事。必有貴人來扶之。如行人之有阻。但貴人代之。具有行人來之效。要之。田禾能倍收。謀望相宜。病逢妙藥。行人使之好運者也。　\n交易－遲　婚姻－合　求財－頗有　自身－安　家宅－祈保　六畜－利　田蠶－利　尋人－難　行人－有阻　六甲－生女　山墳－安吉　訟詞－虧　疾病－設送　失物－西方　移徒－守舊"
+ },
+ {
+  "id": 23,
+  "title": "孫策以璽借袁兵",
+  "level": "上平",
+  "levelRaw": "孫策以璽借袁兵　　　上平",
+  "poem": [
+   "欲攀仙桂蟾宮去",
+   "豈慮天門不放開",
+   "謀望一般音信好",
+   "高人自送嶺頭來"
+  ],
+  "gloss": "想要借由桂樹爬上仙宮去，只怕天門不會就此為你開放；把所求的計畫降低標準，自有高人送上山頂，指引通達的途徑。",
+  "xiang": "此籤望仙扳桂之象，凡事必遇貴人。",
+  "commentary": "本籤為望仙扳桂之象。凡事必能遇貲人之象者。雖屬上平。惟宜多作福。求神庇佑之。方有化凶趨吉之時。到頭。君汝謀望一般喜訊好。高人。貴人也。日將佳音報之而來。要之。商賈者有利。行藏無危。病可安。訟可理。儘可施為。",
+  "items": {
+   "交易": "合",
+   "婚姻": "阻",
+   "求財": "隨意",
+   "自身": "祈福",
+   "家宅": "欠安",
+   "六畜": "不利",
+   "田蠶": "不利",
+   "尋人": "難",
+   "行人": "有危",
+   "六甲": "祈福",
+   "山墳": "舊吉",
+   "訟詞": "虧",
+   "疾病": "安",
+   "失物": "不見",
+   "移徒": "大吉"
+  },
+  "raw": "第二十三首：孫策以璽借袁兵　　　上平　　　　　　　\n欲攀仙桂蟾宮去，豈慮天門不放開　\n謀望一般音信好，高人自送嶺頭來　　\n（四句淺釋：想要借由桂樹爬上仙宮去，只怕天門不會就此為你開放；把所求的計畫降低標準，自有高人送上山頂，指引通達的途徑。）\n商賈利益，行藏無危，病安訟理，儘可施為。此籤望仙扳桂之象，凡事必遇貴人。　\n靈籤之曰：本籤為望仙扳桂之象。凡事必能遇貲人之象者。雖屬上平。惟宜多作福。求神庇佑之。方有化凶趨吉之時。到頭。君汝謀望一般喜訊好。高人。貴人也。日將佳音報之而來。要之。商賈者有利。行藏無危。病可安。訟可理。儘可施為。\n交易－合　婚姻－阻　求財－隨意　自身－祈福　家宅－欠安　　六畜－不利　田蠶－不利　尋人－難　行人－有危　六甲－祈福　山墳－舊吉　訟詞－虧　疾病－安　失物－不見　移徒－大吉"
+ },
+ {
+  "id": 24,
+  "title": "文種不聽范少伯",
+  "level": "",
+  "levelRaw": "文種不聽范少伯",
+  "poem": [
+   "不成鄰里不成家",
+   "水泡痴人似落花",
+   "芳問君恩難得力",
+   "到頭畢竟事如麻"
+  ],
+  "gloss": "時運未至如何可以成鄰成家，執迷不悟的痴人就似花落無情；孤芳自賞恐怕得不到別人的幫助，到頭來仍是事情紛雜困難重重。",
+  "xiang": "此籤痴人喪德之象，凡事守舊待時。",
+  "commentary": "",
+  "items": {
+   "交易": "難",
+   "婚姻": "待時",
+   "求財": "阻",
+   "自身": "險",
+   "家宅": "不利",
+   "六畜": "多災",
+   "田蠶": "多災",
+   "尋人": "至",
+   "行人": "阻",
+   "六甲": "祈福",
+   "山墳": "安",
+   "訟詞": "虧",
+   "疾病": "急求神",
+   "失物": "難",
+   "移徒": "吉"
+  },
+  "raw": "第二十四首：文種不聽范少伯　　　　　　　　\n不成鄰里不成家，水泡痴人似落花　　\n芳問君恩難得力，到頭畢竟事如麻　　\n（四句淺釋：時運未至如何可以成鄰成家，執迷不悟的痴人就似花落無情；孤芳自賞恐怕得不到別人的幫助，到頭來仍是事情紛雜困難重重。）\n是非莫說，事須仔細，正理存心，不傷於己。此籤痴人喪德之象，凡事守舊待時。　\n本籤即是痴人喪德之象。凡事守舊待時。君汝目下即是水泡痴人似落花之命也。事事應順天理。方平安。眼中無人之時。將何。必有福禍來臨。不可不慎。亦即是到頭畢竟如麻者。爰之。凡事求神作福。禱告。　　　\n交易－難　婚姻－待時　求財－阻　自身－險　家宅－不利　六畜－多災　田蠶－多災　尋人－至　行人－阻　六甲－祈福　山墳－安　訟詞－虧　疾病－急求神　失物－難　移徒－吉"
+ },
+ {
+  "id": 25,
+  "title": "伍子胥過昭關",
+  "level": "上中",
+  "levelRaw": "伍子胥過昭關　　　上中",
+  "poem": [
+   "過了憂危第幾重",
+   "從今再歷永無凶",
+   "寬心自有寬心計",
+   "得遇高人護聖功"
+  ],
+  "gloss": "度過了擔心危險的重重關卡，從此以後即使遇到也不會再有災禍；放寬心順其自然一定有因應之道，能遇高人相護順利成功。",
+  "xiang": "",
+  "commentary": "君之簽。是寬心自有寬心計。得遇高人－貴人也。方能護聖功。易言之。凡事遇貴人方能吉也。亦即能過了憂危第幾重。從今再歷永無凶之境。凡事謀略之時必守之。不宜盲目衝之。三思而後行。方不致吃大虧。是到頭來訟中有理。病得安愈。出外求外。枯井逢泉者也。",
+  "items": {
+   "靈籤之曰：君之簽。是寬心自有寬心計。得遇高人": "貴人也。方能護聖功。易言之。凡事遇貴人方能吉也。亦即能過了憂危第幾重。從今再歷永無凶之境。凡事謀略之時必守之。不宜盲目衝之。三思而後行。方不致吃大虧。是到頭來訟中有理。病得安愈。出外求外。枯井逢泉者也。",
+   "交易": "阻滯",
+   "婚姻": "和合",
+   "求財": "阻",
+   "自身": "阻",
+   "家宅": "平平",
+   "六畜": "不利",
+   "田蠶": "不利",
+   "尋人": "阻隔",
+   "行人": "阻隔",
+   "六甲": "有險",
+   "山墳": "不安",
+   "訟詞": "有理",
+   "疾病": "祈福",
+   "失物": "難",
+   "移徒": "不合"
+  },
+  "raw": "第二十五首：伍子胥過昭關　　　上中　　　　　　\n過了憂危第幾重，從今再歷永無凶　　\n寬心自有寬心計，得遇高人護聖功　\n（四句淺釋：度過了擔心危險的重重關卡，從此以後即使遇到也不會再有災禍；放寬心順其自然一定有因應之道，能遇高人相護順利成功。）\n訟中有理，病得安痊，出外求望，枯井逢泉。凡事遇貴則吉。　　\n靈籤之曰：君之簽。是寬心自有寬心計。得遇高人－貴人也。方能護聖功。易言之。凡事遇貴人方能吉也。亦即能過了憂危第幾重。從今再歷永無凶之境。凡事謀略之時必守之。不宜盲目衝之。三思而後行。方不致吃大虧。是到頭來訟中有理。病得安愈。出外求外。枯井逢泉者也。　\n交易－阻滯　婚姻－和合　求財－阻　自身－阻　家宅－平平　六畜－不利　田蠶－不利　尋人－阻隔　行人－阻隔　六甲－有險　山墳－不安　訟詞－有理　疾病－祈福　失物－難　移徒－不合"
+ },
+ {
+  "id": 26,
+  "title": "桓溫得殷浩書",
+  "level": "平",
+  "levelRaw": "桓溫得殷浩書　　　平",
+  "poem": [
+   "上下傳來事總虛",
+   "天邊接得一封書",
+   "書中許我功名事",
+   "直待終時亦是無"
+  ],
+  "gloss": "四周傳來的消息總是不確實，就如天上飛來一筆文件；內容許我有大好的功名，誰知直到最後也只是虛幻一場。",
+  "xiang": "此籤接日虛望之象，凡事守舊待時。",
+  "commentary": "是接日虛望之象。宜守舊待時者。不可聽信世人之言。宜自吾有主見。以智止謠。何必聽人之者。宜向神求之。神靈加護之時。必有轉機。因直待終時亦是無者。因此。守之。規謀之。待來日之計用之。易言之。求閒不聞。目下心煩。欲求名利。徒爾虛投者。",
+  "items": {
+   "交易": "不成",
+   "婚姻": "不成",
+   "求財": "阻",
+   "自身": "安",
+   "家宅": "祈福",
+   "六畜": "養",
+   "田蠶": "半熟",
+   "尋人": "西方",
+   "行人": "有信",
+   "六甲": "生女",
+   "山墳": "吉",
+   "訟詞": "虧",
+   "疾病": "祈福",
+   "失物": "難尋",
+   "移徒": "守舊"
+  },
+  "raw": "第二十六首：桓溫得殷浩書　　　平　　　 　　　\n上下傳來事總虛，天邊接得一封書　\n書中許我功名事，直待終時亦是無　\n（四句淺釋：四周傳來的消息總是不確實，就如天上飛來一筆文件；內容許我有大好的功名，誰知直到最後也只是虛幻一場。）　\n求閑不閑，日下心煩，欲求名利，徒爾虛投。此籤接日虛望之象，凡事守舊待時。　\n靈籤之曰：是接日虛望之象。宜守舊待時者。不可聽信世人之言。宜自吾有主見。以智止謠。何必聽人之者。宜向神求之。神靈加護之時。必有轉機。因直待終時亦是無者。因此。守之。規謀之。待來日之計用之。易言之。求閒不聞。目下心煩。欲求名利。徒爾虛投者。　　\n交易－不成　婚姻－不成　求財－阻　自身－安　家宅－祈福　六畜－養　田蠶－半熟　尋人－西方　行人－有信　六甲－生女　山墳－吉　訟詞－虧　疾病－祈福　失物－難尋　移徒－守舊"
+ },
+ {
+  "id": 27,
+  "title": "李鄴侯白衣宰相",
+  "level": "中中",
+  "levelRaw": "李鄴侯白衣宰相　　　中中",
+  "poem": [
+   "一謀一用一番機",
+   "慮後疑前不敢為",
+   "時至自然逢貴助",
+   "銀牆鐵壁好安居"
+  ],
+  "gloss": "計畫謀慮用盡了機謀，思前顧後仍然不敢有所作為；順其自然，時候到了自然會有貴人相助，就像有銅牆鐵壁般的穩固可以放心安住。",
+  "xiang": "此籤墻有基址之象，凡事接引貴人鄉。",
+  "commentary": "本籤者。牆有基址之家。凡事接引貴人鄉者。君之今也。一謀一事一番機之時。舉棋不定之刻。惟君正逢貴人助也。有銀牆鐵壁所安靠之人。雖有貴人之籤。必須慎交。方有向善之效。否則受伊人愚弄。反得敗名。",
+  "items": {
+   "交易": "難",
+   "婚姻": "阻",
+   "求財": "有",
+   "自身": "吉",
+   "家宅": "吉",
+   "六畜": "利",
+   "田蠶": "熟",
+   "尋人": "遲",
+   "行人": "阻",
+   "六甲": "生女",
+   "山墳": "守舊",
+   "訟詞": "宜和",
+   "疾病": "延安",
+   "失物": "無蹤",
+   "移徒": "吉"
+  },
+  "raw": "第二十七首：李鄴侯白衣宰相　　　中中　　　　　　\n一謀一用一番機，慮後疑前不敢為　\n時至自然逢貴助，銀牆鐵壁好安居　\n（四句淺釋：計畫謀慮用盡了機謀，思前顧後仍然不敢有所作為；順其自然，時候到了自然會有貴人相助，就像有銅牆鐵壁般的穩固可以放心安住。）　古花成事，寒花遇春，疑前阻滯，今得稱心。此籤墻有基址之象，凡事接引貴人鄉。　\n靈籤之曰：本籤者。牆有基址之家。凡事接引貴人鄉者。君之今也。一謀一事一番機之時。舉棋不定之刻。惟君正逢貴人助也。有銀牆鐵壁所安靠之人。雖有貴人之籤。必須慎交。方有向善之效。否則受伊人愚弄。反得敗名。　　\n交易－難　婚姻－阻　求財－有　自身－吉　家宅－吉　六畜－利　田蠶－熟　尋人－遲　行人－阻　六甲－生女　山墳－守舊　訟詞－宜和　疾病－延安　失物－無蹤　移徒－吉"
+ },
+ {
+  "id": 28,
+  "title": "孟嘗君雞鳴度關",
+  "level": "上上",
+  "levelRaw": "孟嘗君雞鳴度關　　上上",
+  "poem": [
+   "東方月上正嬋娟",
+   "頃刻雲遮月半邊",
+   "莫道圓時還又缺",
+   "須教缺處復重圓"
+  ],
+  "gloss": "月兒從東邊初昇正是最美的時候，突然之間烏雲驟至將月亮遮蔽了半邊；別說月正圓為何又遇缺，只待烏雲過後缺處就會重圓。",
+  "xiang": "此籤月被雲遮之象，凡事待時。",
+  "commentary": "月被雲遮之象。亦即是凡事。暫時且守舊。待時老。君汝之早年也。事事不遇之時。唯多年辛勤。終能入佳境。事事如意者。好景已迫眉睫。願君多行善。亦即是言積德。以迓天庥者。君之目前即是浮雲遮月不得疑惑。得待雲開自見明月時。",
+  "items": {
+   "交易": "吉",
+   "婚姻": "合",
+   "求財": "阻",
+   "自身": "祈保",
+   "家宅": "不安",
+   "六畜": "不利",
+   "田蠶": "不利",
+   "尋人": "難",
+   "行人": "滯",
+   "六甲": "有驚",
+   "山墳": "改",
+   "訟詞": "虧",
+   "疾病": "難痊",
+   "失物": "西方",
+   "移徒": "守舊"
+  },
+  "raw": "第二十八首：孟嘗君雞鳴度關　　上上　　　 　　　\n東方月上正嬋娟，頃刻雲遮月半邊　　\n莫道圓時還又缺，須教缺處復重圓　　\n（四句淺釋：月兒從東邊初昇正是最美的時候，突然之間烏雲驟至將月亮遮蔽了半邊；別說月正圓為何又遇缺，只待烏雲過後缺處就會重圓。）　\n浮雲遮月，不得疑惑，得待雲開，自見明月。此籤月被雲遮之象，凡事待時。　\n靈簽之曰：月被雲遮之象。亦即是凡事。暫時且守舊。待時老。君汝之早年也。事事不遇之時。唯多年辛勤。終能入佳境。事事如意者。好景已迫眉睫。願君多行善。亦即是言積德。以迓天庥者。君之目前即是浮雲遮月不得疑惑。得待雲開自見明月時。　　　\n交易－吉　婚姻－合　求財－阻　自身－祈保　家宅－不安　六畜－不利　田蠶－不利　尋人－難　行人－滯　六甲－有驚　山墳－改　訟詞－虧　疾病－難痊　失物－西方　移徒－守舊"
+ },
+ {
+  "id": 29,
+  "title": "百里奚食牛入相",
+  "level": "大吉",
+  "levelRaw": "百里奚食牛入相　　大吉",
+  "poem": [
+   "寶劍光芒出匣時",
+   "匣中應不被塵欺",
+   "貴人親手提攜起",
+   "儘可防身更勿疑"
+  ],
+  "gloss": "寶劍在出鞘時射出光芒，本身的鋒芒當還在劍鞘中時也不會被塵垢所影響；當貴人將此劍為你取出，大可安心用來防身不用懷疑。",
+  "xiang": "此籤寶劍出匣之象，凡事高人指出。",
+  "commentary": "本籤示之曰。是寶劍出匣之象。凡事有高人指出時。必有成者。儘可防身更無疑者。時運已濟。安閒守分。至卯年月。大有發展。鋒芒畢露者。士子科第。仕官之人。得擢升。另言之。寶劍出匣光輝萬里貴人指出。無不讚美者也。",
+  "items": {
+   "交易": "成",
+   "婚姻": "好",
+   "求財": "利",
+   "自身": "吉",
+   "家宅": "祈福",
+   "六畜": "損",
+   "田蠶": "宜早",
+   "尋人": "見",
+   "行人": "遲",
+   "六甲": "生女",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "還愿",
+   "失物": "南方",
+   "移徒": "興"
+  },
+  "raw": "第二十九首：百里奚食牛入相　　大吉　　　 　　　\n寶劍光芒出匣時，匣中應不被塵欺　\n貴人親手提攜起，儘可防身更勿疑　\n（四句淺釋：寶劍在出鞘時射出光芒，本身的鋒芒當還在劍鞘中時也不會被塵垢所影響；當貴人將此劍為你取出，大可安心用來防身不用懷疑。）\n寶劍出匣，光輝萬里，貴人指出，無不讚美。此籤寶劍出匣之象，凡事高人指出。　\n靈籤之曰：本籤示之曰。是寶劍出匣之象。凡事有高人指出時。必有成者。儘可防身更無疑者。時運已濟。安閒守分。至卯年月。大有發展。鋒芒畢露者。士子科第。仕官之人。得擢升。另言之。寶劍出匣光輝萬里貴人指出。無不讚美者也。\n交易－成　婚姻－好　求財－利　自身－吉　家宅－祈福　六畜－損　田蠶－宜早　尋人－見　行人－遲　六甲－生女　山墳－吉　訟詞－和　疾病－還愿　失物－南方　移徒－興"
+ },
+ {
+  "id": 30,
+  "title": "楚懷主入秦武關",
+  "level": "",
+  "levelRaw": "楚懷主入秦武關",
+  "poem": [
+   "勸君切莫向他求",
+   "似鶴飛來暗箭投",
+   "若去採薪蛇伏草",
+   "恐遭毒手也堪憂"
+  ],
+  "gloss": "勸您別再有其它的想法或希求，就好像鶴鳥被暗箭埋伏而受傷；或想去砍柴卻不知毒蛇暗藏在雜草中，恐怕因此而遭到毒手，實在令人擔憂。",
+  "xiang": "此籤安身得己之象，凡事守舊則吉。",
+  "commentary": "本籤示之曰。若去採薪蛇伏草。恐遭毒手也堪虞之命途耶。是安身得己之象。凡事暫守舊待時之者。謀事不相宜。一事無成者。田畝。六畜之不利於時。唯山坎是大吉者。易言之。閉口存舌。閒事莫理不可生心恐傷于己。",
+  "items": {
+   "交易": "滯",
+   "婚姻": "未合",
+   "求財": "待時",
+   "自身": "平平",
+   "家宅": "安",
+   "六畜": "不利",
+   "田蠶": "不利",
+   "尋人": "阻",
+   "行人": "阻",
+   "六甲": "虛驚",
+   "山墳": "大吉",
+   "訟詞": "虧",
+   "疾病": "難痊",
+   "失物": "不見",
+   "移徒": "守舊"
+  },
+  "raw": "第三十首：楚懷主入秦武關　　　　　　 　　　\n勸君切莫向他求，似鶴飛來暗箭投　　\n若去採薪蛇伏草，恐遭毒手也堪憂　　\n（四句淺釋：勸您別再有其它的想法或希求，就好像鶴鳥被暗箭埋伏而受傷；或想去砍柴卻不知毒蛇暗藏在雜草中，恐怕因此而遭到毒手，實在令人擔憂。）　\n閉口存舌，問事莫理，不可生心，恐傷于己。此籤安身得己之象，凡事守舊則吉。　\n靈籤之曰：本籤示之曰。若去採薪蛇伏草。恐遭毒手也堪虞之命途耶。是安身得己之象。凡事暫守舊待時之者。謀事不相宜。一事無成者。田畝。六畜之不利於時。唯山坎是大吉者。易言之。閉口存舌。閒事莫理不可生心恐傷于己。　　\n交易－滯　婚姻－未合　求財－待時　自身－平平　家宅－安　六畜－不利　田蠶－不利　尋人－阻　行人－阻　六甲－虛驚　山墳－大吉　訟詞－虧　疾病－難痊　失物－不見　移徒－守舊"
+ },
+ {
+  "id": 31,
+  "title": "達摩面壁",
+  "level": "",
+  "levelRaw": "達摩面壁",
+  "poem": [
+   "清閑無事靜處坐",
+   "飢時吃飯困時臥",
+   "放下身心不用忙",
+   "必定不遭殃與禍"
+  ],
+  "gloss": "清閒無事的時候就尋找一個寧靜場所安坐，餓了就吃，想睡能睡；放下身與心的束縛不去牽掛，如此必然不會遭逢災殃與禍事啊！",
+  "xiang": "此籤守己安靜之象，凡事宜守舊。",
+  "commentary": "本籤曰。清閑無事靜處坐。飢時吃飯困時臥。可知君爾者當守己安靜之時。凡事宜守舊。不宜在此時輕舉妄動。動則凶。靜則吉之刻。放下身心不用忙。唯有如此。方可除去禍與殃。易言之。守己安靜即是待他時之至。必定週全。",
+  "items": {
+   "交易": "宜遲",
+   "婚姻": "合",
+   "求財": "待時",
+   "自身": "安",
+   "家宅": "祈福",
+   "六畜": "平平",
+   "田蠶": "秋熟",
+   "尋人": "難",
+   "行人": "至",
+   "六甲": "生女",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "設送",
+   "失物": "虛",
+   "移徒": "吉"
+  },
+  "raw": "第三十一首：達摩面壁　　 \n清閑無事靜處坐，飢時吃飯困時臥　\n放下身心不用忙，必定不遭殃與禍　\n（四句淺釋：清閒無事的時候就尋找一個寧靜場所安坐，餓了就吃，想睡能睡；放下身與心的束縛不去牽掛，如此必然不會遭逢災殃與禍事啊！）\n守己安靜，即是神仙，待他時至，必定週全。此籤守己安靜之象，凡事宜守舊。　　\n靈籤之曰：本籤曰。清閑無事靜處坐。飢時吃飯困時臥。可知君爾者當守己安靜之時。凡事宜守舊。不宜在此時輕舉妄動。動則凶。靜則吉之刻。放下身心不用忙。唯有如此。方可除去禍與殃。易言之。守己安靜即是待他時之至。必定週全。\n交易－宜遲　婚姻－合　求財－待時　自身－安　家宅－祈福　六畜－平平　田蠶－秋熟　尋人－難　行人－至　六甲－生女　山墳－吉　訟詞－和　疾病－設送　失物－虛　移徒－吉"
+ },
+ {
+  "id": 32,
+  "title": "常何薦馬周",
+  "level": "",
+  "levelRaw": "常何薦馬周",
+  "poem": [
+   "渺渺前途事可疑",
+   "石中藏玉有誰知",
+   "一朝良匠分明剖",
+   "始覺其中碧玉奇"
+  ],
+  "gloss": "前途茫無頭緒不禁教人憂疑，就像粗糙的石頭中內藏美玉卻有誰知；等到有朝一日識貨的工匠看出了端倪剖出，這才發覺深藏其中的碧玉竟是如此稀奇。",
+  "xiang": "此籤石中剖玉之象，凡事著力可成。",
+  "commentary": "君今之命運也。如石中剖玉之象。八百事啻要費力即可成者。易言之。汝是石中藏玉雖知。孜孜不倦中取玉之勤勞人。人生旅途中。常有驚險之象出現。易言之。玉在石中。匠手可知。直待剖出真可施。",
+  "items": {
+   "交易": "阻",
+   "婚姻": "成",
+   "求財": "勞力",
+   "自身": "安",
+   "家宅": "平平",
+   "六畜": "旺",
+   "田蠶": "晚成",
+   "尋人": "見",
+   "行人": "杳",
+   "六甲": "虛",
+   "山墳": "改",
+   "訟詞": "驚",
+   "疾病": "欠安",
+   "失物": "西方",
+   "移徒": "改"
+  },
+  "raw": "第三十二首：常何薦馬周　　　　　　　　　　　\n渺渺前途事可疑，石中藏玉有誰知　\n一朝良匠分明剖，始覺其中碧玉奇　　\n（四句淺釋：前途茫無頭緒不禁教人憂疑，就像粗糙的石頭中內藏美玉卻有誰知；等到有朝一日識貨的工匠看出了端倪剖出，這才發覺深藏其中的碧玉竟是如此稀奇。）　\n玉在石中，匠手可知，直待剖出，真可施為。此籤石中剖玉之象，凡事著力可成。　\n靈簽之曰：君今之命運也。如石中剖玉之象。八百事啻要費力即可成者。易言之。汝是石中藏玉雖知。孜孜不倦中取玉之勤勞人。人生旅途中。常有驚險之象出現。易言之。玉在石中。匠手可知。直待剖出真可施。　　　　\n交易－阻　婚姻－成　求財－勞力　自身－安　家宅－平平　六畜－旺　田蠶－晚成　尋人－見　行人－杳　六甲－虛　山墳－改　訟詞－驚　疾病－欠安　失物－西方　移徒－改"
+ },
+ {
+  "id": 33,
+  "title": "鮑叔進管仲",
+  "level": "中中",
+  "levelRaw": "鮑叔進管仲　　　中中",
+  "poem": [
+   "石藏美玉在中心",
+   "得指何須向外尋",
+   "直待高人來剖析",
+   "恰如靈雨滌煩襟"
+  ],
+  "gloss": "不起眼的石頭內中心卻是塊美玉，得到了這個提點何必又向外去尋覓；等到高人慧眼將之分離剖出，正似甘霖一降掃去了雜亂紛擾的思緒。",
+  "xiang": "此籤珍玉內藏之象，凡事忍耐守舊則吉。",
+  "commentary": "又是珍玉內藏之象。是凡事忍耐得吉者也。君汝之今也。謀略不宜之時。乍看似機緣。行之反覆為之。無一事可成。石中既有玉藏。何必向外去尋。亦即是君守於今。自有展謀之時。不宜動。動不如一靜。易言之。珍玉內藏不時求。不見待若遇貴人。事則得吉。",
+  "items": {
+   "交易": "遲",
+   "婚姻": "就",
+   "求財": "待時",
+   "自身": "安",
+   "家宅": "祈保",
+   "六畜": "旺",
+   "田蠶": "半熟",
+   "尋人": "勞",
+   "行人": "阻",
+   "六甲": "生男",
+   "山墳": "宜改",
+   "訟詞": "擱",
+   "疾病": "遇良醫",
+   "失物": "北方",
+   "移徒": "吉"
+  },
+  "raw": "第三十三首：鮑叔進管仲　　　中中　　　　　　　\n石藏美玉在中心，得指何須向外尋　\n直待高人來剖析，恰如靈雨滌煩襟　\n（四句淺釋：不起眼的石頭內中心卻是塊美玉，得到了這個提點何必又向外去尋覓；等到高人慧眼將之分離剖出，正似甘霖一降掃去了雜亂紛擾的思緒。）　\n珍玉內藏，不須求覓，若遇貴人，事又得吉。此籤珍玉內藏之象，凡事忍耐守舊則吉。　\n靈簽之曰：又是珍玉內藏之象。是凡事忍耐得吉者也。君汝之今也。謀略不宜之時。乍看似機緣。行之反覆為之。無一事可成。石中既有玉藏。何必向外去尋。亦即是君守於今。自有展謀之時。不宜動。動不如一靜。易言之。珍玉內藏不時求。不見待若遇貴人。事則得吉。　　\n交易－遲　婚姻－就　求財－待時　自身－安　家宅－祈保　六畜－旺　田蠶－半熟　尋人－勞　行人－阻　六甲－生男　山墳－宜改　訟詞－擱　疾病－遇良醫　失物－北方　移徒－吉"
+ },
+ {
+  "id": 34,
+  "title": "文中子上太平策",
+  "level": "上上",
+  "levelRaw": "文中子上太平策　　　上上",
+  "poem": [
+   "出入行藏禮義恭",
+   "言必忠良聽必聰",
+   "心下了然俱洞徹",
+   "光明如日正當空"
+  ],
+  "gloss": "行事言行謙恭有讓不脫禮義的規範，忠言必逆耳，但聽取受教必能領悟；心中明似鏡一切的事物都能照見無礙，就似光明如紅日當空晴朗無雲。",
+  "xiang": "此籤紅日當空之象，凡事自來有成。",
+  "commentary": "本簽也。紅日當空之象。凡事自來有成。君之今也。出入行藏禮義恭。言必忠良聽必聰。與友朋。長輩之交。必須禮恭。天下之事能透徹。君之運也。光明則如日正當空時。易言之。空中無事秋水澄清別無阻礙。自然有成者。",
+  "items": {
+   "交易": "難",
+   "婚姻": "合",
+   "求財": "虛",
+   "自身": "安",
+   "家宅": "清吉",
+   "六畜": "衰",
+   "田蠶": "不利",
+   "尋人": "滯",
+   "行人": "阻",
+   "六甲": "有險",
+   "山墳": "吉",
+   "訟詞": "虧",
+   "疾病": "設送",
+   "失物": "虛",
+   "移徒": "守舊"
+  },
+  "raw": "第三十四首：文中子上太平策　　　上上　　　　　\n出入行藏禮義恭，言必忠良聽必聰　\n心下了然俱洞徹，光明如日正當空　　\n（四句淺釋：行事言行謙恭有讓不脫禮義的規範，忠言必逆耳，但聽取受教必能領悟；心中明似鏡一切的事物都能照見無礙，就似光明如紅日當空晴朗無雲。）　\n空中無事，秋水澄清，別無阻碍，自然有成。此籤紅日當空之象，凡事自來有成。　　\n靈籤之曰：本簽也。紅日當空之象。凡事自來有成。君之今也。出入行藏禮義恭。言必忠良聽必聰。與友朋。長輩之交。必須禮恭。天下之事能透徹。君之運也。光明則如日正當空時。易言之。空中無事秋水澄清別無阻礙。自然有成者。\n交易－難　婚姻－合　求財－虛　自身－安　家宅－清吉　六畜－衰　田蠶－不利　尋人－滯　行人－阻　六甲－有險　山墳－吉　訟詞－虧　疾病－設送　失物－虛　移徒－守舊"
+ },
+ {
+  "id": 35,
+  "title": "劉關張古城相會",
+  "level": "上上",
+  "levelRaw": "劉關張古城相會　　　上上",
+  "poem": [
+   "衣冠重整舊宿風",
+   "道是無功卻有功",
+   "掃卻當途荊棘碍",
+   "三人共議事相同"
+  ],
+  "gloss": "重新打點自己拋去舊有的習氣，說沒有功勞實則上卻是有的；揮去眼前困難的阻礙，三人共同商討必能達成共識。",
+  "xiang": "此籤衣冠重整之象，凡事改變大吉。",
+  "commentary": "此籤是掃卻當途荊棘礙。三人共議事相同者。可知重整之象。凡事改變即大吉。功名。交易均可得利。求財。時運。六畜亦均有利可圖。是謀略成功。年運亨通之時。一旦稱心。萬事通之刻。君汝之今為不須憂慮。自有期間。前程事更換可宜。",
+  "items": {
+   "交易": "利",
+   "婚姻": "阻",
+   "求財": "好",
+   "自身": "吉",
+   "家宅": "亂",
+   "六畜": "興",
+   "田蠶": "不利",
+   "尋人": "至",
+   "行人": "至",
+   "六甲": "驚",
+   "山墳": "宜舊",
+   "訟詞": "有理",
+   "疾病": "祈福",
+   "失物": "遲見",
+   "移徒": "安"
+  },
+  "raw": "第三十五首：劉關張古城相會　　　上上　　　　　　\n衣冠重整舊宿風，道是無功卻有功　　\n掃卻當途荊棘碍，三人共議事相同　　\n（四句淺釋：重新打點自己拋去舊有的習氣，說沒有功勞實則上卻是有的；揮去眼前困難的阻礙，三人共同商討必能達成共識。）　\n不須憂疑，自有期間，問前程事，更換可宜。此籤衣冠重整之象，凡事改變大吉。　\n靈籤之曰：此籤是掃卻當途荊棘礙。三人共議事相同者。可知重整之象。凡事改變即大吉。功名。交易均可得利。求財。時運。六畜亦均有利可圖。是謀略成功。年運亨通之時。一旦稱心。萬事通之刻。君汝之今為不須憂慮。自有期間。前程事更換可宜。　　　\n交易－利　婚姻－阻　求財－好　自身－吉　家宅－亂　六畜－興　田蠶－不利　尋人－至　行人－至　六甲－驚　山墳－宜舊　訟詞－有理　疾病－祈福　失物－遲見　移徒－安"
+ },
+ {
+  "id": 36,
+  "title": "劉先主進葭萠關",
+  "level": "上上",
+  "levelRaw": "劉先主進葭萠關　　上上",
+  "poem": [
+   "目前病訟不須憂",
+   "實地資財儘可求",
+   "恰好繫猿今脫鎖",
+   "得歸仙洞去來遊"
+  ],
+  "gloss": "此刻的疾病官司不必憂愁，充足的資財盡可以解決問題的需求；就好似猿猴解開了身上的枷鎖，得以返回仙洞來去悠遊。",
+  "xiang": "此籤繫猿脫鎖之象，凡事通泰。",
+  "commentary": "本籤曰。目前病訟不須憂。實地資財儘可求。是上上之籤。惟有積德。布施之舉。必可更進展之機。如忽爾遇不如意之時。因君汝目下是繫猿脫鎖之象。凡是通泰。因此。再加修心向善。必有神佑。易言之。且自寬舒待他時至路達通衢也。",
+  "items": {
+   "交易": "待時",
+   "婚姻": "未成",
+   "求財": "大利",
+   "自身": "安",
+   "家宅": "不安",
+   "六畜": "平",
+   "田蠶": "十足",
+   "尋人": "至",
+   "行人": "至",
+   "六甲": "祈保",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "欠安",
+   "失物": "遠",
+   "移徒": "吉"
+  },
+  "raw": "第三十六首：劉先主進葭萠關　　上上　　　 　　　\n目前病訟不須憂，實地資財儘可求　\n恰好繫猿今脫鎖，得歸仙洞去來遊　　\n（四句淺釋：此刻的疾病官司不必憂愁，充足的資財盡可以解決問題的需求；就好似猿猴解開了身上的枷鎖，得以返回仙洞來去悠遊。）\n脫除心事，且自寬舒，待他時至，路達通衢。此籤繫猿脫鎖之象，凡事通泰。　\n靈籤之曰：本籤曰。目前病訟不須憂。實地資財儘可求。是上上之籤。惟有積德。布施之舉。必可更進展之機。如忽爾遇不如意之時。因君汝目下是繫猿脫鎖之象。凡是通泰。因此。再加修心向善。必有神佑。易言之。且自寬舒待他時至路達通衢也。\n交易－待時　婚姻－未成　求財－大利　自身－安　家宅－不安　六畜－平　田蠶－十足　尋人－至　行人－至　六甲－祈保　山墳－吉　訟詞－有理　疾病－欠安　失物－遠　移徒－吉"
+ },
+ {
+  "id": 37,
+  "title": "管公明避隱遼東",
+  "level": "平平",
+  "levelRaw": "管公明避隱遼東　　　平平",
+  "poem": [
+   "欲問身安運泰時",
+   "風中燈燭不相宜",
+   "爭如收拾深堂坐",
+   "庶免光搖靜處期"
+  ],
+  "gloss": "想解決身體健康與運勢如意的疑惑，宛如風中燈燭不是好時機；莫不如安身守己靜待養身，自然可以避免掉不必要的事端。",
+  "xiang": "此籤風中燈燭之象，凡事謹慎則吉。",
+  "commentary": "本籤也。風前燈燭之籤也。不相宜者。惟凡事小心。謹慎則吉也。君必須收拾深堂坐。亦即是得靜為宜吉。如動則凶至。只好暫時忍耐之。時到之時。必有吉祥之象。隨君而來。易言之。靜處安身命待時泰。動心惹禍。靜守救危耶。",
+  "items": {
+   "交易": "難",
+   "婚姻": "不合",
+   "求財": "有",
+   "自身": "平平",
+   "家宅": "守舊",
+   "六畜": "安",
+   "田蠶": "秋吉",
+   "尋人": "有",
+   "行人": "有信",
+   "六甲": "祈保",
+   "山墳": "勿改",
+   "訟詞": "和",
+   "疾病": "祭星",
+   "失物": "難歸",
+   "移徒": "守舊"
+  },
+  "raw": "第三十七首：管公明避隱遼東　　　平平　　　　　　\n欲問身安運泰時，風中燈燭不相宜　\n爭如收拾深堂坐，庶免光搖靜處期　　\n（四句淺釋：想解決身體健康與運勢如意的疑惑，宛如風中燈燭不是好時機；莫不如安身守己靜待養身，自然可以避免掉不必要的事端。）\n靜處安身，命待時泰，動心惹禍，靜守急危。此籤風中燈燭之象，凡事謹慎則吉。　\n靈籤之曰：本籤也。風前燈燭之籤也。不相宜者。惟凡事小心。謹慎則吉也。君必須收拾深堂坐。亦即是得靜為宜吉。如動則凶至。只好暫時忍耐之。時到之時。必有吉祥之象。隨君而來。易言之。靜處安身命待時泰。動心惹禍。靜守救危耶。\n交易－難　婚姻－不合　求財－有　自身－平平　家宅－守舊　六畜－安　田蠶－秋吉　尋人－有　行人－有信　六甲－祈保　山墳－勿改　訟詞－和　疾病－祭星　失物－難歸　移徒－守舊"
+ },
+ {
+  "id": 38,
+  "title": "淮陰侯背楚歸漢",
+  "level": "中平",
+  "levelRaw": "淮陰侯背楚歸漢　　中平",
+  "poem": [
+   "鏡月當空出匣時",
+   "剎那雲霧暗迷離",
+   "寬心守待浮雲散",
+   "更改相宜可望為"
+  ],
+  "gloss": "天上的明月正初出，突然之間雲遮霧掩隱去了光芒；且安心靜守飄雲自然散去，柳暗花明前景可期。",
+  "xiang": "此籤浮雲遮月之象，凡事守舊待時。",
+  "commentary": "本籤為浮雲遮月之象。目前事事無須如意之時亦即是勸君叵動。俟時運之來至。動之方吉利。唯有汝寬心守待。耐心待至撥雲見皎潔月娘時。汝即家居無憂。人口陰災作福。保佑之。不致有破財之時。守之。不宜不遵行。",
+  "items": {
+   "交易": "待時",
+   "婚姻": "難合",
+   "求財": "難",
+   "自身": "祈保",
+   "家宅": "不安",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "遇",
+   "行人": "阻",
+   "六甲": "虛花",
+   "山墳": "宜修",
+   "訟詞": "和",
+   "疾病": "延安",
+   "失物": "虛",
+   "移徒": "吉"
+  },
+  "raw": "第三十八首：淮陰侯背楚歸漢　　中平　　　 　　　\n鏡月當空出匣時，剎那雲霧暗迷離　\n寬心守待浮雲散，更改相宜可望為　\n（四句淺釋：天上的明月正初出，突然之間雲遮霧掩隱去了光芒；且安心靜守飄雲自然散去，柳暗花明前景可期。）　\n家居無憂，人口陰災，作福保祏，又恐破財。此籤浮雲遮月之象，凡事守舊待時。　\n靈籤之曰：本籤為浮雲遮月之象。目前事事無須如意之時亦即是勸君叵動。俟時運之來至。動之方吉利。唯有汝寬心守待。耐心待至撥雲見皎潔月娘時。汝即家居無憂。人口陰災作福。保佑之。不致有破財之時。守之。不宜不遵行。　\n交易－待時　婚姻－難合　求財－難　自身－祈保　家宅－不安　六畜－損　田蠶－損　尋人－遇　行人－阻　六甲－虛花　山墳－宜修　訟詞－和　疾病－延安　失物－虛　移徒－吉"
+ },
+ {
+  "id": 39,
+  "title": "曹操遣襧衡投黃祖",
+  "level": "",
+  "levelRaw": "曹操遣襧衡投黃祖",
+  "poem": [
+   "天邊消息應難問",
+   "切莫私心強望求",
+   "若把石頭磨作鏡",
+   "精神枉費一時休"
+  ],
+  "gloss": "就像未知的事情難以預料，別只顧自己有所強求；就好像想用石頭來磨成一面明鏡，恐怕耗盡精神心力也只是徒然。",
+  "xiang": "此籤安靜守舊之象。",
+  "commentary": "本籤告之於弟子曰。若把石頭磨成鏡。精神枉費一時休之安靜守舊之象也。一切事宜皆在低潮中。宜小心。小心。如六畜之損。田畝之虧。宜拾舊圖新。適合時潮。方能振興起色。六甲生女亦不必氣餒。宜積德。修身為先。必有賴之。易言之。千般用計屆時皆空心守舊。不必強求者。",
+  "items": {
+   "交易": "阻",
+   "婚姻": "不合",
+   "求財": "平平",
+   "自身": "提防",
+   "家宅": "安",
+   "六畜": "損",
+   "田蠶": "利",
+   "尋人": "難",
+   "行人": "動",
+   "六甲": "生女",
+   "山墳": "大吉",
+   "訟詞": "虧",
+   "疾病": "設送",
+   "失物": "空",
+   "移徒": "平安"
+  },
+  "raw": "第三十九首：曹操遣襧衡投黃祖　　\n天邊消息應難問，切莫私心強望求　\n若把石頭磨作鏡，精神枉費一時休　\n（四句淺釋：就像未知的事情難以預料，別只顧自己有所強求；就好像想用石頭來磨成一面明鏡，恐怕耗盡精神心力也只是徒然。）\n千般用計，一旦皆空，安靜守舊，不必強求。此籤安靜守舊之象。　\n靈籤之曰：本籤告之於弟子曰。若把石頭磨成鏡。精神枉費一時休之安靜守舊之象也。一切事宜皆在低潮中。宜小心。小心。如六畜之損。田畝之虧。宜拾舊圖新。適合時潮。方能振興起色。六甲生女亦不必氣餒。宜積德。修身為先。必有賴之。易言之。千般用計屆時皆空心守舊。不必強求者。\n交易－阻　婚姻－不合　求財－平平　自身－提防　家宅－安　六畜－損　田蠶－利　尋人－難　行人－動　六甲－生女　山墳－大吉　訟詞－虧　疾病－設送　失物－空　移徒－平安"
+ },
+ {
+  "id": 40,
+  "title": "馬援女為皇后　　　平中",
+  "level": "",
+  "levelRaw": "馬援女為皇后　　　平中",
+  "poem": [
+   "紅輪西墜兔東升",
+   "陰長陽消是兩形",
+   "若是女人占此卦",
+   "增添福祿稱心情"
+  ],
+  "gloss": "太陽西下月亮就東升，陰生陽失是兩者間的狀態顯現；如果女人求占得到此一卦象，即稱心如意福祿增添。",
+  "xiang": "此籤陰長陽消之象，凡事先難後吉。",
+  "commentary": "本籤是陰長陽消之家。凡事先難後吉者。不管是交易。求財。時運。均在開始時。均為不利。但是因一己之奮鬥。苦心造詣。終有出頭之日。所幸田畝大收。六畜興旺。皆是祈福所賜。疾病。皆有險。宜小心。易言之。陰利女人。不宜男子。若問求望。無憂從喜。",
+  "items": {
+   "交易": "吉",
+   "婚姻": "不合",
+   "求財": "待時",
+   "自身": "祈福",
+   "家宅": "不利",
+   "六畜": "旺",
+   "田蠶": "旺",
+   "尋人": "隔",
+   "行人": "阻",
+   "六甲": "虛",
+   "山墳": "吉",
+   "訟詞": "虧",
+   "疾病": "有驚",
+   "失物": "空",
+   "移徒": "大吉"
+  },
+  "raw": "第四十首：馬援女為皇后　　　平中　　　 　　　\n紅輪西墜兔東升，陰長陽消是兩形　\n若是女人占此卦，增添福祿稱心情　　\n（四句淺釋：太陽西下月亮就東升，陰生陽失是兩者間的狀態顯現；如果女人求占得到此一卦象，即稱心如意福祿增添。）　\n陰利女人，不宜男子，若問求望，無憂後喜。此籤陰長陽消之象，凡事先難後吉。　\n靈籤之曰：本籤是陰長陽消之家。凡事先難後吉者。不管是交易。求財。時運。均在開始時。均為不利。但是因一己之奮鬥。苦心造詣。終有出頭之日。所幸田畝大收。六畜興旺。皆是祈福所賜。疾病。皆有險。宜小心。易言之。陰利女人。不宜男子。若問求望。無憂從喜。　　\n交易－吉　婚姻－不合　求財－待時　自身－祈福　家宅－不利　六畜－旺　田蠶－旺　尋人－隔　行人－阻　六甲－虛　山墳－吉　訟詞－虧　疾病－有驚　失物－空　移徒－大吉"
+ },
+ {
+  "id": 41,
+  "title": "董卓郿塢藏金",
+  "level": "",
+  "levelRaw": "董卓郿塢藏金",
+  "poem": [
+   "無限好事君須記",
+   "恰如認賊作為子",
+   "莫貪眼下有些甜",
+   "可慮他時還受苦"
+  ],
+  "gloss": "事事無絕對的道理你必須要謹記，就好像目前認賊人為子一樣；不要只看到眼前的利益就急著貪求，豈知日後還得要擔憂受苦。",
+  "xiang": "此籤認賊為子之象，凡事不宜苟且。",
+  "commentary": "本籤示於弟子曰。認賊為子之象。不宜苟且者。神戒之曰。莫貪眼下有些甜頭。趨之。後果堪虞。到頭來還是受苦者。功名。交易。尚不理想。求財皆在待時之命運。為認賊作子之時。易言之。只道一著君子莫錯宰把身心不致耽擱。交易－難婚姻－未合求財－待時自身－平常家宅－不安六畜－安田蠶－半熟尋人－至行人－至六甲－生男驚山墳－中平訟詞－宜和疾病－祭星失物－難尋移徒－祈保",
+  "items": {
+   "交易": "難",
+   "婚姻": "未合",
+   "求財": "待時",
+   "自身": "平常",
+   "家宅": "不安",
+   "六畜": "安",
+   "田蠶": "半熟",
+   "尋人": "至",
+   "行人": "至",
+   "六甲": "生男驚",
+   "山墳": "中平",
+   "訟詞": "宜和",
+   "疾病": "祭星",
+   "失物": "難尋",
+   "移徒": "祈保"
+  },
+  "raw": "第四十一首：董卓郿塢藏金　　　　　\n無限好事君須記，恰如認賊作為子　　\n莫貪眼下有些甜，可慮他時還受苦　\n（四句淺釋：事事無絕對的道理你必須要謹記，就好像目前認賊人為子一樣；不要只看到眼前的利益就急著貪求，豈知日後還得要擔憂受苦。）\n只道一著，君子莫錯，宰把身心，不致耽擱。此籤認賊為子之象，凡事不宜苟且。　\n靈籤之曰：本籤示於弟子曰。認賊為子之象。不宜苟且者。神戒之曰。莫貪眼下有些甜頭。趨之。後果堪虞。到頭來還是受苦者。功名。交易。尚不理想。求財皆在待時之命運。為認賊作子之時。易言之。只道一著君子莫錯宰把身心不致耽擱。　　交易－難　婚姻－未合　求財－待時　自身－平常　家宅－不安　六畜－安　田蠶－半熟　尋人－至　行人－至　六甲－生男驚　山墳－中平　訟詞－宜和　疾病－祭星　失物－難尋　移徒－祈保"
+ },
+ {
+  "id": 42,
+  "title": "溫公入相除新法",
+  "level": "上",
+  "levelRaw": "溫公入相除新法　　　上",
+  "poem": [
+   "君垂恩澤潤無邊",
+   "覆禱祈禳沒黨偏",
+   "一切有情皆受用",
+   "均沾樂利得週全"
+  ],
+  "gloss": "你施予的恩澤利益眾人無數，又公正無私的祈禱上天賜給大眾糧食；一切有情都因此受益無窮，得到甚大的好處與方便而得以周全。",
+  "xiang": "此籤天垂甘露之象，凡事大吉利也。",
+  "commentary": "本籤示之曰。天垂甘露之泉。凡事大吉利者。亦即是先難後易者所得。功名成。交易就。婚姻雖平庸。但是難得之緣也。時運至冬季即至。六畜。田畝皆旺之時。宜勤儉。千萬不得浪透。陷已於絕境者。易言之。天降甘露。君子莫忘求謀成就。和合吉昌之籤也。",
+  "items": {
+   "交易": "成",
+   "婚姻": "中吉",
+   "求財": "未有",
+   "自身": "冬吉",
+   "家宅": "祈福",
+   "六畜": "中平",
+   "田蠶": "中平",
+   "尋人": "見",
+   "行人": "動",
+   "六甲": "平安",
+   "山墳": "安",
+   "訟詞": "勝",
+   "疾病": "解",
+   "失物": "空",
+   "移徒": "守舊"
+  },
+  "raw": "第四十二首：溫公入相除新法　　　上　　　　　　　　\n君垂恩澤潤無邊，覆禱祈禳沒黨偏　\n一切有情皆受用，均沾樂利得週全　　\n(四句淺釋：你施予的恩澤利益眾人無數，又公正無私的祈禱上天賜給大眾糧食；一切有情都因此受益無窮，得到甚大的好處與方便而得以周全。）\n天降甘露，君子莫忘，求謀成就，和合吉昌。此籤天垂甘露之象，凡事大吉利也。　　\n靈籤之曰：本籤示之曰。天垂甘露之泉。凡事大吉利者。亦即是先難後易者所得。功名成。交易就。婚姻雖平庸。但是難得之緣也。時運至冬季即至。六畜。田畝皆旺之時。宜勤儉。千萬不得浪透。陷已於絕境者。易言之。天降甘露。君子莫忘求謀成就。和合吉昌之籤也。　　\n交易－成　婚姻－中吉　求財－未有　自身－冬吉　家宅－祈福　六畜－中平　田蠶－中平　尋人－見　行人－動　六甲－平安　山墳－安　訟詞－勝　疾病－解　失物－空　移徒－守舊"
+ },
+ {
+  "id": 43,
+  "title": "泗水亭長作天子",
+  "level": "大吉",
+  "levelRaw": "泗水亭長作天子　　　大吉",
+  "poem": [
+   "天地交泰萬物新",
+   "自形自色自怡神",
+   "森羅萬象皆精彩",
+   "事事和諧得稱人"
+  ],
+  "gloss": "天地順適安泰萬物欣欣向榮，本身各有各的形貌顯現安定怡然的神色；這種種現象繁多卻漂亮地呈現在眼前，象徵著事事和諧稱心如意。",
+  "xiang": "此籤天地交泰之象，凡事遇貴。",
+  "commentary": "本籤為天地交泰之象。是事事和諧得稱人者。季冬有喜。交春之時。人事遂意者。必是喜事連連之人。萬象新之時。自形自色自怡神。事事吉祥之際遇。相機而動者。易言之。本籤者天生萬物謀望皆新福德積聚瑞氣添增。可喜之籤也。",
+  "items": {
+   "交易": "利",
+   "婚姻": "合",
+   "求財": "有",
+   "自身": "安",
+   "家宅": "吉",
+   "六畜": "中平",
+   "田蠶": "中平",
+   "尋人": "見",
+   "行人": "有阻",
+   "六甲": "生男",
+   "山墳": "東西吉",
+   "訟詞": "勝",
+   "疾病": "祭星",
+   "失物": "東方",
+   "移徒": "利"
+  },
+  "raw": "第四十三首：泗水亭長作天子　　　大吉　　　　　　　\n天地交泰萬物新，自形自色自怡神　\n森羅萬象皆精彩，事事和諧得稱人　\n（四句淺釋：天地順適安泰萬物欣欣向榮，本身各有各的形貌顯現安定怡然的神色；這種種現象繁多卻漂亮地呈現在眼前，象徵著事事和諧稱心如意。）　\n天生萬物，謀望皆新，福德積聚，瑞氣添增。此籤天地交泰之象，凡事遇貴。　\n靈籤之曰：本籤為天地交泰之象。是事事和諧得稱人者。季冬有喜。交春之時。人事遂意者。必是喜事連連之人。萬象新之時。自形自色自怡神。事事吉祥之際遇。相機而動者。易言之。本籤者天生萬物謀望皆新福德積聚瑞氣添增。可喜之籤也。\n交易－利　婚姻－合　求財－有　自身－安　家宅－吉　六畜－中平　田蠶－中平　尋人－見　行人－有阻　六甲－生男　山墳－東西吉　訟詞－勝　疾病－祭星　失物－東方　移徒－利"
+ },
+ {
+  "id": 44,
+  "title": "周郎赤壁敗曹兵",
+  "level": "中中",
+  "levelRaw": "周郎赤壁敗曹兵　　　中中",
+  "poem": [
+   "棋逢敵手要藏機",
+   "黑白盤中未決時",
+   "到底欲知誰勝負",
+   "須教先著相機宜"
+  ],
+  "gloss": "下棋時遇到實力相當的對手應該更小心，此刻仍然拿不定主意；想要知道最後到底誰勝誰負，必定是能掌握機先，搶在前頭的人。",
+  "xiang": "此籤棋逢敵手之象，凡事先吉。",
+  "commentary": "本籤為棋逢敵手之象也。凡事先吉。凡未小心。節儉則有轉惡之嫌。宜小心為之。棋逢敵手之時。必藏有機。決定勝負之時莫遲疑。認為可行則毫不猶豫之下即可。尤應和者。善有善報。惡有惡報。示人早知覺悟多作善。方能有善報者。",
+  "items": {
+   "交易": "利",
+   "婚姻": "未合",
+   "求財": "遂意",
+   "自身": "平穩",
+   "家宅": "吉",
+   "六畜": "損",
+   "田蠶": "中平",
+   "尋人": "阻",
+   "行人": "阻",
+   "六甲": "生女",
+   "山墳": "守舊",
+   "訟詞": "宜和",
+   "疾病": "祈福",
+   "失物": "空",
+   "移徒": "守舊"
+  },
+  "raw": "第四十四首：周郎赤壁敗曹兵　　　中中　　　　　\n棋逢敵手要藏機，黑白盤中未決時　\n到底欲知誰勝負，須教先著相機宜　\n（四句淺釋：下棋時遇到實力相當的對手應該更小心，此刻仍然拿不定主意；想要知道最後到底誰勝誰負，必定是能掌握機先，搶在前頭的人。）\n欺求心事，如同著棋，要知勝負，先著莫疑。此籤棋逢敵手之象，凡事先吉。　\n靈籤之曰：本籤為棋逢敵手之象也。凡事先吉。凡未小心。節儉則有轉惡之嫌。宜小心為之。棋逢敵手之時。必藏有機。決定勝負之時莫遲疑。認為可行則毫不猶豫之下即可。尤應和者。善有善報。惡有惡報。示人早知覺悟多作善。方能有善報者。\n交易－利　婚姻－未合　求財－遂意　自身－平穩　家宅－吉　六畜－損　田蠶－中平　尋人－阻　行人－阻　六甲－生女　山墳－守舊　訟詞－宜和　疾病－祈福　失物－空　移徒－守舊"
+ },
+ {
+  "id": 45,
+  "title": "張良受書圯上老人",
+  "level": "上上",
+  "levelRaw": "張良受書圯上老人　　上上",
+  "poem": [
+   "溫柔自是勝強剛",
+   "積善于門大吉昌",
+   "若是有人占此卦",
+   "宛如止渴遇瓊漿"
+  ],
+  "gloss": "溫柔本身必定比剛強佔優勢，多行善事必定有利；如果有人求占得到此卦，就好似飲下瓊漿止住了飢渴。",
+  "xiang": "此籤積福門庭之象，凡事營謀則吉。",
+  "commentary": "本籤為積福門庭之象。凡事謀則吉者也。靈籤曰。溫柔自是勝強剛。積善于門大吉昌。為使己之事務。求財。時運吉昌者。必須積善。修德。布施。方能亨之。久而彌堅。易言之。天地有感應驗非常佛神保持得福壽長之籤。",
+  "items": {
+   "交易": "利",
+   "婚姻": "合",
+   "求財": "遂好",
+   "自身": "安",
+   "家宅": "吉",
+   "六畜": "中平",
+   "田蠶": "秋利",
+   "尋人": "見",
+   "行人": "阻",
+   "六甲": "生男",
+   "山墳": "東西",
+   "訟詞": "勝",
+   "疾病": "祈福",
+   "失物": "東方",
+   "移徒": "利"
+  },
+  "raw": "第四十五首：張良受書圯上老人　　上上　　　　　　\n溫柔自是勝強剛，積善于門大吉昌　　\n若是有人占此卦，宛如止渴遇瓊漿　\n（四句淺釋：溫柔本身必定比剛強佔優勢，多行善事必定有利；如果有人求占得到此卦，就好似飲下瓊漿止住了飢渴。）\n天地有感，應驗非常，佛神保祐，得福壽長。此籤積福門庭之象，凡事營謀則吉。　\n靈籤之曰：本籤為積福門庭之象。凡事謀則吉者也。\n靈籤曰。溫柔自是勝強剛。積善于門大吉昌。為使己之事務。求財。時運吉昌者。必須積善。修德。布施。方能亨之。久而彌堅。易言之。天地有感應驗非常佛神保持得福壽長之籤。　\n交易－利　婚姻－合　求財－遂好　自身－安　家宅－吉　六畜－中平　田蠶－秋利　尋人－見　行人－阻　六甲－生男　山墳－東西　訟詞－勝　疾病－祈福　失物－東方　移徒－利"
+ },
+ {
+  "id": 46,
+  "title": "趙韓王為村學究",
+  "level": "上平",
+  "levelRaw": "趙韓王為村學究　　　上平",
+  "poem": [
+   "勸君耐守舊生涯",
+   "把定身心莫聽邪",
+   "直待有人輕著力",
+   "滿園枯木再開花"
+  ],
+  "gloss": "勸你遵循保持以往的步調，安固身心切勿聽取不正當的事理；直到有人行方便助你一臂之力，就像滿園枯木逢春再開花。",
+  "xiang": "此籤枯木生花之象，凡事待時則吉。",
+  "commentary": "本籤為枯木生花之家。即是萬物逢春復蘇之象。君爾多年辛勞得報於斯時。惟早植因緣。必有喜事連連。詩日：勸君耐守舊生涯。爰之。君之今宜靜。不宜動。動則凶。靜則吉。亦方能枯木再開花。嚮使逢遇貴人。可攀之。伊者後日之諸侯。易言之。決心守舊時至成就行多多逆。安靜無憂。",
+  "items": {
+   "交易": "成",
+   "婚姻": "就",
+   "求財": "待時",
+   "自身": "吉",
+   "家宅": "安",
+   "六畜": "難",
+   "田蠶": "五分",
+   "尋人": "杳",
+   "行人": "阻",
+   "六甲": "生女",
+   "山墳": "吉",
+   "訟詞": "吉",
+   "疾病": "急求神",
+   "失物": "空",
+   "移徒": "守舊"
+  },
+  "raw": "第四十六首：趙韓王為村學究　　　上平　　　　　　\n勸君耐守舊生涯，把定身心莫聽邪　\n直待有人輕著力，滿園枯木再開花　　\n（四句淺釋：勸你遵循保持以往的步調，安固身心切勿聽取不正當的事理；直到有人行方便助你一臂之力，就像滿園枯木逢春再開花。）\n變心守舊，時至成就，行則多逆，安靜無憂。此籤枯木生花之象，凡事待時則吉。　\n靈籤之曰：本籤為枯木生花之家。即是萬物逢春復蘇之象。君爾多年辛勞得報於斯時。惟早植因緣。必有喜事連連。詩日：勸君耐守舊生涯。爰之。君之今宜靜。不宜動。動則凶。靜則吉。亦方能枯木再開花。嚮使逢遇貴人。可攀之。伊者後日之諸侯。易言之。決心守舊時至成就行多多逆。安靜無憂。　　\n交易－成　婚姻－就　求財－待時　自身－吉　家宅－安　六畜－難　田蠶－五分　尋人－杳　行人－阻　六甲－生女　山墳－吉　訟詞－吉　疾病－急求神　失物－空　移徒－守舊"
+ },
+ {
+  "id": 47,
+  "title": "高遠夫五十得名",
+  "level": "上上",
+  "levelRaw": "高遠夫五十得名　　　上上",
+  "poem": [
+   "錦上添花色更鮮",
+   "運來祿馬喜雙全",
+   "時人莫訝功名晚",
+   "一舉登科四海傳"
+  ],
+  "gloss": "猶如彩色花紋的織品上加了朵花兒更添鮮艷，時候至時好運官祿連連令人稱賀；現在的人不必驚異功名遲晚，金榜題名之際天下皆知且廣為流傳。",
+  "xiang": "此籤福祿雙全之象，凡事興隆大吉。",
+  "commentary": "本籤者。福祿雙全之象者。凡事興隆大吉之籤。曰錦上添花色更鮮。運來之時也喜雙全。八十二對大魁。不是晚也。奉獻社會人群。積吾德。蔭子孫。何樂不為。為天數之所賜。宜再積德。方有同點燈之故。易言之。兒有雙親。守時待慶遂平生志。都來自命。",
+  "items": {
+   "交易": "阻",
+   "婚姻": "合",
+   "求財": "利",
+   "自身": "安",
+   "家宅": "祈保",
+   "六畜": "平",
+   "田蠶": "八分",
+   "尋人": "至",
+   "行人": "遲",
+   "六甲": "生男",
+   "山墳": "利",
+   "訟詞": "宜和",
+   "疾病": "祈福",
+   "失物": "西北",
+   "移徒": "吉"
+  },
+  "raw": "第四十七首：高遠夫五十得名　　　上上　　　　　　\n錦上添花色更鮮，運來祿馬喜雙全　\n時人莫訝功名晚，一舉登科四海傳　\n（四句淺釋：猶如彩色花紋的織品上加了朵花兒更添鮮艷，時候至時好運官祿連連令人稱賀；現在的人不必驚異功名遲晚，金榜題名之際天下皆知且廣為流傳。）　\n兒有雙親，守時待慶，遂平生志，都來自命。此籤福祿雙全之象，凡事興隆大吉。　\n靈籤之曰：本籤者。福祿雙全之象者。凡事興隆大吉之籤。曰錦上添花色更鮮。運來之時也喜雙全。八十二對大魁。不是晚也。奉獻社會人群。積吾德。蔭子孫。何樂不為。為天數之所賜。宜再積德。方有同點燈之故。易言之。兒有雙親。守時待慶遂平生志。都來自命。　\n交易－阻　婚姻－合　求財－利　自身－安　家宅－祈保　六畜－平　田蠶－八分　尋人－至　行人－遲　六甲－生男　山墳－利　訟詞－宜和　疾病－祈福　失物－西北　移徒－吉"
+ },
+ {
+  "id": 48,
+  "title": "班超萬里封侯",
+  "level": "大吉",
+  "levelRaw": "班超萬里封侯　　　大吉",
+  "poem": [
+   "鵾鳥秋光化作鵬",
+   "翱翔得意盡飛騰",
+   "直沖萬里雲霄外",
+   "任是諸禽總不能"
+  ],
+  "gloss": "鵾烏在秋天的時節轉變為大鵬鳥，盡情得意飛升翱翔；亳無阻礙直上萬里之外，聽憑眾多禽鳥終究無法相比。",
+  "xiang": "此籤鵾鳥化鵬之象，凡事興隆大吉。",
+  "commentary": "本籤為鵾烏化鵬之吉象也。凡事皆能興隆大吉。功名成之。利得之。婚合之。六畜旺之。六甲全之。官事。等等。無一不順利也。直沖雲霄之外。無可與倫比者。惟逢此佳境。勿忘今之所由成。積德。布施之再行者。可維護君爾之謀望無疑。易言之。今之君也。桂花時節財祿成此。",
+  "items": {
+   "交易": "宜遲",
+   "婚姻": "不合",
+   "求財": "秋旺",
+   "自身": "吉",
+   "家宅": "利",
+   "六畜": "春旺",
+   "田蠶": "中平",
+   "尋人": "見",
+   "行人": "阻",
+   "六甲": "安",
+   "山墳": "吉",
+   "訟詞": "勝",
+   "疾病": "祈保",
+   "失物": "西方",
+   "移徒": "守舊"
+  },
+  "raw": "第四十八首：班超萬里封侯　　　大吉　　　 　　　\n鵾鳥秋光化作鵬，翱翔得意盡飛騰　　\n直沖萬里雲霄外，任是諸禽總不能　\n（四句淺釋：鵾烏在秋天的時節轉變為大鵬鳥，盡情得意飛升翱翔；亳無阻礙直上萬里之外，聽憑眾多禽鳥終究無法相比。）　\n鵾鳥化鵬，諸禽不能，桂花時節，財祿百成。此籤鵾鳥化鵬之象，凡事興隆大吉。　\n靈籤之曰：本籤為鵾烏化鵬之吉象也。凡事皆能興隆大吉。功名成之。利得之。婚合之。六畜旺之。六甲全之。官事。等等。無一不順利也。直沖雲霄之外。無可與倫比者。惟逢此佳境。勿忘今之所由成。積德。布施之再行者。可維護君爾之謀望無疑。易言之。今之君也。桂花時節財祿成此。\n交易－宜遲　婚姻－不合　求財－秋旺　自身－吉　家宅－利　六畜－春旺　田蠶－中平　尋人－見　行人－阻　六甲－安　山墳－吉　訟詞－勝　疾病－祈保　失物－西方　移徒－守舊"
+ },
+ {
+  "id": 49,
+  "title": "太子丹尊事荊軻",
+  "level": "",
+  "levelRaw": "太子丹尊事荊軻",
+  "poem": [
+   "營圖萬事若冰澌",
+   "何必慳貪苦所為",
+   "只好靜心閑處坐",
+   "待他興變復奚疑"
+  ],
+  "gloss": "謀求眾多的作為最終仍然冰溶於水，又何必貪圖不軌深受其苦；唯一的辦法只有靜心安份守己；等到事情發生轉變後自然能消除你之前種種的疑惑。",
+  "xiang": "此籤如冰還原之象，凡事只宜苦守。",
+  "commentary": "",
+  "items": {
+   "交易": "不利",
+   "婚姻": "不合",
+   "求財": "難",
+   "自身": "祈保",
+   "家宅": "不安",
+   "六畜": "損",
+   "田蠶": "虧",
+   "尋人": "見",
+   "行人": "遲",
+   "六甲": "險",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "難痊",
+   "失物": "凶",
+   "移徒": "守舊"
+  },
+  "raw": "第四十九首：太子丹尊事荊軻　　　\n營圖萬事若冰澌，何必慳貪苦所為　\n只好靜心閑處坐，待他興變復奚疑　\n（四句淺釋：謀求眾多的作為最終仍然冰溶於水，又何必貪圖不軌深受其苦；唯一的辦法只有靜心安份守己；等到事情發生轉變後自然能消除你之前種種的疑惑。）\n水凍成冰，冰還溶水，若問營謀，何如不理。此籤如冰還原之象，凡事只宜苦守。\n交易－不利　婚姻－不合　求財－難　自身－祈保　家宅－不安　六畜－損　田蠶－虧　尋人－見　行人－遲　六甲－險　山墳－吉　訟詞－和　疾病－難痊　失物－凶　移徒－守舊"
+ },
+ {
+  "id": 50,
+  "title": "三寶太監下西洋",
+  "level": "大吉",
+  "levelRaw": "三寶太監下西洋　　　大吉",
+  "poem": [
+   "五湖四海盡行船",
+   "高掛風帆把舵堅",
+   "幸得順風隨所至",
+   "滿船寶貝稱心田"
+  ],
+  "gloss": "五湖四海都可以駕船遨遊，揚起風帆穩住船舵；所到之處皆能得到順風相送，船上滿滿的收穫令人歡心喜悅。",
+  "xiang": "此籤順風行船之象，凡事和合大吉。",
+  "commentary": "本籤曰。五湖四海盡行船。高掛風帆把舵堅。如三寶太監。鄭和之行之於南洋也。只要把舵牢住。必可揚德威於異域者。為順風行船之象。凡事和合大吉者。雖大吉之籤。百事興。唯必留心正應。反應之不同。易言之。本籤者自在優游。不須著力。財源重重。無不惟悅者。",
+  "items": {
+   "交易": "宜遲",
+   "婚姻": "不合",
+   "求財": "西方",
+   "自身": "吉",
+   "家宅": "利",
+   "六畜": "春旺",
+   "田蠶": "秋利",
+   "尋人": "至",
+   "行人": "阻",
+   "六甲": "安",
+   "山墳": "南利",
+   "訟詞": "虧",
+   "疾病": "解",
+   "失物": "西方",
+   "移徒": "守舊"
+  },
+  "raw": "第五十首：三寶太監下西洋　　　大吉　　　 　　　\n五湖四海盡行船，高掛風帆把舵堅　　\n幸得順風隨所至，滿船寶貝稱心田　　\n（四句淺釋：五湖四海都可以駕船遨遊，揚起風帆穩住船舵；所到之處皆能得到順風相送，船上滿滿的收穫令人歡心喜悅。）　\n自在優游，不須著力，財源重重，無不惟悅。此籤順風行船之象，凡事和合大吉。　\n靈籤之曰：本籤曰。五湖四海盡行船。高掛風帆把舵堅。如三寶太監。鄭和之行之於南洋也。只要把舵牢住。必可揚德威於異域者。為順風行船之象。凡事和合大吉者。雖大吉之籤。百事興。唯必留心正應。反應之不同。易言之。本籤者自在優游。不須著力。財源重重。無不惟悅者。　\n交易－宜遲　婚姻－不合　求財－西方　自身－吉　家宅－利　六畜－春旺　田蠶－秋利　尋人－至　行人－阻　六甲－安　山墳－南利　訟詞－虧　疾病－解　失物－西方　移徒－守舊"
+ },
+ {
+  "id": 51,
+  "title": "諸葛公隆中高臥",
+  "level": "上平",
+  "levelRaw": "諸葛公隆中高臥　　　上平",
+  "poem": [
+   "夏日初臨日正長",
+   "人皆愁惱熱非常",
+   "天公也解諸人意",
+   "故遣薰風特送涼"
+  ],
+  "gloss": "夏天剛剛來臨，白天的時間變得比較長，人們都因為過於炎熱而感到煩悶不爽；其實上天也明白眾人的心意，因此派遣南風專門送來涼爽。",
+  "xiang": "此籤炎天生涼之象，凡事所謀穩當。",
+  "commentary": "本籤之詩也。炎天生涼之象。凡事所謀穩當者。雖是中平之籤。人生之樂在於此。凡事知足之時即大安。謀事不宜因小嫌棄。改大則敗者。一石拾之嫌小。舍之。再拾之。無一而足者。到頭無石可撿。易言之。進用莫疑。最佳期日至。凡成謀望。不須憂慮。",
+  "items": {
+   "交易": "平常",
+   "婚姻": "合",
+   "求財": "秋吉",
+   "自身": "謹防",
+   "家宅": "祈福",
+   "六畜": "平",
+   "田蠶": "損",
+   "尋人": "見",
+   "行人": "動",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "吉",
+   "疾病": "還愿",
+   "失物": "北方",
+   "移徒": "守舊"
+  },
+  "raw": "第五十一首：諸葛公隆中高臥　　　上平　　　　　\n夏日初臨日正長，人皆愁惱熱非常　　\n天公也解諸人意，故遣薰風特送涼　\n（四句淺釋：夏天剛剛來臨，白天的時間變得比較長，人們都因為過於炎熱而感到煩悶不爽；其實上天也明白眾人的心意，因此派遣南風專門送來涼爽。）\n進用莫疑，佳期日至，凡成謀望，不須憂慮。此籤炎天生涼之象，凡事所謀穩當。\n靈籤之曰：本籤之詩也。炎天生涼之象。凡事所謀穩當者。雖是中平之籤。人生之樂在於此。凡事知足之時即大安。謀事不宜因小嫌棄。改大則敗者。一石拾之嫌小。舍之。再拾之。無一而足者。到頭無石可撿。易言之。進用莫疑。最佳期日至。凡成謀望。不須憂慮。　　　\n交易－平常　婚姻－合　求財－秋吉　自身－謹防　家宅－祈福　六畜－平　田蠶－損　尋人－見　行人－動　六甲－生男　山墳－吉　訟詞－吉　疾病－還愿　失物－北方　移徒－守舊"
+ },
+ {
+  "id": 52,
+  "title": "李太白醉中捉月",
+  "level": "",
+  "levelRaw": "李太白醉中捉月",
+  "poem": [
+   "水中捉月費工夫",
+   "費盡功夫卻又無",
+   "莫信閑言併浪論",
+   "枉拋心力也難圖"
+  ],
+  "gloss": "猶如費工夫想要撈起在水中的月亮，耗盡了方法仍是一場空；別再聽信流言和不真實的話語，枉費心思力氣，最終想要謀取的事物終究難以如願。",
+  "xiang": "此籤水中捉月之象，凡事所為不利。",
+  "commentary": "水中捉月之象。凡事所為不利。在水中撈月亮很費工夫。但是費盡工夫卻又撈不到。不要相信閒言和沒有根據的言論。白白用心。做事也不能完成目標。易言之。訛言莫信。費力勞心。家宅不利。不可妄行。",
+  "items": {
+   "交易": "難",
+   "婚姻": "未就",
+   "求財": "秋吉",
+   "自身": "欠吉",
+   "家宅": "不安",
+   "六畜": "損",
+   "田蠶": "五分",
+   "尋人": "至",
+   "行人": "有災",
+   "六甲": "祈保",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "祈保",
+   "失物": "難",
+   "移徒": "平常"
+  },
+  "raw": "第五十二首：李太白醉中捉月　　　　　　　　\n水中捉月費工夫，費盡功夫卻又無　\n莫信閑言併浪論，枉拋心力也難圖　\n（四句淺釋：猶如費工夫想要撈起在水中的月亮，耗盡了方法仍是一場空；別再聽信流言和不真實的話語，枉費心思力氣，最終想要謀取的事物終究難以如願。）\n訛言莫信，費力勞心，家宅不利，不可妄行。此籤水中捉月之象，凡事所為不利。　\n靈籤之曰：水中捉月之象。凡事所為不利。在水中撈月亮很費工夫。但是費盡工夫卻又撈不到。不要相信閒言和沒有根據的言論。白白用心。做事也不能完成目標。易言之。訛言莫信。費力勞心。家宅不利。不可妄行。　　\n交易－難　婚姻－未就　求財－秋吉　自身－欠吉　家宅－不安　六畜－損　田蠶－五分　尋人－至　行人－有災　六甲－祈保　山墳－吉　訟詞－和　疾病－祈保　失物－難　移徒－平常"
+ },
+ {
+  "id": 53,
+  "title": "王景略捫虱談兵",
+  "level": "上上",
+  "levelRaw": "王景略捫虱談兵　　　上上",
+  "poem": [
+   "失意翻成得意時",
+   "龍吟虎嘯兩相宜",
+   "青雲有路終須到",
+   "許我功名必可期"
+  ],
+  "gloss": "從前的失意已轉變為得意，猶如龍吟虎嘯兩相得宜；平步青雲、大道亨通的日子終將會來臨，屆時盼望的功名利祿必然也能如願以償。",
+  "xiang": "此籤龍吟虎嘯之象，凡事求謀吉昌。",
+  "commentary": "本籤為龍吟虎嘯之象也。凡事謀略之。吉昌者也。失意翻成得意時。黑暗之去也黎明至。光明也。於是青雲中有路。終於到。天神允我功名可期。易言之。教去即去教。住即住口有亨通到頭必利者。一片虔誠祈保之。必有助益於君爾。",
+  "items": {
+   "交易": "難成",
+   "婚姻": "成就",
+   "求財": "中平",
+   "自身": "欠吉",
+   "家宅": "不安",
+   "六畜": "損",
+   "田蠶": "五分",
+   "尋人": "見",
+   "行人": "至",
+   "六甲": "祈保",
+   "山墳": "吉",
+   "訟詞": "和",
+   "疾病": "安",
+   "失物": "見",
+   "移徒": "吉"
+  },
+  "raw": "第五十三首：王景略捫虱談兵　　　上上　　　　　　　\n失意翻成得意時，龍吟虎嘯兩相宜　\n青雲有路終須到，許我功名必可期　\n（四句淺釋：從前的失意已轉變為得意，猶如龍吟虎嘯兩相得宜；平步青雲、大道亨通的日子終將會來臨，屆時盼望的功名利祿必然也能如願以償。）\n教去即去，教住即住，口有亨通，到頭必利。此籤龍吟虎嘯之象，凡事求謀吉昌。　\n靈籤之曰：本籤為龍吟虎嘯之象也。凡事謀略之。吉昌者也。失意翻成得意時。黑暗之去也黎明至。光明也。於是青雲中有路。終於到。天神允我功名可期。易言之。教去即去教。住即住口有亨通到頭必利者。一片虔誠祈保之。必有助益於君爾。\n交易－難成　婚姻－成就　求財－中平　自身－欠吉　家宅－不安　六畜－損　田蠶－五分　尋人－見　行人－至　六甲－祈保　山墳－吉　訟詞－和　疾病－安　失物－見　移徒－吉"
+ },
+ {
+  "id": 54,
+  "title": "呂仙枕黃梁未熟",
+  "level": "",
+  "levelRaw": "呂仙枕黃梁未熟",
+  "poem": [
+   "夢中得寶醒來無",
+   "應說巫山只是虛",
+   "苦問婚姻並病訟",
+   "別尋生路得相宜"
+  ],
+  "gloss": "在夢中獲取了珍貴的寶貝，醒來時卻空無一物，應知猶如巫山雲雨般不過是場虛幻；想要知道婚姻與疾病訴訟的吉凶？還不如換個想法與途徑較務實吧。",
+  "xiang": "此籤夢中得寶之象，凡事多虛少實。",
+  "commentary": "本籤曰。夢中得寶醒來無。可知君之謀望。均歸虛者也。功名。交易。婚姻。求財等。皆守舊方可。目下之所由成者積德。修身之不足所由生。爰之。更在修陰騭方面多下功夫。必有轉機之時。前程方可遠大。易言之。本籤也。戒人去惡從善。趨吉化凶者也。",
+  "items": {
+   "交易": "難",
+   "婚姻": "待時",
+   "求財": "阻",
+   "自身": "謹防",
+   "家宅": "欠安",
+   "六畜": "不利",
+   "田蠶": "滯",
+   "尋人": "見",
+   "行人": "遲",
+   "六甲": "祈保",
+   "山墳": "不安",
+   "訟詞": "虧",
+   "疾病": "求神保",
+   "失物": "空",
+   "移徒": "吉"
+  },
+  "raw": "第五十四首：呂仙枕黃梁未熟　　\n夢中得寶醒來無，應說巫山只是虛　　\n苦問婚姻並病訟，別尋生路得相宜　\n（四句淺釋：在夢中獲取了珍貴的寶貝，醒來時卻空無一物，應知猶如巫山雲雨般不過是場虛幻；想要知道婚姻與疾病訴訟的吉凶？還不如換個想法與途徑較務實吧。）\n如水中月，形短形長，皆由分定，何必商量。此籤夢中得寶之象，凡事多虛少實。　\n靈籤之曰：本籤曰。夢中得寶醒來無。可知君之謀望。均歸虛者也。功名。交易。婚姻。求財等。皆守舊方可。目下之所由成者積德。修身之不足所由生。爰之。更在修陰騭方面多下功夫。必有轉機之時。前程方可遠大。易言之。本籤也。戒人去惡從善。趨吉化凶者也。　　　\n交易－難　婚姻－待時　求財－阻　自身－謹防　家宅－欠安　六畜－不利　田蠶－滯　尋人－見　行人－遲　六甲－祈保　山墳－不安　訟詞－虧　疾病－求神保　失物－空　移徒－吉"
+ },
+ {
+  "id": 55,
+  "title": "郭曖尚公主",
+  "level": "大吉",
+  "levelRaw": "郭曖尚公主　　　大吉",
+  "poem": [
+   "相傳罔替子孫賢",
+   "衣祿豐盈富在天",
+   "金馬玉堂人快樂",
+   "飢時吃飯困時眠"
+  ],
+  "gloss": "世代傳承子孫優秀賢能，衣食無缺富貴在天；金玉滿堂無憂無慮自然舒爽，餓了就吃，倦了就眠的生活必然適意。",
+  "xiang": "此籤接竹引泉之象，凡事著謀吉利。",
+  "commentary": "本籤示於弟子曰。子孫賢。衣祿豐盈富在天。君爾之命。即是富貴天定者。大吉大利之籤者。功名。交易。婚姻。求財皆如意者。而且吃飯困時眠之運。逢此大吉利之時。宜多修德。積善。更可發揚光大者。",
+  "items": {
+   "交易": "成",
+   "婚姻": "合",
+   "求財": "利",
+   "自身": "還愿",
+   "家宅": "欠安",
+   "六畜": "損",
+   "田蠶": "吉",
+   "尋人": "難",
+   "行人": "動",
+   "六甲": "平安",
+   "山墳": "安",
+   "訟詞": "有貴人",
+   "疾病": "祭星",
+   "失物": "見",
+   "移徒": "吉"
+  },
+  "raw": "第五十五首：郭曖尚公主　　　大吉　　　　　　\n相傳罔替子孫賢，衣祿豐盈富在天　\n金馬玉堂人快樂，飢時吃飯困時眠　\n（四句淺釋：世代傳承子孫優秀賢能，衣食無缺富貴在天；金玉滿堂無憂無慮自然舒爽，餓了就吃，倦了就眠的生活必然適意。）　\n祖宗積德，福祿後昆，榮祿並耀，光裕門庭。此籤接竹引泉之象，凡事著謀吉利。　\n靈籤之曰：本籤示於弟子曰。子孫賢。衣祿豐盈富在天。君爾之命。即是富貴天定者。大吉大利之籤者。功名。交易。婚姻。求財皆如意者。而且吃飯困時眠之運。逢此大吉利之時。宜多修德。積善。更可發揚光大者。　　\n交易－成　婚姻－合　求財－利　自身－還愿　家宅－欠安　六畜－損　田蠶－吉　尋人－難　行人－動　六甲－平安　山墳－安　訟詞－有貴人　疾病－祭星　失物－見　移徒－吉"
+ },
+ {
+  "id": 56,
+  "title": "范少伯泛舟五湖",
+  "level": "中平",
+  "levelRaw": "范少伯泛舟五湖　　　中平",
+  "poem": [
+   "澗小石粗流水響",
+   "力勞撐駕恐損傷",
+   "路須指出前江去",
+   "風靜潮平儘不妨"
+  ],
+  "gloss": "溪澗窄小又暗藏巨大的石塊，使得流水經過時都發出激響，這樣的情況下辛苦拚力前進恐怕會導致船體因此受到損傷；如果能夠找出更適合的途徑，如此才可風平浪靜無所阻礙。",
+  "xiang": "此籤澗水行船之象，凡事先難後易。",
+  "commentary": "本籤是澗水行船之象。是凡事先難後吉者。雖是君爾力勞撐駕。恐有損傷。先是勞而無功。路順指出前江去。自有風靜浪平。一路順風之時。必須更修身。積善。布施。天心感應之時。必有更上一層之列。易言之。澗小灘多掌船勞力指出前江風帆順得。",
+  "items": {
+   "交易": "利",
+   "婚姻": "隨意",
+   "求財": "中平",
+   "自身": "吉",
+   "家宅": "安",
+   "六畜": "損",
+   "田蠶": "秋利",
+   "尋人": "至",
+   "行人": "至",
+   "六甲": "生男",
+   "山墳": "宜修",
+   "訟詞": "有理",
+   "疾病": "即安",
+   "失物": "滯",
+   "移徒": "吉"
+  },
+  "raw": "第五十六首：范少伯泛舟五湖　　　中平　　　　　　\n澗小石粗流水響，力勞撐駕恐損傷　　\n路須指出前江去，風靜潮平儘不妨　\n(四句淺釋：溪澗窄小又暗藏巨大的石塊，使得流水經過時都發出激響，這樣的情況下辛苦拚力前進恐怕會導致船體因此受到損傷；如果能夠找出更適合的途徑，如此才可風平浪靜無所阻礙。）\n澗水灘多，掌船勞力，指出前江，風帆順得。此籤澗水行船之象，凡事先難後易。　\n靈籤之曰：本籤是澗水行船之象。是凡事先難後吉者。雖是君爾力勞撐駕。恐有損傷。先是勞而無功。路順指出前江去。自有風靜浪平。一路順風之時。必須更修身。積善。布施。天心感應之時。必有更上一層之列。易言之。澗小灘多掌船勞力指出前江風帆順得。　　\n交易－利　婚姻－隨意　求財－中平　自身－吉　家宅－安　六畜－損　田蠶－秋利　尋人－至　行人－至　六甲－生男　山墳－宜修　訟詞－有理　疾病－即安　失物－滯　移徒－吉"
+ },
+ {
+  "id": 57,
+  "title": "甯戚飯牛叩角",
+  "level": "上中",
+  "levelRaw": "甯戚飯牛叩角　　　上中",
+  "poem": [
+   "聞是聞非風過耳",
+   "好衣好祿日當空",
+   "君須記取他年事",
+   "汝意還同我意同"
+  ],
+  "gloss": "是與非就把它當成耳邊過風，目前哪裡有什麼好顧慮的呢；你別忘記以往種種發生的事情，我們的想法依舊沒有差異。",
+  "xiang": "此籤好子見娘之象，凡事遇貴則吉。",
+  "commentary": "本籤者好子見娘之象。凡事能遇貴人則化吉也。凡遇事可受貴人扶之。提攜之後可成。必為其人所敬仰。一倡百和者。事事可以成功。好衣好祿日當空。易言之。選用謀望皆大吉昌。從心懇切。如子見娘。",
+  "items": {
+   "交易": "成",
+   "婚姻": "合",
+   "求財": "順",
+   "自身": "平",
+   "家宅": "欠安",
+   "六畜": "損",
+   "田蠶": "熟",
+   "尋人": "難",
+   "行人": "阻",
+   "六甲": "生女",
+   "山墳": "吉",
+   "訟詞": "宜和",
+   "疾病": "祈保",
+   "失物": "凶",
+   "移徒": "守舊"
+  },
+  "raw": "第五十七首：甯戚飯牛叩角　　　上中　　　　　　\n聞是聞非風過耳，好衣好祿日當空　\n君須記取他年事，汝意還同我意同　\n（四句淺釋：是與非就把它當成耳邊過風，目前哪裡有什麼好顧慮的呢；你別忘記以往種種發生的事情，我們的想法依舊沒有差異。）\n選用謀望，皆大吉昌，從心懇切，如子見娘。此籤好子見娘之象，凡事遇貴則吉。　\n靈籤之曰：本籤者好子見娘之象。凡事能遇貴人則化吉也。凡遇事可受貴人扶之。提攜之後可成。必為其人所敬仰。一倡百和者。事事可以成功。好衣好祿日當空。易言之。選用謀望皆大吉昌。從心懇切。如子見娘。　　\n交易－成　婚姻－合　求財－順　自身－平　家宅－欠安　六畜－損　田蠶－熟　尋人－難　行人－阻　六甲－生女　山墳－吉　訟詞－宜和　疾病－祈保　失物－凶　移徒－守舊"
+ },
+ {
+  "id": 58,
+  "title": "羅隱歸咎越王",
+  "level": "中中",
+  "levelRaw": "羅隱歸咎越王　　　中中",
+  "poem": [
+   "忠言善言君須記",
+   "莫向他方求別藝",
+   "勸君安守舊生涯",
+   "除卻有餘都不是"
+  ],
+  "gloss": "忠言必逆耳的道理你必須牢記，何必捨近求遠往別處尋找其它的技藝；勸你守舊溫故而知新，除此之外應該是沒有更好的方法了吧。",
+  "xiang": "此籤守舊生涯之象，凡事不可妄為。",
+  "commentary": "本籤者。要君爾必守舊生涯之象。凡事必須三思而後行。不宜輕舉妄動。詩曰。忠言善語君須記。勿因不滿現況而見異思遷。一股幹勁。結果帶來不可收拾之殘局。是時悟之。不如不作。即時已晚。噬臍不及者。易言之。得往且往可往舊路溫故知新莫求別路。",
+  "items": {
+   "交易": "成",
+   "婚姻": "阻",
+   "求財": "吉",
+   "自身": "欠利",
+   "家宅": "平安",
+   "六畜": "損",
+   "田蠶": "五分",
+   "尋人": "見",
+   "行人": "遲",
+   "六甲": "驚",
+   "山墳": "改",
+   "訟詞": "虧",
+   "疾病": "欠安",
+   "失物": "凶",
+   "移徒": "守舊"
+  },
+  "raw": "第五十八首：羅隱歸咎越王　　　中中　　　 　　　\n忠言善言君須記，莫向他方求別藝　　\n勸君安守舊生涯，除卻有餘都不是　\n(四句淺釋：忠言必逆耳的道理你必須牢記，何必捨近求遠往別處尋找其它的技藝；勸你守舊溫故而知新，除此之外應該是沒有更好的方法了吧。）\n得往且往，可往舊路，溫故知新，莫求別路。此籤守舊生涯之象，凡事不可妄為。　\n靈籤之曰：本籤者。要君爾必守舊生涯之象。凡事必須三思而後行。不宜輕舉妄動。詩曰。忠言善語君須記。勿因不滿現況而見異思遷。一股幹勁。結果帶來不可收拾之殘局。是時悟之。不如不作。即時已晚。噬臍不及者。易言之。得往且往可往舊路溫故知新莫求別路。　　\n交易－成　婚姻－阻　求財－吉　自身－欠利　家宅－平安　六畜－損　田蠶－五分　尋人－見　行人－遲　六甲－驚　山墳－改　訟詞－虧　疾病－欠安　失物－凶　移徒－守舊"
+ },
+ {
+  "id": 59,
+  "title": "李德裕貶崖州",
+  "level": "中平",
+  "levelRaw": "李德裕貶崖州　　　中平",
+  "poem": [
+   "直上高樓去避身",
+   "四邊繞處是荊棘",
+   "誰知造物安排定",
+   "得意番成失意人"
+  ],
+  "gloss": "想上高樓躲避災難，四周卻處處是荊棘阻礙；須知萬物的安排是早已經註定好的，世事難料，誰能知此刻的得意下一秒即變成失意。",
+  "xiang": "此籤守常待時之象，凡事只宜守舊。",
+  "commentary": "",
+  "items": {
+   "交易": "成",
+   "婚姻": "不合",
+   "求財": "平常",
+   "自身": "安",
+   "家宅": "祈保",
+   "六畜": "大利",
+   "田蠶": "半吉",
+   "尋人": "阻",
+   "行人": "至",
+   "六甲": "祈福",
+   "山墳": "吉",
+   "訟詞": "虧",
+   "疾病": "求福",
+   "失物": "凶",
+   "移徒": "吉"
+  },
+  "raw": "第五十九首：李德裕貶崖州　　　中平 　\n直上高樓去避身，四邊繞處是荊棘　\n誰知造物安排定，得意番成失意人　\n（四句淺釋：想上高樓躲避災難，四周卻處處是荊棘阻礙；須知萬物的安排是早已經註定好的，世事難料，誰能知此刻的得意下一秒即變成失意。）\n如醉飲酒，如何且守，直待時來，無災無咎。此籤守常待時之象，凡事只宜守舊。 　　\n交易－成　婚姻－不合　求財－平常　自身－安　家宅－祈保　六畜－大利　田蠶－半吉　尋人－阻　行人－至　六甲－祈福　山墳－吉　訟詞－虧　疾病－求福　失物－凶　移徒－吉"
+ },
+ {
+  "id": 60,
+  "title": "先主連營",
+  "level": "",
+  "levelRaw": "先主連營",
+  "poem": [
+   "抱薪救火火增煙",
+   "燒卻三千及大千",
+   "若問營謀併出入",
+   "不如收拾莫憂燃"
+  ],
+  "gloss": "宛如抱著木柴去滅火，火卻越燒越旺，最後都被大火吞噬殆盡一無所有；此刻若要問出入營謀等事，還是安心守舊才能無憂。",
+  "xiang": "此籤抱薪救火之象，凡事守舊則吉。",
+  "commentary": "本籤示之於弟子曰。抱薪救火。當然火會增煙。霉頭加以霉繇此可知。君爾凡是著手興事。必須守舊。千萬不能逞一時之勇。見人之成。見異思遷。輕舉妄動。恐怕有大害。不僅不能成事。反而將事弄砸。得不償失。易言之。總有千般一旦皆休安心守舊維得無憂。",
+  "items": {
+   "交易": "難",
+   "婚姻": "不合",
+   "求財": "微",
+   "自身": "祈保",
+   "家宅": "凶",
+   "六畜": "損",
+   "田蠶": "不利",
+   "尋人": "杳",
+   "行人": "滯",
+   "六甲": "險",
+   "山墳": "平",
+   "訟詞": "虧",
+   "疾病": "有驚",
+   "失物": "西方",
+   "移徒": "吉"
+  },
+  "raw": "第六十首：先主連營　　\n抱薪救火火增煙，燒卻三千及大千　\n若問營謀併出入，不如收拾莫憂燃　\n（四句淺釋：宛如抱著木柴去滅火，火卻越燒越旺，最後都被大火吞噬殆盡一無所有；此刻若要問出入營謀等事，還是安心守舊才能無憂。）\n總有千般，一旦皆休，安心守舊，維得無憂。此籤抱薪救火之象，凡事守舊則吉。　\n靈籤之曰：本籤示之於弟子曰。抱薪救火。當然火會增煙。霉頭加以霉繇此可知。君爾凡是著手興事。必須守舊。千萬不能逞一時之勇。見人之成。見異思遷。輕舉妄動。恐怕有大害。不僅不能成事。反而將事弄砸。得不償失。易言之。總有千般一旦皆休安心守舊維得無憂。　\n交易－難　婚姻－不合　求財－微　自身－祈保　家宅－凶　六畜－損　田蠶－不利　尋人－杳　行人－滯　六甲－險　山墳－平　訟詞－虧　疾病－有驚　失物－西方　移徒－吉"
+ },
+ {
+  "id": 61,
+  "title": "廝養卒走燕取歸趙王",
+  "level": "大吉",
+  "levelRaw": "廝養卒走燕取歸趙王　　大吉",
+  "poem": [
+   "日上吟詩月下歌",
+   "逢場作戲笑呵呵",
+   "相逢會處難藏隱",
+   "喝采齊聲嗹哩囉"
+  ],
+  "gloss": "與佳人白天吟詩晚上唱歌，歡喜作樂笑開懷；在此相逢聚首無所不談，耳邊眾人的喝采聲連貫不絕，這樣的生活是很滿足快樂的啊。",
+  "xiang": "此籤佳人歡樂之象，凡事大吉如意。",
+  "commentary": "本簽之示於弟子曰。日上吟詩月下歌者。為佳人歡樂之象者。凡是百事興。大吉昌之徵。因時運知。所謀之事也。百事如意之時。惟將如此康泰上盈之道。何如保之。冤之。保之。方能克终。易言之。君之今也。佳人在屋唱。吟詩曲一片歡嘉取樂且足之佳境。",
+  "items": {
+   "交易": "利",
+   "婚姻": "成",
+   "求財": "順",
+   "自身": "吉利",
+   "家宅": "安",
+   "六畜": "旺",
+   "田蠶": "熟",
+   "尋人": "至",
+   "行人": "至",
+   "六甲": "生女",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "即痊",
+   "失物": "凶",
+   "移徒": "吉"
+  },
+  "raw": "第六十一首：廝養卒走燕取歸趙王　　大吉　　　　\n日上吟詩月下歌，逢場作戲笑呵呵　　\n相逢會處難藏隱，喝采齊聲嗹哩囉 　\n（四句淺釋：與佳人白天吟詩晚上唱歌，歡喜作樂笑開懷；在此相逢聚首無所不談，耳邊眾人的喝采聲連貫不絕，這樣的生活是很滿足快樂的啊。）\n佳人在屋，唱吟詩曲，一片歡嘉，取樂且足。此籤佳人歡樂之象，凡事大吉如意。　\n靈簽之曰：本簽之示於弟子曰。日上吟詩月下歌者。為佳人歡樂之象者。凡是百事興。大吉昌之徵。因時運知。所謀之事也。百事如意之時。惟將如此康泰上盈之道。何如保之。冤之。保之。方能克终。易言之。君之今也。佳人在屋唱。吟詩曲一片歡嘉取樂且足之佳境。　　\n交易－利　婚姻－成　求財－順　自身－吉利　家宅－安　六畜－旺　田蠶－熟　尋人－至　行人－至　六甲－生女　山墳－吉　訟詞－有理　疾病－即痊　失物－凶　移徒－吉"
+ },
+ {
+  "id": 62,
+  "title": "呂蒙正破窯守困",
+  "level": "中中",
+  "levelRaw": "呂蒙正破窯守困　　　中中",
+  "poem": [
+   "晨昏全賴佛扶持",
+   "雖是逢危不見危",
+   "若得貴人來接引",
+   "此時福祿自相隨"
+  ],
+  "gloss": "早晚皆依靠神佛的護持與庇祐，縱然逢凶仍可化吉；如果遇到貴人拉提牽引，這時候福祿自然也隨之而來。",
+  "xiang": "此籤守舊平安之象，凡事遇貴則吉。",
+  "commentary": "本籤也。守舊平安之象。凡興事。能遇貴人扶持之時。必能順利者。晨昏全賴佛祖扶持。因之。必須先由吾身之修德。積善始。神方能有所庇佑。凡事須隱忍。藏器以待用。不宜急。不可躁。易言之。君之命也。諸事平穩四方名顯。改换從新。凶存吉現也。",
+  "items": {
+   "交易": "順",
+   "婚姻": "成",
+   "求財": "西方",
+   "自身": "吉",
+   "家宅": "安",
+   "六畜": "利",
+   "田蠶": "四分",
+   "尋人": "西方",
+   "行人": "阻",
+   "六甲": "祈福",
+   "山墳": "吉",
+   "訟詞": "虧",
+   "疾病": "祈福",
+   "失物": "見",
+   "移徒": "守舊"
+  },
+  "raw": "第六十二首：呂蒙正破窯守困　　　中中　　　　　\n晨昏全賴佛扶持，雖是逢危不見危　\n若得貴人來接引，此時福祿自相隨　\n（四句淺釋：早晚皆依靠神佛的護持與庇祐，縱然逢凶仍可化吉；如果遇到貴人拉提牽引，這時候福祿自然也隨之而來。）　\n諸事平穩，四方名顯，改換從新，凶藏吉現。此籤守舊平安之象，凡事遇貴則吉。　\n靈籤之曰：本籤也。守舊平安之象。凡興事。能遇貴人扶持之時。必能順利者。晨昏全賴佛祖扶持。因之。必須先由吾身之修德。積善始。神方能有所庇佑。凡事須隱忍。藏器以待用。不宜急。不可躁。易言之。君之命也。諸事平穩四方名顯。改换從新。凶存吉現也。　　\n交易－順　婚姻－成　求財－西方　自身－吉　家宅－安　六畜－利　田蠶－四分　尋人－西方　行人－阻　六甲－祈福　山墳－吉　訟詞－虧　疾病－祈福　失物－見　移徒－守舊"
+ },
+ {
+  "id": 63,
+  "title": "黃孝子萬里尋親",
+  "level": "",
+  "levelRaw": "黃孝子萬里尋親",
+  "poem": [
+   "昔日行船失了針",
+   "今朝依舊海中尋",
+   "若還尋得原針在",
+   "也費工夫也費心"
+  ],
+  "gloss": "從前駕船時遺落了針，現今仍然在海中尋找；如果還能找到原來遺失物的地點所在，一定是費盡了心力與精神啊。",
+  "xiang": "此籤海中尋針之象，凡事費勞空力。",
+  "commentary": "本籤也。海底撈針之象。凡事費勞空力之徵。成為如此者。時也命也。不得違之。逞一時之強。卻不得任何結果。反而受到不利。甚至吃虧。蝕本之情形出現。福是福基福埋福種。說得分明且宜手拱。",
+  "items": {
+   "交易": "成",
+   "婚姻": "不合",
+   "求財": "有",
+   "自身": "謹防",
+   "家宅": "欠利",
+   "六畜": "莫養",
+   "田蠶": "吉",
+   "尋人": "難",
+   "行人": "滯",
+   "六甲": "險",
+   "山墳": "安",
+   "訟詞": "宜和",
+   "疾病": "難痊",
+   "失物": "凶",
+   "移徒": "延遷"
+  },
+  "raw": "第六十三首：黃孝子萬里尋親　　\n昔日行船失了針，今朝依舊海中尋　　\n若還尋得原針在，也費工夫也費心　\n（四句淺釋：從前駕船時遺落了針，現今仍然在海中尋找；如果還能找到原來遺失物的地點所在，一定是費盡了心力與精神啊。）\n福是福基，福埋福種，說得分明，且宜手拱。此籤海中尋針之象，凡事費勞空力。\n靈籤之曰：本籤也。海底撈針之象。凡事費勞空力之徵。成為如此者。時也命也。不得違之。逞一時之強。卻不得任何結果。反而受到不利。甚至吃虧。蝕本之情形出現。福是福基福埋福種。說得分明且宜手拱。　　\n交易－成　婚姻－不合　求財－有　自身－謹防　家宅－欠利　六畜－莫養　田蠶－吉　尋人－難　行人－滯　六甲－險　山墳－安　訟詞－宜和　疾病－難痊　失物－凶　移徒－延遷"
+ },
+ {
+  "id": 64,
+  "title": "石崇被害",
+  "level": "",
+  "levelRaw": "石崇被害",
+  "poem": [
+   "譬若金鱗放碧漪",
+   "暗遭羅網四邊圍",
+   "思量無計翻身出",
+   "命到泉關苦獨悲"
+  ],
+  "gloss": "就似金魚放入湖中本可自在悠遊，哪裡知道已被人在四處撒下了羅網捕捉；費盡了心力卻無脫身之法，最終獨自哀痛地命喪黃泉。",
+  "xiang": "此籤魚遭羅網之象，凡事提防陷害。",
+  "commentary": "本籤者。暗遭羅網四邊圍之命者。凡事必須提防歹人陷害。此運者起跌不常者。且虛。險。驚。改。凶之者多。經多方面涉塵。終能出險。惟此歷程艱苦異常。無以數計。思量無計翻身出。易言之。身居塵內禍自天來。早須防備免受其災。",
+  "items": {
+   "交易": "中平",
+   "婚姻": "不合",
+   "求財": "虛",
+   "自身": "險",
+   "家宅": "凶",
+   "六畜": "衰",
+   "田蠶": "損",
+   "尋人": "杳",
+   "行人": "有阻",
+   "六甲": "驚",
+   "山墳": "改",
+   "訟詞": "虧",
+   "疾病": "災險",
+   "失物": "凶",
+   "移徒": "吉"
+  },
+  "raw": "第六十四首：石崇被害　　\n譬若金鱗放碧漪，暗遭羅網四邊圍　　\n思量無計翻身出，命到泉關苦獨悲　\n（四句淺釋：就似金魚放入湖中本可自在悠遊，哪裡知道已被人在四處撒下了羅網捕捉；費盡了心力卻無脫身之法，最終獨自哀痛地命喪黃泉。）　\n身居塵內，禍自天來，早須防備，免受其災。此籤魚遭羅網之象，凡事提防陷害。　\n靈籤之曰：本籤者。暗遭羅網四邊圍之命者。凡事必須提防歹人陷害。此運者起跌不常者。且虛。險。驚。改。凶之者多。經多方面涉塵。終能出險。惟此歷程艱苦異常。無以數計。思量無計翻身出。易言之。身居塵內禍自天來。早須防備免受其災。　　　\n交易－中平　婚姻－不合　求財－虛　自身－險　家宅－凶　六畜－衰　田蠶－損　尋人－杳　行人－有阻　六甲－驚　山墳－改　訟詞－虧　疾病－災險　失物－凶　移徒－吉"
+ },
+ {
+  "id": 65,
+  "title": "越王句踐棲會稽山",
+  "level": "",
+  "levelRaw": "越王句踐棲會稽山",
+  "poem": [
+   "眼前歡喜未為歡",
+   "危不危兮安不安",
+   "割肉成瘡因甚事",
+   "不如守舊得安全"
+  ],
+  "gloss": "眼前的歡喜不見得是真歡喜，禍福安危實在難以論定；到底為了什麼事情要讓自己受創？還不如安份守己才是上策啊。",
+  "xiang": "此籤割肉成瘡之象，凡事守舊待時。",
+  "commentary": "本籤者。割肉成瘡之象者。凡事必須守舊待時。不宜輕舉妄動也。因時命之註定君爾之命眼歡喜未為歡。危不危兮安不安。日下運多拂逆。毫無利息可言。如百花凋落。無復榮華之望。幾希萬事皆空之勢。易言之。如得止。且止知歡割自己肉痛本一般。",
+  "items": {
+   "交易": "小人",
+   "婚姻": "不久長",
+   "求財": "不利",
+   "自身": "是非",
+   "家宅": "不安",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "杳",
+   "行人": "有阻",
+   "六甲": "驚",
+   "山墳": "不利",
+   "訟詞": "虧",
+   "疾病": "反覆",
+   "失物": "難尋",
+   "移徒": "守舊"
+  },
+  "raw": "第六十五首：越王句踐棲會稽山　\n眼前歡喜未為歡，危不危兮安不安　　\n割肉成瘡因甚事，不如守舊得安全　\n（四句淺釋：眼前的歡喜不見得是真歡喜，禍福安危實在難以論定；到底為了什麼事情要讓自己受創？還不如安份守己才是上策啊。）\n得止且止，知歡且歡，割自己肉，痛本一般。此籤割肉成瘡之象，凡事守舊待時。　\n靈籤之曰：本籤者。割肉成瘡之象者。凡事必須守舊待時。不宜輕舉妄動也。因時命之註定君爾之命眼歡喜未為歡。危不危兮安不安。日下運多拂逆。毫無利息可言。如百花凋落。無復榮華之望。幾希萬事皆空之勢。易言之。如得止。且止知歡割自己肉痛本一般。　\n交易－小人　婚姻－不久長　求財－不利　自身－是非　家宅－不安　六畜－損　田蠶－損　尋人－杳　行人－有阻　六甲－驚　山墳－不利　訟詞－虧　疾病－反覆　失物－難尋　移徒－守舊"
+ },
+ {
+  "id": 66,
+  "title": "楚霸王陰陵失道",
+  "level": "",
+  "levelRaw": "楚霸王陰陵失道",
+  "poem": [
+   "路險馬行人去遠",
+   "失群羊困虎相當",
+   "危灘船過風翻浪",
+   "春暮花殘天降霜"
+  ],
+  "gloss": "催馬行走，但地勢險惡，距離仍相當遙遠，失群的羊兒偏偏碰上了老虎；就似船隻在急流狂風中行駛，也好比晚春將結束綻放的花朵，又遇霜雪更加速枯萎。",
+  "xiang": "此籤意滯之象，凡事待時仔細小心。",
+  "commentary": "本籤者意滯之象。凡舉事待時。且必須仔細小心。無一是處之時。目下不許君絲毫動之。一動不如一靜。以目前之情況守之。不可勉強。一強求。逞一時之勇之時虧即主。弄巧成拙。無一可圖利。易言之。守靜安靜安分無憂不須貪望自有優游。",
+  "items": {
+   "交易": "失敗",
+   "婚姻": "不久長",
+   "求財": "破失",
+   "自身": "災",
+   "家宅": "憂疑",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "杳",
+   "行人": "阻",
+   "六甲": "危險",
+   "山墳": "不利",
+   "訟詞": "虧",
+   "疾病": "設送",
+   "失物": "不見",
+   "移徒": "莫動"
+  },
+  "raw": "第六十六首：楚霸王陰陵失道　　\n路險馬行人去遠，失群羊困虎相當　\n危灘船過風翻浪，春暮花殘天降霜　\n（四句淺釋：催馬行走，但地勢險惡，距離仍相當遙遠，失群的羊兒偏偏碰上了老虎；就似船隻在急流狂風中行駛，也好比晚春將結束綻放的花朵，又遇霜雪更加速枯萎。）　\n守靜安靜，安分無憂，不須貪望，自有優游。此籤意滯之象，凡事待時仔細小心。　\n靈籤之曰：本籤者意滯之象。凡舉事待時。且必須仔細小心。無一是處之時。目下不許君絲毫動之。一動不如一靜。以目前之情況守之。不可勉強。一強求。逞一時之勇之時虧即主。弄巧成拙。無一可圖利。易言之。守靜安靜安分無憂不須貪望自有優游。　　\n交易－失敗　婚姻－不久長　求財－破失　自身－災　家宅－憂疑　六畜－損　田蠶－損　尋人－杳　行人－阻　六甲－危險　山墳－不利　訟詞－虧　疾病－設送　失物－不見　移徒－莫動"
+ },
+ {
+  "id": 67,
+  "title": "管仲相齊",
+  "level": "上上",
+  "levelRaw": "管仲相齊　　　　上上",
+  "poem": [
+   "一條金秤等君情",
+   "無減無增無重輕",
+   "為是平生心正直",
+   "文章不識義皆明"
+  ],
+  "gloss": "想要用一條金秤來衡量你的品性節操，是測不出增、減、輕、重的；乃是因為你平生存心端正毫無偏私，縱使不識文字，仍然通曉義理無礙。",
+  "xiang": "此籤心中端正之象，凡事平穩大吉。",
+  "commentary": "本籤之曰。心中端正之象。凡事能平穩大吉之者。一條金銔等君情。由它衡量即是無減無增。無重輕為人之道。即是人心平生心正直之時。即使不識文章也明白義之道理。易言之。平生正直善處人情只依本分天下則太平矣。清高門路即可。",
+  "items": {
+   "交易": "穩",
+   "婚姻": "合",
+   "求財": "利",
+   "自身": "平",
+   "家宅": "安",
+   "六畜": "好",
+   "田蠶": "穩",
+   "尋人": "遲見",
+   "行人": "有信",
+   "六甲": "生男",
+   "山墳": "平",
+   "訟詞": "和",
+   "疾病": "祭星",
+   "失物": "見",
+   "移徒": "守舊"
+  },
+  "raw": "第六十七首：管仲相齊　　　　上上　　　　　　　　\n一條金秤等君情，無減無增無重輕　\n為是平生心正直，文章不識義皆明　\n（四句淺釋：想要用一條金秤來衡量你的品性節操，是測不出增、減、輕、重的；乃是因為你平生存心端正毫無偏私，縱使不識文字，仍然通曉義理無礙。）\n平生正直，善處人情，只依本分，天下太平。此籤心中端正之象，凡事平穩大吉。　\n靈籤之曰：本籤之曰。心中端正之象。凡事能平穩大吉之者。一條金銔等君情。由它衡量即是無減無增。無重輕為人之道。即是人心平生心正直之時。即使不識文章也明白義之道理。易言之。平生正直善處人情只依本分天下則太平矣。清高門路即可。\n交易－穩　婚姻－合　求財－利　自身－平　家宅－安　六畜－好　田蠶－穩　尋人－遲見　行人－有信　六甲－生男　山墳－平　訟詞－和　疾病－祭星　失物－見　移徒－守舊"
+ },
+ {
+  "id": 68,
+  "title": "李吉甫三代為相",
+  "level": "上上",
+  "levelRaw": "李吉甫三代為相　　上上",
+  "poem": [
+   "門庭清吉夢禎祥",
+   "積善于門大吉昌",
+   "訟理婚成蠶又熟",
+   "病逢良藥得安康"
+  ],
+  "gloss": "家風清廉，夢也吉祥，積善人家，必有餘慶；訟有理，婚可成，衣無缺，縱有疾病，得遇良藥，可保安康。",
+  "xiang": "此籤日暖風和之象，凡事大吉大利。",
+  "commentary": "本籤者。日暖風和之象。凡事大吉大利者。君爾之門庭清吉。夢也禎祥。古人勸之。積善之家慶有餘。家運大吉大利也。積善者。先由心正。不存邪。助人為樂。修身。布施之謂。因之。訟理婚成蠶又熟。易言之。日暖風和百花大發事莫疑遲從今顯達。",
+  "items": {
+   "交易": "隨意",
+   "婚姻": "成",
+   "求財": "春旺",
+   "自身": "安",
+   "家宅": "旺",
+   "六畜": "旺",
+   "田蠶": "利",
+   "尋人": "至",
+   "行人": "到",
+   "六甲": "防驚",
+   "山墳": "大吉",
+   "訟詞": "勝",
+   "疾病": "安",
+   "失物": "急尋",
+   "移徒": "如意"
+  },
+  "raw": "第六十八首：李吉甫三代為相　　上上　　　 　　　\n門庭清吉夢禎祥，積善于門大吉昌　\n訟理婚成蠶又熟，病逢良藥得安康　\n（四句淺釋：家風清廉，夢也吉祥，積善人家，必有餘慶；訟有理，婚可成，衣無缺，縱有疾病，得遇良藥，可保安康。）\n日暖風和，百花大發，事莫疑遲，從今顯達。此籤日暖風和之象，凡事大吉大利。\n靈籤之曰：本籤者。日暖風和之象。凡事大吉大利者。君爾之門庭清吉。夢也禎祥。古人勸之。積善之家慶有餘。家運大吉大利也。積善者。先由心正。不存邪。助人為樂。修身。布施之謂。因之。訟理婚成蠶又熟。易言之。日暖風和百花大發事莫疑遲從今顯達。　　\n交易－隨意　婚姻－成　求財－春旺　自身－安　家宅－旺　六畜－旺　田蠶－利　尋人－至　行人－到　六甲－防驚　山墳－大吉　訟詞－勝　疾病－安　失物－急尋　移徒－如意"
+ },
+ {
+  "id": 69,
+  "title": "程嬰匿孤存趙",
+  "level": "中上",
+  "levelRaw": "程嬰匿孤存趙　　中上",
+  "poem": [
+   "冬來嶺上一枝梅",
+   "葉落枯枝總不摧",
+   "探得陽春消息近",
+   "依然還我作花魁"
+  ],
+  "gloss": "就似嚴冬高山頂上的一株梅花，受盡風霜雨雪的侵襲依然挺立不搖；得悉春天的日子就快要來臨了，屆時仍是花中之王，誰能比擬？",
+  "xiang": "此籤梅花占魁之象，凡事宜早吉利。",
+  "commentary": "本籤者梅花占魁之象。凡事宜平吉利者也。冬至。嶺上之一枝梅也。雖是葉落枯根。伊亦能傲霜鬥雪疏影橫斜。放出幽香。為世人報得春之跫音將至。君多年之傲苦也。必得一報。出頭天者。易言之。君之運也。一箭落空非空不空看非景致消息在中者。",
+  "items": {
+   "交易": "待時",
+   "婚姻": "遲成",
+   "求財": "謹慎",
+   "自身": "祈福",
+   "家宅": "欠利",
+   "六畜": "旺",
+   "田蠶": "旺",
+   "尋人": "見",
+   "行人": "遲",
+   "六甲": "秋虛春實",
+   "山墳": "宜改",
+   "訟詞": "虧",
+   "疾病": "虛驚",
+   "失物": "東方",
+   "移徒": "不吉"
+  },
+  "raw": "第六十九首：程嬰匿孤存趙　　中上 　\n冬來嶺上一枝梅，葉落枯枝總不摧　\n探得陽春消息近，依然還我作花魁　\n（四句淺釋：就似嚴冬高山頂上的一株梅花，受盡風霜雨雪的侵襲依然挺立不搖；得悉春天的日子就快要來臨了，屆時仍是花中之王，誰能比擬？）\n一箭落空，非空不空，看非景致，消息在中。此籤梅花占魁之象，凡事宜早吉利。　\n靈籤之曰：本籤者梅花占魁之象。凡事宜平吉利者也。冬至。嶺上之一枝梅也。雖是葉落枯根。伊亦能傲霜鬥雪疏影橫斜。放出幽香。為世人報得春之跫音將至。君多年之傲苦也。必得一報。出頭天者。易言之。君之運也。一箭落空非空不空看非景致消息在中者。　　\n交易－待時　婚姻－遲成　求財－謹慎　自身－祈福　家宅－欠利　六畜－旺　田蠶－旺　尋人－見　行人－遲　六甲－秋虛春實　山墳－宜改　訟詞－虧　疾病－虛驚　失物－東方　移徒－不吉"
+ },
+ {
+  "id": 70,
+  "title": "諸葛與關公說親",
+  "level": "",
+  "levelRaw": "諸葛與關公說親",
+  "poem": [
+   "朝朝役役恰如蜂",
+   "飛來飛去西復東",
+   "春暮花殘無覓處",
+   "此身不戀舊叢中"
+  ],
+  "gloss": "猶如成日勞苦奔波的蜂兒，自東向西，又自西向東地飛來飛去；但是春殘花謝，哪裡還找得到蜜可採呢？就不必再一心眷戀舊花叢了吧！",
+  "xiang": "此籤遊蜂採花之象，凡事勞而無功。",
+  "commentary": "本籤者遊蜂採花之象。凡事勞而無功者。飛來飛去而復東。春屆暮節花殘也無其覓處。棲身之所。交易。婚姻。求財。六畜。生產。皆無一是處。在此苦境之時。最宜修吾身。積吾善。行布施。善吾之言行。方能有轉機。易言之。役役終朝暗雨不清用盡機謀爭加寂寞者。",
+  "items": {
+   "交易": "反覆",
+   "婚姻": "不久長",
+   "求財": "破耗",
+   "自身": "小人",
+   "家宅": "口舌",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "無跡",
+   "行人": "杳",
+   "六甲": "虛花",
+   "山墳": "改",
+   "訟詞": "虧",
+   "疾病": "阻",
+   "失物": "空",
+   "移徒": "守舊"
+  },
+  "raw": "第七十首：諸葛與關公說親　　　\n朝朝役役恰如蜂，飛來飛去西復東　\n春暮花殘無覓處，此身不戀舊叢中　\n（四句淺釋：猶如成日勞苦奔波的蜂兒，自東向西，又自西向東地飛來飛去；但是春殘花謝，哪裡還找得到蜜可採呢？就不必再一心眷戀舊花叢了吧！）\n役役終朝，暗雨不清，用盡機謀，爭加寂寞。此籤遊蜂採花之象，凡事勞而無功。\n靈籤之曰：本籤者遊蜂採花之象。凡事勞而無功者。飛來飛去而復東。春屆暮節花殘也無其覓處。棲身之所。交易。婚姻。求財。六畜。生產。皆無一是處。在此苦境之時。最宜修吾身。積吾善。行布施。善吾之言行。方能有轉機。易言之。役役終朝暗雨不清用盡機謀爭加寂寞者。\n交易－反覆　婚姻－不久長　求財－破耗　自身－小人　家宅－口舌　六畜－損　田蠶－損　尋人－無跡　行人－杳　六甲－虛花　山墳－改　訟詞－虧　疾病－阻　失物－空　移徒－守舊"
+ },
+ {
+  "id": 71,
+  "title": "貂蟬從王司徒計",
+  "level": "上上",
+  "levelRaw": "貂蟬從王司徒計　　　上上",
+  "poem": [
+   "誰知愛寵遇強徒",
+   "女子當年嫁二夫",
+   "自是一弓施兩箭",
+   "騎龍跨虎上安居"
+  ],
+  "gloss": "誰能知道愛妾會碰上強權，讓小女子在那時嫁了兩個丈夫；這乃是猶如一支弓搭上了兩支箭，又好比駕龍馭虎，左右逢源。",
+  "xiang": "此籤一弓兩箭之象，凡事改變大吉。",
+  "commentary": "本籤之示意者。一弓兩箭之象。凡事改變則大吉者。騎龍跨馬上安居。凡事切莫墮志。修心向善去。自有好處。目下雖略困。但是。終必逢時。但勤勞。人事己盡天理。無不準。易言之。不審不審事由天命辰午中間切須謹慎。",
+  "items": {
+   "交易": "護防",
+   "婚姻": "兩合",
+   "求財": "勞力",
+   "自身": "是非",
+   "家宅": "損失",
+   "六畜": "損",
+   "田蠶": "晚",
+   "尋人": "見",
+   "行人": "阻",
+   "六甲": "先驚後實",
+   "山墳": "吉",
+   "訟詞": "虧",
+   "疾病": "祈星",
+   "失物": "難",
+   "移徒": "改"
+  },
+  "raw": "第七十一首：貂蟬從王司徒計　　　上上　　　\n誰知愛寵遇強徒，女子當年嫁二夫　\n自是一弓施兩箭，騎龍跨虎上安居　　\n（四句淺釋：誰能知道愛妾會碰上強權，讓小女子在那時嫁了兩個丈夫；這乃是猶如一支弓搭上了兩支箭，又好比駕龍馭虎，左右逢源。）\n不審不審，事由天命，辰午中間，切須謹慎。此籤一弓兩箭之象，凡事改變大吉。　\n靈籤之曰：本籤之示意者。一弓兩箭之象。凡事改變則大吉者。騎龍跨馬上安居。凡事切莫墮志。修心向善去。自有好處。目下雖略困。但是。終必逢時。但勤勞。人事己盡天理。無不準。易言之。不審不審事由天命辰午中間切須謹慎。　\n交易－護防　婚姻－兩合　求財－勞力　自身－是非　家宅－損失　六畜－損　田蠶－晚　尋人－見　行人－阻　六甲－先驚後實　山墳－吉　訟詞－虧　疾病－祈星　失物－難　移徒－改"
+ },
+ {
+  "id": 72,
+  "title": "劉智遠打磨房",
+  "level": "中吉",
+  "levelRaw": "劉智遠打磨房　　　中吉",
+  "poem": [
+   "弄蜂須要求他蜜",
+   "猶恐遭他尾上針",
+   "雖是眼前有異路",
+   "暗裏深藏荊棘林"
+  ],
+  "gloss": "取蜂的原因是為了得到蜜汁，但還是擔憂會遭其尾刺所傷；即使表面上看去仍有不同的途徑或方法，誰知暗地裡卻仍然佈滿了荊棘。",
+  "xiang": "",
+  "commentary": "本籤示之於弟子曰。事須仔細不可強求如蜂採蜜著其由來。事後遂意。皆祖宗積德之所致。若能順理而行。益加倍植。則天之報施。凡事先苦後甘之象。必須忍耐。否則無由成功。由忍一字。將有轉凶化吉之時。",
+  "items": {
+   "交易": "遲",
+   "婚姻": "阻",
+   "求財": "阻",
+   "自身": "防",
+   "家宅": "欠利",
+   "六畜": "損",
+   "田蠶": "少收",
+   "尋人": "難",
+   "行人": "遲",
+   "六甲": "虛驚",
+   "山墳": "敗設換",
+   "訟詞": "虧",
+   "疾病": "設送",
+   "失物": "凶",
+   "移徒": "莫動"
+  },
+  "raw": "第七十二首：劉智遠打磨房　　　中吉　　　　　　\n弄蜂須要求他蜜，猶恐遭他尾上針　\n雖是眼前有異路，暗裏深藏荊棘林　\n（四句淺釋：取蜂的原因是為了得到蜜汁，但還是擔憂會遭其尾刺所傷；即使表面上看去仍有不同的途徑或方法，誰知暗地裡卻仍然佈滿了荊棘。）\n事須仔細，不可強求，如蜂採蜜，著其由來。　　靈籤之曰：本籤示之於弟子曰。事須仔細不可強求如蜂採蜜著其由來。事後遂意。皆祖宗積德之所致。若能順理而行。益加倍植。則天之報施。凡事先苦後甘之象。必須忍耐。否則無由成功。由忍一字。將有轉凶化吉之時。　　\n交易－遲　婚姻－阻　求財－阻　自身－防　家宅－欠利　　　　六畜－損　田蠶－少收　尋人－難　行人－遲　六甲－虛驚　山墳－敗設換　訟詞－虧　疾病－設送　失物－凶　移徒－莫動"
+ },
+ {
+  "id": 73,
+  "title": "蕭何月下追韓信",
+  "level": "上上",
+  "levelRaw": "蕭何月下追韓信　　　上上",
+  "poem": [
+   "春雷震起蟄中蟲",
+   "脫卻塵凡出舊墉",
+   "忽遇風雲交際處",
+   "自然變化得成龍"
+  ],
+  "gloss": "春雷震醒了冬眠中的蟲兒，離開了舊有的蛹繭卸去了束縛；待遇到風雲交會之際，自然就能變化成龍了。",
+  "xiang": "此籤蟄中變態之象，凡事變化則吉。",
+  "commentary": "本籤示之於弟子曰。是蟄中變態之象也。凡事變化則吉者。事事求變。捨舊圖新。求合時潮。何必煩惱。一定可轉機。多費心機。可有轉變。君爾可知。功名富貴遲速有時。待時而動則吉也。易言之。震開蟄月思入風雲一好變態直入天宮。",
+  "items": {
+   "交易": "貴人",
+   "婚姻": "成合",
+   "求財": "春利",
+   "自身": "平常",
+   "家宅": "祈福",
+   "六畜": "春利",
+   "田蠶": "早生",
+   "尋人": "見",
+   "行人": "阻",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "勝",
+   "疾病": "陰阻",
+   "失物": "難",
+   "移徒": "很苦"
+  },
+  "raw": "第七十三首：蕭何月下追韓信　　　上上　　　　\n春雷震起蟄中蟲，脫卻塵凡出舊墉　\n忽遇風雲交際處，自然變化得成龍　\n（四句淺釋：春雷震醒了冬眠中的蟲兒，離開了舊有的蛹繭卸去了束縛；待遇到風雲交會之際，自然就能變化成龍了。）　\n震開蟄月，思入風雲，一好變態，直入天宮。此籤蟄中變態之象，凡事變化則吉。　\n靈籤之曰：本籤示之於弟子曰。是蟄中變態之象也。凡事變化則吉者。事事求變。捨舊圖新。求合時潮。何必煩惱。一定可轉機。多費心機。可有轉變。君爾可知。功名富貴遲速有時。待時而動則吉也。易言之。震開蟄月思入風雲一好變態直入天宮。　　\n交易－貴人　婚姻－成合　求財－春利　自身－平常　家宅－祈福　六畜－春利　田蠶－早生　尋人－見　行人－阻　六甲－生男　山墳－吉　訟詞－勝　疾病－陰阻　失物－難　移徒－很苦"
+ },
+ {
+  "id": 74,
+  "title": "韓非入秦被害",
+  "level": "",
+  "levelRaw": "韓非入秦被害",
+  "poem": [
+   "慵飛野鶴自投籠",
+   "欲舉鵬霄落陷中",
+   "南北東西渾障礙",
+   "此身憔悴恨無窮"
+  ],
+  "gloss": "猶如懶飛不馴的鶴鳥自投羅網，原本意欲沖天，不料卻深陷其中；天地雖大卻四處都充滿了阻礙，導致委靡不振，悔恨不已。",
+  "xiang": "此籤野鶴投籠之象，凡事守舊留心。",
+  "commentary": "本籤示之於弟子曰。野鶴投籠之象。既然是投籠者失去自由之意。當自守舊留心。今之命也。東西南北渾障礙者。此身憔悴。恨無窮之時。正逢不堪景象。凡事守之。慎之。三思而後行方可。易言之。進身不得退步而行命運乖蹇切勿交爭。",
+  "items": {
+   "交易": "破耗",
+   "婚姻": "刑傷",
+   "求財": "小人",
+   "自身": "困滯",
+   "家宅": "不安",
+   "六畜": "瘟",
+   "田蠶": "缺",
+   "尋人": "杳春",
+   "行人": "阻",
+   "六甲": "刑劫",
+   "山墳": "絕",
+   "訟詞": "禍",
+   "疾病": "延安",
+   "失物": "凶",
+   "移徒": "不利"
+  },
+  "raw": "第七十四首：韓非入秦被害　　\n慵飛野鶴自投籠，欲舉鵬霄落陷中　　\n南北東西渾障礙，此身憔悴恨無窮　\n（四句淺釋：猶如懶飛不馴的鶴鳥自投羅網，原本意欲沖天，不料卻深陷其中；天地雖大卻四處都充滿了阻礙，導致委靡不振，悔恨不已。）\n進身不得，退步而行，命運乖蹇，切勿交爭。此籤野鶴投籠之象，凡事守舊留心。\n靈籤之曰：本籤示之於弟子曰。野鶴投籠之象。既然是投籠者失去自由之意。當自守舊留心。今之命也。東西南北渾障礙者。此身憔悴。恨無窮之時。正逢不堪景象。凡事守之。慎之。三思而後行方可。易言之。進身不得退步而行命運乖蹇切勿交爭。　　\n交易－破耗　婚姻－刑傷　求財－小人　自身－困滯　家宅－不安　六畜－瘟　田蠶－缺　尋人－杳春　行人－阻　六甲－刑劫　山墳－絕　訟詞－禍　疾病－延安　失物－凶　移徒－不利"
+ },
+ {
+  "id": 75,
+  "title": "伍子胥中流得蘭槳",
+  "level": "中",
+  "levelRaw": "伍子胥中流得蘭槳　　　中",
+  "poem": [
+   "宛如抱虎過山前",
+   "戰戰兢兢膽碎寒",
+   "幸得山前逢妙手",
+   "方能保得一身安"
+  ],
+  "gloss": "就似抱虎過山，戰戰兢兢心碎膽寒；幸好在前方遇得高人相助，方可保得平安。",
+  "xiang": "此籤抱虎過山之象，凡事先凶後吉。",
+  "commentary": "本籤示之於弟子曰。宛如抱虎過山前之景也。令人戰戰兢兢膽碎寒者。凡事必須多擘畫。千萬不得輕舉妄動。機密不密則不成。須防口之血半。惟君爾之修身。積德功夫一至。必能逢得妙手。方能保得一身平安。易言之。危險危險前程阻隔切莫遠行自宜守節。先凶後吉者。",
+  "items": {
+   "交易": "防滯",
+   "婚姻": "難順",
+   "求財": "謹慎",
+   "自身": "提防",
+   "家宅": "祈保",
+   "六畜": "損",
+   "田蠶": "五分",
+   "尋人": "杳",
+   "行人": "阻",
+   "六甲": "有危",
+   "山墳": "凶",
+   "訟詞": "克虧",
+   "疾病": "祭虎",
+   "失物": "難",
+   "移徒": "吉"
+  },
+  "raw": "第七十五首：伍子胥中流得蘭槳　　　中　　　\n宛如抱虎過山前，戰戰兢兢膽碎寒　\n幸得山前逢妙手，方能保得一身安　\n（四句淺釋：就似抱虎過山，戰戰兢兢心碎膽寒；幸好在前方遇得高人相助，方可保得平安。）\n危險危險，前程阻隔，切莫遠行，自宜守節。此籤抱虎過山之象，凡事先凶後吉。　\n靈籤之曰：本籤示之於弟子曰。宛如抱虎過山前之景也。令人戰戰兢兢膽碎寒者。凡事必須多擘畫。千萬不得輕舉妄動。機密不密則不成。須防口之血半。惟君爾之修身。積德功夫一至。必能逢得妙手。方能保得一身平安。易言之。危險危險前程阻隔切莫遠行自宜守節。先凶後吉者。　\n交易－防滯　婚姻－難順　求財－謹慎　自身－提防　家宅－祈保　六畜－損　田蠶－五分　尋人－杳　行人－阻　六甲－有危　山墳－凶　訟詞－克虧　疾病－祭虎　失物－難　移徒－吉"
+ },
+ {
+  "id": 76,
+  "title": "孫叔敖隱處海濱",
+  "level": "上上",
+  "levelRaw": "孫叔敖隱處海濱　　上上",
+  "poem": [
+   "魚龍混雜意和同",
+   "耐守寒潭未濟中",
+   "不覺一朝頭角聳",
+   "禹門一跳到天宮"
+  ],
+  "gloss": "龍與魚混在一起看來毫無差異，困守寒潭無濟於事；待有朝一日大展頭角之時，屆時自然魚躍成龍，一飛沖天。",
+  "xiang": "此籤禹門未透之象，凡事變化則吉。",
+  "commentary": "本籤者。禹門未透之象。凡百事變化則吉之意。魚與龍兩者混雜潭中意和同。耐守於潭卻未濟中時。唯有一朝頭角聳之刻。君爾即可由禹門一躍到天宮去者。貴人逢遇之曰。必有被擢拔之時。彼時商賈者財利勃發。家宅產業興隆。另言之。雖有址地不如待時營謀出入切莫安為。",
+  "items": {
+   "交易": "阻滯",
+   "婚姻": "未合",
+   "求財": "有",
+   "自身": "提防",
+   "家宅": "中平",
+   "六畜": "損",
+   "田蠶": "五分",
+   "尋人": "杳",
+   "行人": "遲",
+   "六甲": "有險",
+   "山墳": "祭",
+   "訟詞": "虧",
+   "疾病": "祭星",
+   "失物": "難",
+   "移徒": "守舊"
+  },
+  "raw": "第七十六首：孫叔敖隱處海濱　　上上　　　　\n魚龍混雜意和同，耐守寒潭未濟中　\n不覺一朝頭角聳，禹門一跳到天宮　\n（四句淺釋：龍與魚混在一起看來毫無差異，困守寒潭無濟於事；待有朝一日大展頭角之時，屆時自然魚躍成龍，一飛沖天。）\n雖有址地，不如待時，營謀出入，切莫安為。此籤禹門未透之象，凡事變化則吉。　\n靈籤之曰：本籤者。禹門未透之象。凡百事變化則吉之意。魚與龍兩者混雜潭中意和同。耐守於潭卻未濟中時。唯有一朝頭角聳之刻。君爾即可由禹門一躍到天宮去者。貴人逢遇之曰。必有被擢拔之時。彼時商賈者財利勃發。家宅產業興隆。另言之。雖有址地不如待時營謀出入切莫安為。\n交易－阻滯　婚姻－未合　求財－有　自身－提防　家宅－中平　六畜－損　田蠶－五分　尋人－杳　行人－遲　六甲－有險　山墳－祭　訟詞－虧　疾病－祭星　失物－難　移徒－守舊"
+ },
+ {
+  "id": 77,
+  "title": "范睢相秦",
+  "level": "",
+  "levelRaw": "范睢相秦",
+  "poem": [
+   "夢中說夢獲多財",
+   "身外浮名總莫猜",
+   "水遠山遙難信定",
+   "貴人一指笑顏開"
+  ],
+  "gloss": "在夢裡說夢見得到了大量的珠寶，猶如身外虛名不必再去推測；山高水遠如何能憑斷距離？待貴人一指明路，因才領悟而笑逐顏開。",
+  "xiang": "此籤夢中得財之象，凡事空虛無力。",
+  "commentary": "本籤示之於弟子曰。夢中得財之象。亦即是空虛無力者。總而言之。身外浮名。總無可猜。水遠山遙難信定。伊是遙遠之地。無法信之。定之。貴人一指時。君爾笑逐顏開。易言之。夢中說夢聲名虛望只好待時貴人接引。",
+  "items": {
+   "交易": "難",
+   "婚姻": "不合",
+   "求財": "空虛",
+   "自身": "阻",
+   "家宅": "祈福",
+   "六畜": "損",
+   "田蠶": "少收",
+   "尋人": "杳",
+   "行人": "遲",
+   "六甲": "虛",
+   "山墳": "改吉",
+   "訟詞": "宜和",
+   "疾病": "設送",
+   "失物": "遠",
+   "移徒": "待時"
+  },
+  "raw": "第七十七首：范睢相秦　　　\n夢中說夢獲多財，身外浮名總莫猜　\n水遠山遙難信定，貴人一指笑顏開　\n（四句淺釋：在夢裡說夢見得到了大量的珠寶，猶如身外虛名不必再去推測；山高水遠如何能憑斷距離？待貴人一指明路，因才領悟而笑逐顏開。）\n夢中說夢，聲名虛望，只好待時，貴人接引。此籤夢中得財之象，凡事空虛無力。　\n靈籤之曰：本籤示之於弟子曰。夢中得財之象。亦即是空虛無力者。總而言之。身外浮名。總無可猜。水遠山遙難信定。伊是遙遠之地。無法信之。定之。貴人一指時。君爾笑逐顏開。易言之。夢中說夢聲名虛望只好待時貴人接引。　\n交易－難　婚姻－不合　求財－空虛　自身－阻　家宅－祈福　六畜－損　田蠶－少收　尋人－杳　行人－遲　六甲－虛　山墳－改吉　訟詞－宜和　疾病－設送　失物－遠　移徒－待時"
+ },
+ {
+  "id": 78,
+  "title": "秦宓屈張溫",
+  "level": "上中",
+  "levelRaw": "秦宓屈張溫　　　　上中",
+  "poem": [
+   "冷水來澆白雪洋",
+   "不寒不熱自溫涼",
+   "要行天下無他事",
+   "惟有中藏一藝強"
+  ],
+  "gloss": "猶如用冷水澆淋白雪，不冷也不熱；欲走遍天下而無變故憂慮之法，唯有內含豐富且有餘的本領罷了。",
+  "xiang": "此籤平穩用事之象，凡事大吉利也。",
+  "commentary": "本籤即是平穩用事時。凡事大吉利者。亦即是冷水來澆時也。白雪洋。時令不寒不熱時自有溫涼者。逢此時令時。君爾行天下時。並無他事。唯君汝。必須藏有一藝之長久。可行天下無阻。易言之。囚徒得赦病遇良醫求財謀望貴人指迷。",
+  "items": {
+   "交易": "成",
+   "婚姻": "合",
+   "求財": "平平",
+   "自身": "大吉",
+   "家宅": "中平",
+   "六畜": "興旺",
+   "田蠶": "熟",
+   "尋人": "至",
+   "行人": "至",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "散",
+   "疾病": "平安",
+   "失物": "即見",
+   "移徒": "大吉"
+  },
+  "raw": "第七十八首：秦宓屈張溫　　　　上中　　\n冷水來澆白雪洋，不寒不熱自溫涼　　\n要行天下無他事，惟有中藏一藝強　\n（四句淺釋：猶如用冷水澆淋白雪，不冷也不熱；欲走遍天下而無變故憂慮之法，唯有內含豐富且有餘的本領罷了。）　\n囚徒得赦，病遇良醫，求財謀望，貴人指迷。此籤平穩用事之象，凡事大吉利也。　\n靈籤之曰：本籤即是平穩用事時。凡事大吉利者。亦即是冷水來澆時也。白雪洋。時令不寒不熱時自有溫涼者。逢此時令時。君爾行天下時。並無他事。唯君汝。必須藏有一藝之長久。可行天下無阻。易言之。囚徒得赦病遇良醫求財謀望貴人指迷。　　\n交易－成　婚姻－合　求財－平平　自身－大吉　家宅－中平　六畜－興旺　田蠶－熟　尋人－至　行人－至　六甲－生男　山墳－吉　訟詞－散　疾病－平安　失物－即見　移徒－大吉"
+ },
+ {
+  "id": 79,
+  "title": "魏顆得老人結草",
+  "level": "上中",
+  "levelRaw": "魏顆得老人結草　　上中",
+  "poem": [
+   "虛空結愿結人緣",
+   "保得人安愿未還",
+   "得兔忘蹄真絕跡",
+   "敢將初誓謾輕瞄"
+  ],
+  "gloss": "曾在虛空中許下了願望，保全了人的平安，但是願望還沒有報答；目的達到了，別人的幫助卻不記得，難道敢如此輕視當初的誓言嗎？",
+  "xiang": "此籤信實不虛之象，凡事待時耐守則吉。",
+  "commentary": "本籤示之於弟子曰。信實不虛凡事待時耐守則吉之靈籤也。唯君爾虛空結愿結人緣。一人之力。有限者。如果逞一時之勇盲目猛衝。恐有難發生之時。時也命也。汝可悟之。叵逞勇矣。易言之。有人見我空自懷然佛慈指藥切莫輕瞞。",
+  "items": {
+   "交易": "謹慎",
+   "婚姻": "虛",
+   "求財": "守份",
+   "自身": "許經",
+   "家宅": "還愿",
+   "六畜": "損",
+   "田蠶": "七分",
+   "尋人": "杳",
+   "行人": "滯",
+   "六甲": "生女",
+   "山墳": "向西方吉",
+   "訟詞": "如意",
+   "疾病": "解",
+   "失物": "西方",
+   "移徒": "守舊"
+  },
+  "raw": "第七十九首：魏顆得老人結草　　上中 　\n虛空結愿結人緣，保得人安愿未還　\n得兔忘蹄真絕跡，敢將初誓謾輕瞄　\n（四句淺釋：曾在虛空中許下了願望，保全了人的平安，但是願望還沒有報答；目的達到了，別人的幫助卻不記得，難道敢如此輕視當初的誓言嗎？）\n有人見我，空自懷然，佛慈指藥，切莫輕瞞。此籤信實不虛之象，凡事待時耐守則吉。　\n靈籤之曰：本籤示之於弟子曰。信實不虛凡事待時耐守則吉之靈籤也。唯君爾虛空結愿結人緣。一人之力。有限者。如果逞一時之勇盲目猛衝。恐有難發生之時。時也命也。汝可悟之。叵逞勇矣。易言之。有人見我空自懷然佛慈指藥切莫輕瞞。\n交易－謹慎　婚姻－虛　求財－守份　自身－許經　家宅－還愿　六畜－損　田蠶－七分　尋人－杳　行人－滯　六甲－生女　山墳－向西方吉　訟詞－如意　疾病－解　失物－西方　移徒－守舊"
+ },
+ {
+  "id": 80,
+  "title": "郭令公免冑見吐蕃",
+  "level": "上上",
+  "levelRaw": "郭令公免冑見吐蕃　　上上",
+  "poem": [
+   "直上高山去學仙",
+   "豈知一旦帝王宣",
+   "青天白日常明照",
+   "志在聲名四海傳"
+  ],
+  "gloss": "本欲上高山學習仙術，誰知一日忽被帝王宣召；本身端正無私就好似紅日當空，心中的抱負想必也能一舉皆知，名揚四海了啊。",
+  "xiang": "此籤貴人性情之象，凡事遇貴全吉。",
+  "commentary": "本籤示之於弟子曰。貴人性情之象也。凡百事遇貴人即化凶趨吉者。由詩意得知君爾直上高山去學仙。豈知一旦帝王宣。即青天白日常明照。晴天無一片雲。白日常照時。君之命運。正如當中。易言之。有始有終大問西東心中用事貴人重重。",
+  "items": {
+   "交易": "遂意",
+   "婚姻": "雙配",
+   "求財": "有利",
+   "自身": "吉利",
+   "家宅": "平安",
+   "六畜": "有利",
+   "田蠶": "半收",
+   "尋人": "遇",
+   "行人": "回",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "有理",
+   "疾病": "平安",
+   "失物": "南方",
+   "移徒": "吉"
+  },
+  "raw": "第八十首：郭令公免冑見吐蕃　　上上　 　　\n直上高山去學仙，豈知一旦帝王宣\n青天白日常明照，志在聲名四海傳　\n（四句淺釋：本欲上高山學習仙術，誰知一日忽被帝王宣召；本身端正無私就好似紅日當空，心中的抱負想必也能一舉皆知，名揚四海了啊。）\n有始有終，大問西東，心中用事，貴人重重。此籤貴人性情之象，凡事遇貴全吉。　\n靈籤之曰：本籤示之於弟子曰。貴人性情之象也。凡百事遇貴人即化凶趨吉者。由詩意得知君爾直上高山去學仙。豈知一旦帝王宣。即青天白日常明照。晴天無一片雲。白日常照時。君之命運。正如當中。易言之。有始有終大問西東心中用事貴人重重。　\n交易－遂意　婚姻－雙配　求財－有利　自身－吉利　家宅－平安　六畜－有利　田蠶－半收　尋人－遇　行人－回　六甲－生男　山墳－吉　訟詞－有理　疾病－平安　失物－南方　移徒－吉"
+ },
+ {
+  "id": 81,
+  "title": "風送籐王閣",
+  "level": "中中",
+  "levelRaw": "風送籐王閣　　　　中中",
+  "poem": [
+   "庭前葉落暮秋時",
+   "行客奔程勢若飛",
+   "謝得天公輕著力",
+   "順風相送寶船歸"
+  ],
+  "gloss": "秋天即將結束，庭院前樹上的葉子紛紛飄落了下來，出門在外的遊子歸心似箭；感謝上蒼暗中輕輕使了助力，借著順風讓我和滿載的行囊更加速返鄉。",
+  "xiang": "此籤從心所望之象，凡事大吉利。",
+  "commentary": "本籤也。從心所望之象也。凡事大吉利者。一葉如秋後。逐漸有機緣。行客之來勢如飛奔。風送君爾之船。只要輕輕著力。爾船即將寶藏船舶推送回來。不必費力者。此者非人力之所逮。易言之。心中所望天必從之所謀用事儘可施為。",
+  "items": {
+   "交易": "成合",
+   "婚姻": "和合",
+   "求財": "隨意",
+   "自身": "許經",
+   "家宅": "祈保",
+   "六畜": "穩",
+   "田蠶": "晚",
+   "尋人": "至",
+   "行人": "動",
+   "六甲": "虛驚",
+   "山墳": "擇地",
+   "訟詞": "有勝",
+   "疾病": "有善",
+   "失物": "不見",
+   "移徒": "隨意"
+  },
+  "raw": "第八十一首：風送籐王閣　　　　中中　\n庭前葉落暮秋時，行客奔程勢若飛　　\n謝得天公輕著力，順風相送寶船歸　　\n(四句淺釋：秋天即將結束，庭院前樹上的葉子紛紛飄落了下來，出門在外的遊子歸心似箭；感謝上蒼暗中輕輕使了助力，借著順風讓我和滿載的行囊更加速返鄉。）　\n心中所望，天必從之，所謀用事，儘可施為。此籤從心所望之象，凡事大吉利。　\n靈籤之曰：本籤也。從心所望之象也。凡事大吉利者。一葉如秋後。逐漸有機緣。行客之來勢如飛奔。風送君爾之船。只要輕輕著力。爾船即將寶藏船舶推送回來。不必費力者。此者非人力之所逮。易言之。心中所望天必從之所謀用事儘可施為。\n交易－成合　婚姻－和合　求財－隨意　自身－許經　家宅－祈保　六畜－穩　田蠶－晚　尋人－至　行人－動　六甲－虛驚　山墳－擇地　訟詞－有勝　疾病－有善　失物－不見　移徒－隨意"
+ },
+ {
+  "id": 82,
+  "title": "呂純陽重生梓樹",
+  "level": "中中",
+  "levelRaw": "呂純陽重生梓樹　　中中",
+  "poem": [
+   "炎炎烈火焰燒天",
+   "焰裏還生一朵蓮",
+   "到底永成根不壞",
+   "依然枝葉色新鮮"
+  ],
+  "gloss": "火勢凶猛，烈焰沖天，但蓮花不受影響，依然在其中滋長；直到最後也並沒有被折損，仍然枝繁葉茂，色彩鮮艷。",
+  "xiang": "此籤火中生蓮之象，凡事先難後易。",
+  "commentary": "本籤者。火中生蓮之象。凡事先難後易者。目下時運未濟。千萬不可逞英豪。圖意外之財。卻反而損失不貲。所幸到底永成根不壞。依然枝葉色新鮮。爾之命也。可因命大。遇險而不危。易言之。雖是危險不傷其身營謀用事皆得貴人。",
+  "items": {
+   "交易": "小人",
+   "婚姻": "阻",
+   "求財": "勞力",
+   "自身": "謹防",
+   "家宅": "欠安",
+   "六畜": "損",
+   "田蠶": "缺",
+   "尋人": "西方",
+   "行人": "阻",
+   "六甲": "虛驚",
+   "山墳": "改吉",
+   "訟詞": "虧",
+   "疾病": "設送",
+   "失物": "南方",
+   "移徒": "守舊"
+  },
+  "raw": "第八十二首：呂純陽重生梓樹　　中中　　　　\n炎炎烈火焰燒天，焰裏還生一朵蓮　\n到底永成根不壞，依然枝葉色新鮮　\n(四句淺釋：火勢凶猛，烈焰沖天，但蓮花不受影響，依然在其中滋長；直到最後也並沒有被折損，仍然枝繁葉茂，色彩鮮艷。）\n雖是危險，不傷其身，營謀用事，皆得貴人。此籤火中生蓮之象，凡事先難後易。　\n靈籤之曰：本籤者。火中生蓮之象。凡事先難後易者。目下時運未濟。千萬不可逞英豪。圖意外之財。卻反而損失不貲。所幸到底永成根不壞。依然枝葉色新鮮。爾之命也。可因命大。遇險而不危。易言之。雖是危險不傷其身營謀用事皆得貴人。\n交易－小人　婚姻－阻　求財－勞力　自身－謹防　家宅－欠安　六畜－損　田蠶－缺　尋人－西方　行人－阻　六甲－虛驚　山墳－改吉　訟詞－虧　疾病－設送　失物－南方　移徒－守舊"
+ },
+ {
+  "id": 83,
+  "title": "馬周入都投旅店",
+  "level": "中上",
+  "levelRaw": "馬周入都投旅店　　　中上",
+  "poem": [
+   "譬若初三四五蟾",
+   "半無半有未完全",
+   "須教十五良宵夜",
+   "到處清光到處圓"
+  ],
+  "gloss": "就像初三、四、五的月亮，似有若無仍未達完滿；待等到十五夜來臨，四處各地即都可見清亮無比的滿月。",
+  "xiang": "此籤如月初出之象，凡事待時則吉。",
+  "commentary": "本籤者。如月初出之象。凡事舉之時。得待時。來濟時方吉者。君爾之今則是時運未濟之時。今之不逢時叵逞強。欲圖意外之財時。反而將失利者。宜控制之。不宜放任行之。汝必須待到十五良宵夜。月光明才可見。到清光。易言之。知足自足如月初出直到圓時無有不吉。",
+  "items": {
+   "交易": "待時",
+   "婚姻": "遲",
+   "求財": "勤防",
+   "自身": "夏秋吉",
+   "家宅": "許愿",
+   "六畜": "平",
+   "田蠶": "平",
+   "尋人": "難",
+   "行人": "阻",
+   "六甲": "生女",
+   "山墳": "改吉",
+   "訟詞": "和",
+   "疾病": "設送",
+   "失物": "難",
+   "移徒": "守舊"
+  },
+  "raw": "第八十三首：馬周入都投旅店　　　中上　　　　\n譬若初三四五蟾，半無半有未完全　\n須教十五良宵夜，到處清光到處圓　\n（四句淺釋：就像初三、四、五的月亮，似有若無仍未達完滿；待等到十五夜來臨，四處各地即都可見清亮無比的滿月。）\n知足自足，如月初出，直到圓時，無有不吉。此籤如月初出之象，凡事待時則吉。　\n靈籤之曰：本籤者。如月初出之象。凡事舉之時。得待時。來濟時方吉者。君爾之今則是時運未濟之時。今之不逢時叵逞強。欲圖意外之財時。反而將失利者。宜控制之。不宜放任行之。汝必須待到十五良宵夜。月光明才可見。到清光。易言之。知足自足如月初出直到圓時無有不吉。　\n交易－待時　婚姻－遲　求財－勤防　自身－夏秋吉　家宅－許愿　六畜－平　田蠶－平　尋人－難　行人－阻　六甲－生女　山墳－改吉　訟詞－和　疾病－設送　失物－難　移徒－守舊"
+ },
+ {
+  "id": 84,
+  "title": "李廣灞陵夜獵",
+  "level": "",
+  "levelRaw": "李廣灞陵夜獵",
+  "poem": [
+   "因名喪德不和同",
+   "切忌忙中變作凶",
+   "醉後不知何處去",
+   "青松影裡睡朦朧"
+  ],
+  "gloss": "因為虛名而失去道德修養，哪裡能夠得到認同？忙中有錯更恐招來禍患；如人酒後茫茫，東南西北不知何處去，卻是在青松樹下睡著了！",
+  "xiang": "此籤因名喪德之象，凡事勞費心力。",
+  "commentary": "本籤者。因名喪德之象。因之。凡事勞費心力而無益者也。為了攫取一己之名利。喪其德行。受世人辱罵。指摘者何用。神靈誡之曰。切忌忙中變作凶。本為善意。惟己之言行中不知不覺中。將善心變為惡而導致凶。易言之。君之命也。寒魚離水美中不足若問營謀如何結局。",
+  "items": {},
+  "raw": "第八十四首：李廣灞陵夜獵　　\n因名喪德不和同，切忌忙中變作凶　　\n醉後不知何處去，青松影裡睡朦朧　\n（四句淺釋：因為虛名而失去道德修養，哪裡能夠得到認同？忙中有錯更恐招來禍患；如人酒後茫茫，東南西北不知何處去，卻是在青松樹下睡著了！）\n寒魚離水，美中不足，若問營謀，如何結局。此籤因名喪德之象，凡事勞費心力。　\n靈籤之曰：本籤者。因名喪德之象。因之。凡事勞費心力而無益者也。為了攫取一己之名利。喪其德行。受世人辱罵。指摘者何用。神靈誡之曰。切忌忙中變作凶。本為善意。惟己之言行中不知不覺中。將善心變為惡而導致凶。易言之。君之命也。寒魚離水美中不足若問營謀如何結局。"
+ },
+ {
+  "id": 85,
+  "title": "蘇秦抵掌華屋",
+  "level": "上上",
+  "levelRaw": "蘇秦抵掌華屋　　　上上",
+  "poem": [
+   "重開山後藏前事",
+   "萬寶園中可再團",
+   "醉詠新詩添逸興",
+   "貴人引接上雲衢"
+  ],
+  "gloss": "重新出發，將過去的事封存，在萬寶園中再度聚首；安閒快樂地把酒言歡吟詩作樂，待得貴人牽引時，就能一鳴驚人了啊。",
+  "xiang": "此籤春暮花開之象，凡事求謀俱吉。",
+  "commentary": "本籤者。暮春百花盛開之時。凡百事求謀俱吉者也。沉滯已久之命運。於今逐漸入佳境。珍惜此時。把握本刻。立即動之。汝之運途將為爾闢坦途。亦即是萬寶園中可再團。易言之。老者還來春暮風和欲求名利早晚遇財。",
+  "items": {
+   "交易": "平平",
+   "婚姻": "遲成",
+   "求財": "著力",
+   "自身": "謹防",
+   "家宅": "欠利",
+   "六畜": "旺",
+   "田蠶": "好",
+   "尋人": "難",
+   "行人": "阻",
+   "六甲": "生女",
+   "山墳": "宜改吉",
+   "訟詞": "反覆",
+   "疾病": "延滯",
+   "失物": "凶",
+   "移徒": "更新"
+  },
+  "raw": "第八十五首：蘇秦抵掌華屋　　　上上　\n重開山後藏前事，萬寶園中可再團　\n醉詠新詩添逸興，貴人引接上雲衢　\n（四句淺釋：重新出發，將過去的事封存，在萬寶園中再度聚首；安閒快樂地把酒言歡吟詩作樂，待得貴人牽引時，就能一鳴驚人了啊。）　\n老者還來，春暮風和，欲求名利，早晚遇財。此籤春暮花開之象，凡事求謀俱吉。　\n靈籤之曰：本籤者。暮春百花盛開之時。凡百事求謀俱吉者也。沉滯已久之命運。於今逐漸入佳境。珍惜此時。把握本刻。立即動之。汝之運途將為爾闢坦途。亦即是萬寶園中可再團。易言之。老者還來春暮風和欲求名利早晚遇財。　　\n交易－平平　婚姻－遲成　求財－著力　自身－謹防　家宅－欠利　六畜－旺　田蠶－好　尋人－難　行人－阻　六甲－生女　山墳－宜改吉　訟詞－反覆　疾病－延滯　失物－凶　移徒－更新"
+ },
+ {
+  "id": 86,
+  "title": "西王母獻益地圖",
+  "level": "大吉",
+  "levelRaw": "西王母獻益地圖　　大吉",
+  "poem": [
+   "春來花發映陽臺",
+   "萬里舟行進寶來",
+   "躍過禹門三級浪",
+   "恰如平地一聲雷"
+  ],
+  "gloss": "春天時百花盛開，在陽光投射下樓台呈現美麗的疏影，有人自萬里之外駕船送來滿滿的珍寶；相信魚躍龍門時來運轉之時，就似春雷一聲乍響，震撼了大地。",
+  "xiang": "此籤帝朝受職之象，凡事遇貴則吉。",
+  "commentary": "本籤者。帝朝受職之象。凡百事興者遇貴則吉利者也。春來花發。是百花爭妍鬥豔之刻。萬里舟行進寶來其聲聲之旺也。如躍過禹門三級浪。恰如平地一聲雷響起者。易言之。帝朝受職如貧得寶望用從心籤中第一。",
+  "items": {},
+  "raw": "第八十六首：西王母獻益地圖　　大吉　\n春來花發映陽臺，萬里舟行進寶來　　\n躍過禹門三級浪，恰如平地一聲雷　\n（四句淺釋：春天時百花盛開，在陽光投射下樓台呈現美麗的疏影，有人自萬里之外駕船送來滿滿的珍寶；相信魚躍龍門時來運轉之時，就似春雷一聲乍響，震撼了大地。）　\n帝朝受職，如貧得寶，望用從心，籤中第一。此籤帝朝受職之象，凡事遇貴則吉。　\n靈籤之曰：本籤者。帝朝受職之象。凡百事興者遇貴則吉利者也。春來花發。是百花爭妍鬥豔之刻。萬里舟行進寶來其聲聲之旺也。如躍過禹門三級浪。恰如平地一聲雷響起者。易言之。帝朝受職如貧得寶望用從心籤中第一。"
+ },
+ {
+  "id": 87,
+  "title": "魏武帝羊腸失路",
+  "level": "中平",
+  "levelRaw": "魏武帝羊腸失路　　中平",
+  "poem": [
+   "人行半嶺日啣山",
+   "峻險巉巖未可攀",
+   "仰望上天垂護佑",
+   "此身猶在太虛間"
+  ],
+  "gloss": "行走到半山腰時，感覺赤辣的太陽似乎要把山給吞沒了，如此險峻的山勢找不到可以再攀附上升的途徑；望著天空，祈禱上蒼庇護保祐，我這個軀體就猶如迷失在虛無廣濶的空間之中啊！",
+  "xiang": "此籤淘沙見金之象，凡事勞心有成。",
+  "commentary": "本籤者。淘沙見金之象也。凡百事勞心即有成之命運。目下居於日啣山之境。且前面正遇叢山峻嶺。艱苦歷程中。苦中不得不仰頭祈求上蒼垂護祐。己身猶在太虛之間。唯勞心可成之命。易言之。剖石見玉淘沙見金須用著力勞心成就。",
+  "items": {
+   "交易": "謹防",
+   "婚姻": "有阻",
+   "求財": "勞心",
+   "自身": "欠利",
+   "家宅": "祈福",
+   "六畜": "平平",
+   "田蠶": "平穩",
+   "尋人": "未見",
+   "行人": "遲",
+   "六甲": "空虛",
+   "山墳": "凶",
+   "訟詞": "虧",
+   "疾病": "有阻",
+   "失物": "凶",
+   "移徒": "守舊"
+  },
+  "raw": "第八十七首：魏武帝羊腸失路　　中平　　　　　\n人行半嶺日啣山，峻險巉巖未可攀　　\n仰望上天垂護佑，此身猶在太虛間　\n（四句淺釋：行走到半山腰時，感覺赤辣的太陽似乎要把山給吞沒了，如此險峻的山勢找不到可以再攀附上升的途徑；望著天空，祈禱上蒼庇護保祐，我這個軀體就猶如迷失在虛無廣濶的空間之中啊！）　\n剖石見玉，淘沙見金，須用著力，勞心成就。此籤淘沙見金之象，凡事勞心有成。　\n靈籤之曰：本籤者。淘沙見金之象也。凡百事勞心即有成之命運。目下居於日啣山之境。且前面正遇叢山峻嶺。艱苦歷程中。苦中不得不仰頭祈求上蒼垂護祐。己身猶在太虛之間。唯勞心可成之命。易言之。剖石見玉淘沙見金須用著力勞心成就。\n交易－謹防　婚姻－有阻　求財－勞心　自身－欠利　家宅－祈福　六畜－平平　田蠶－平穩　尋人－未見　行人－遲　六甲－空虛　山墳－凶　訟詞－虧　疾病－有阻　失物－凶　移徒－守舊"
+ },
+ {
+  "id": 88,
+  "title": "張子房誤中副車",
+  "level": "",
+  "levelRaw": "張子房誤中副車",
+  "poem": [
+   "木雕一虎在山林",
+   "遠望威容意不禁",
+   "縱說不妨終可畏",
+   "此身如入大江心"
+  ],
+  "gloss": "雖然知道山林裡是一隻木頭雕刻而成的老虎，但遠遠看著它的容貌，仍然忍不住打起寒顫；即使口頭上說不礙事，但心裡終究感到畏懼，就好像軀體已被捲入大江之中一般啊。",
+  "xiang": "此籤木虎虛驚之象，凡事宜守待時。",
+  "commentary": "本籤者。木虎虛驚之象。凡百事宜守待時方吉安。千萬叵倚強凌弱。遠望威容意不禁者。即使木虎不必畏懼。但己身如同入大江心。岌岌可危。必須防貪求不已。生禍福無不自求者。必慎之。易言之。爐頭點雪耳邊過風可宜作福前凶後吉。",
+  "items": {
+   "交易": "不利",
+   "婚姻": "不合",
+   "求財": "小人",
+   "自身": "口舌",
+   "家宅": "不安",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "杳",
+   "行人": "阻",
+   "六甲": "空虛",
+   "山墳": "凶",
+   "訟詞": "虧",
+   "疾病": "祭星",
+   "失物": "凶",
+   "移徒": "守舊"
+  },
+  "raw": "第八十八首：張子房誤中副車　　\n木雕一虎在山林，遠望威容意不禁　\n縱說不妨終可畏，此身如入大江心　\n(四句淺釋：雖然知道山林裡是一隻木頭雕刻而成的老虎，但遠遠看著它的容貌，仍然忍不住打起寒顫；即使口頭上說不礙事，但心裡終究感到畏懼，就好像軀體已被捲入大江之中一般啊。）\n爐頭點雪，耳邊過風，可宜作福，前凶後吉。此籤木虎虛驚之象，凡事宜守待時。　\n靈籤之曰：本籤者。木虎虛驚之象。凡百事宜守待時方吉安。千萬叵倚強凌弱。遠望威容意不禁者。即使木虎不必畏懼。但己身如同入大江心。岌岌可危。必須防貪求不已。生禍福無不自求者。必慎之。易言之。爐頭點雪耳邊過風可宜作福前凶後吉。　　\n交易－不利　婚姻－不合　求財－小人　自身－口舌　家宅－不安　六畜－損　田蠶－損　尋人－杳　行人－阻　六甲－空虛　山墳－凶　訟詞－虧　疾病－祭星　失物－凶　移徒－守舊"
+ },
+ {
+  "id": 89,
+  "title": "姜太公渭水遇文王",
+  "level": "上上",
+  "levelRaw": "姜太公渭水遇文王　　上上",
+  "poem": [
+   "出入營謀大吉昌",
+   "無瑕玉在石中藏",
+   "如今幸得高人指",
+   "獲寶從心喜不常"
+  ],
+  "gloss": "出外求謀運勢極佳，就好似原本深藏在石頭中的美玉；如今因得高人提點指示將其取出，如獲至寶歡喜無限。",
+  "xiang": "此籤玉藏石中之象，凡事稱心大吉。",
+  "commentary": "本籤者。玉藏石中之象。凡事稱心大吉昌者也。靈籤曰。出入營謀大吉昌。君今逢無瑕之玉藏石中。能獲貴人指點。扶持。終能得寶。此時此刻當喜非常。令人雀躍者。惟稱心時不可大意者。更不忘修德。積善。易言之。本籤為如玉藏石貴人指出而得寶稱心遂意大吉者。",
+  "items": {
+   "交易": "成合",
+   "婚姻": "就",
+   "求財": "隨意",
+   "自身": "康泰",
+   "家宅": "吉利",
+   "六畜": "勤理",
+   "田蠶": "著力",
+   "尋人": "見",
+   "行人": "動",
+   "六甲": "生男",
+   "山墳": "吉",
+   "訟詞": "勝",
+   "疾病": "平安",
+   "失物": "在",
+   "移徒": "吉"
+  },
+  "raw": "第八十九首：姜太公渭水遇文王　　上上　\n出入營謀大吉昌，無瑕玉在石中藏　\n如今幸得高人指，獲寶從心喜不常　\n（四句淺釋：出外求謀運勢極佳，就好似原本深藏在石頭中的美玉；如今因得高人提點指示將其取出，如獲至寶歡喜無限。）\n如玉藏石，貴人指出，得寶稱心，遂意大吉。此籤玉藏石中之象，凡事稱心大吉。\n靈籤之曰：本籤者。玉藏石中之象。凡事稱心大吉昌者也。靈籤曰。出入營謀大吉昌。君今逢無瑕之玉藏石中。能獲貴人指點。扶持。終能得寶。此時此刻當喜非常。令人雀躍者。惟稱心時不可大意者。更不忘修德。積善。易言之。本籤為如玉藏石貴人指出而得寶稱心遂意大吉者。\n交易－成合　婚姻－就　求財－隨意　自身－康泰　家宅－吉利　六畜－勤理　田蠶－著力　尋人－見　行人－動　六甲－生男　山墳－吉　訟詞－勝　疾病－平安　失物－在　移徒－吉"
+ },
+ {
+  "id": 90,
+  "title": "劉先主如魚得水",
+  "level": "上上",
+  "levelRaw": "劉先主如魚得水　　上上",
+  "poem": [
+   "忽朝一信下天墀",
+   "寶貝船裝滿載歸",
+   "若問前程成底事",
+   "始終應得貴人提"
+  ],
+  "gloss": "意想不到的好消息從天而降，猶如船上裝載著滿滿的珍寶榮歸；若要問前程事物最後的發展，早晚還是會得到貴人的幫助啊。",
+  "xiang": "此籤功名成就之象，凡事進身大吉。",
+  "commentary": "本籤者。功名成就之象。凡事進身大吉也。君爾之今運也。忽朝一信天下墀之時。寶貝船裝滿載歸之時。若問前程於神仙。君之今也。始終應得貴人提之刻。凡百事得真人。順利推進之運。上上者。易言之。君汝之今。欲問功名貴人遇得更增福慶財祿進益者耶。",
+  "items": {},
+  "raw": "第九十首：劉先主如魚得水　　上上　\n忽朝一信下天墀，寶貝船裝滿載歸　　\n若問前程成底事，始終應得貴人提　\n（四句淺釋：意想不到的好消息從天而降，猶如船上裝載著滿滿的珍寶榮歸；若要問前程事物最後的發展，早晚還是會得到貴人的幫助啊。）\n欲問功名，貴人遇得，更增福慶，財祿進益。此籤功名成就之象，凡事進身大吉。　\n靈籤之曰：本籤者。功名成就之象。凡事進身大吉也。君爾之今運也。忽朝一信天下墀之時。寶貝船裝滿載歸之時。若問前程於神仙。君之今也。始終應得貴人提之刻。凡百事得真人。順利推進之運。上上者。易言之。君汝之今。欲問功名貴人遇得更增福慶財祿進益者耶。"
+ },
+ {
+  "id": 91,
+  "title": "宗愨長風破浪",
+  "level": "上上",
+  "levelRaw": "宗愨長風破浪　　　上上",
+  "poem": [
+   "好把愁眉須展開",
+   "大才大用薦將來",
+   "一條大路平如掌",
+   "凡有施為總稱懷"
+  ],
+  "gloss": "請將深鎖的眉頭舒展開來吧，未來必有舉薦大用；前方寬廣的大道平坦地好似攤開的手掌，一切只要付諸實行，總能稱心如意！",
+  "xiang": "此籤前程有路之象，凡事施為則吉。",
+  "commentary": "本籤為前程有坦途可行之象。凡事謀之行之立見吉利者也。一條坦途可向前行。心中用事不必瞻前顧後。勇往邁進事事可如意。順利吉昌者。唯行在頂峰。傲視下界之際。勿忘今日之所由生。皆由貴人扶之者。易言之。必留個餘地。以防向下坡之崎嶇。",
+  "items": {},
+  "raw": "第九十一首：宗愨長風破浪　　　上上　\n好把愁眉須展開，大才大用薦將來　　\n一條大路平如掌，凡有施為總稱懷　\n（四句淺釋：請將深鎖的眉頭舒展開來吧，未來必有舉薦大用；前方寬廣的大道平坦地好似攤開的手掌，一切只要付諸實行，總能稱心如意！）\n一條大路，儘可施為，心中用事，只宜向前。此籤前程有路之象，凡事施為則吉。\n靈籤之曰：本籤為前程有坦途可行之象。凡事謀之行之立見吉利者也。一條坦途可向前行。心中用事不必瞻前顧後。勇往邁進事事可如意。順利吉昌者。唯行在頂峰。傲視下界之際。勿忘今日之所由生。皆由貴人扶之者。易言之。必留個餘地。以防向下坡之崎嶇。"
+ },
+ {
+  "id": 92,
+  "title": "李固言柳汁染衣",
+  "level": "上上",
+  "levelRaw": "李固言柳汁染衣　　上上",
+  "poem": [
+   "經商得利稱心懷",
+   "福祿榮華倍獲財",
+   "若問進身謀望事",
+   "秀才一舉狀元回"
+  ],
+  "gloss": "從商獲利時自然稱心開懷，更何況榮華富貴倍增；如果要問求謀加官等事，終能一舉狀元，衣錦還鄉。",
+  "xiang": "此籤進身大吉之象，凡事操心大吉。",
+  "commentary": "本籤者。進身大吉之象也。凡百事興時操心大利。靈詩示之云。經商得利稱心懷。福祿面也。榮華倍獲財。君汝如問謀望之面。神可告之君。必能一舉狀元衣錦還鄉者。易言之。汝自幼小之年。自小至大無相無礙諸事遂意。遂望自在耶。",
+  "items": {
+   "交易": "勝",
+   "婚姻": "合",
+   "求財": "順",
+   "自身": "安泰",
+   "家宅": "平安",
+   "六畜": "旺",
+   "田蠶": "五分",
+   "尋人": "見",
+   "行人": "動",
+   "六甲": "生男",
+   "山墳": "大吉",
+   "訟詞": "有利",
+   "疾病": "安",
+   "失物": "在",
+   "移徒": "遂意"
+  },
+  "raw": "第九十二首：李固言柳汁染衣　　上上　　　　\n經商得利稱心懷，福祿榮華倍獲財　　\n若問進身謀望事，秀才一舉狀元回　\n（四句淺釋：從商獲利時自然稱心開懷，更何況榮華富貴倍增；如果要問求謀加官等事，終能一舉狀元，衣錦還鄉。）　\n自小至大，無相無礙，諸事遂吉，謀望自在。此籤進身大吉之象，凡事操心大吉。\n靈籤之曰：本籤者。進身大吉之象也。凡百事興時操心大利。靈詩示之云。經商得利稱心懷。福祿面也。榮華倍獲財。君汝如問謀望之面。神可告之君。必能一舉狀元衣錦還鄉者。易言之。汝自幼小之年。自小至大無相無礙諸事遂意。遂望自在耶。\n交易－勝　婚姻－合　求財－順　自身－安泰　家宅－平安　六畜－旺　田蠶－五分　尋人－見　行人－動　六甲－生男　山墳－大吉　訟詞－有利　疾病－安　失物－在　移徒－遂意"
+ },
+ {
+  "id": 93,
+  "title": "衛懿公賜鶴乘軒",
+  "level": "中中",
+  "levelRaw": "衛懿公賜鶴乘軒　　　中中",
+  "poem": [
+   "鸞鳳翎毛雨壓垂",
+   "此時應被雀輕欺",
+   "忽朝一日雲霄霽",
+   "依舊還教振羽衣"
+  ],
+  "gloss": "鳳凰身上的羽毛被雨打溼緊垂，在此同時還得承受雀鳥輕慢相欺；待有朝一日天晴大放光明之時，終將再度展翅高飛，依舊在萬鳥中稱王！",
+  "xiang": "此籤未用君子之象，凡事先難後易。",
+  "commentary": "本籤示之於弟子曰。未用君子之象。凡事先難。因謀事之敏。終獲吉利者也。君汝之目下命。人在窮困之際。啻好屈己忍之。強歡言笑。千萬叵急躁惱怒。斯時四面楚歌。皆陷阱也。易言之。小人正盛君子莫為暫時守己自有亨通之時也。",
+  "items": {
+   "交易": "待時",
+   "婚姻": "滯",
+   "求財": "有阻",
+   "自身": "謹防",
+   "家宅": "欠利",
+   "六畜": "損",
+   "田蠶": "晚",
+   "尋人": "難",
+   "行人": "留連",
+   "六甲": "有虛",
+   "山墳": "改吉",
+   "訟詞": "虧",
+   "疾病": "延安",
+   "失物": "凶",
+   "移徒": "守舊"
+  },
+  "raw": "第九十三首：衛懿公賜鶴乘軒　　　中中　　　　\n鸞鳳翎毛雨壓垂，此時應被雀輕欺　\n忽朝一日雲霄霽，依舊還教振羽衣　\n（四句淺釋：鳳凰身上的羽毛被雨打溼緊垂，在此同時還得承受雀鳥輕慢相欺；待有朝一日天晴大放光明之時，終將再度展翅高飛，依舊在萬鳥中稱王！）　\n小人正盛，君子莫為，暫時守己，自有亨通。此籤未用君子之象，凡事先難後易。　\n靈籤之曰：本籤示之於弟子曰。未用君子之象。凡事先難。因謀事之敏。終獲吉利者也。君汝之目下命。人在窮困之際。啻好屈己忍之。強歡言笑。千萬叵急躁惱怒。斯時四面楚歌。皆陷阱也。易言之。小人正盛君子莫為暫時守己自有亨通之時也。\n交易－待時　婚姻－滯　求財－有阻　自身－謹防　家宅－欠利　六畜－損　田蠶－晚　尋人－難　行人－留連　六甲－有虛　山墳－改吉　訟詞－虧　疾病－延安　失物－凶　移徒－守舊"
+ },
+ {
+  "id": 94,
+  "title": "王君公避世牆東",
+  "level": "中中",
+  "levelRaw": "王君公避世牆東　　中中",
+  "poem": [
+   "小人君子別賢愚",
+   "事有差訛合是非",
+   "琴遇知音當鼓操",
+   "爭如定靜得便宜"
+  ],
+  "gloss": "須知君子與小人有賢愚之分，但事情的對錯與是非要如何區別呢？就像撫琴若遇知己時即能一拍即合，與其爭執不休，還不如沈默是金來的有利吧！",
+  "xiang": "此籤未遇知音之象，凡事耐性則吉。",
+  "commentary": "本籤者。君爾未遇知音之象也。凡事耐性行之。為之則趨吉也。平素多信仰神佛扶之。能遇貴人之時。君即可爭如定靜得便宜耶。易言之。汝在功行圓滿之刻。必能光大門戶。知音行正百事莫理若人遇貴無價珍美耶。",
+  "items": {
+   "交易": "待時",
+   "婚姻": "滯",
+   "求財": "阻",
+   "自身": "小人",
+   "家宅": "慎出",
+   "六畜": "損",
+   "田蠶": "少",
+   "尋人": "動",
+   "行人": "動",
+   "六甲": "有女",
+   "山墳": "改吉",
+   "訟詞": "如意",
+   "疾病": "阻隔",
+   "失物": "連尋",
+   "移徒": "不利"
+  },
+  "raw": "第九十四首：王君公避世牆東　　中中　\n小人君子別賢愚，事有差訛合是非　　\n琴遇知音當鼓操，爭如定靜得便宜　\n（四句淺釋：須知君子與小人有賢愚之分，但事情的對錯與是非要如何區別呢？就像撫琴若遇知己時即能一拍即合，與其爭執不休，還不如沈默是金來的有利吧！）\n知音行正，百事莫理，若人遇貴，無價珍美。此籤未遇知音之象，凡事耐性則吉。　\n靈籤之曰：本籤者。君爾未遇知音之象也。凡事耐性行之。為之則趨吉也。平素多信仰神佛扶之。能遇貴人之時。君即可爭如定靜得便宜耶。易言之。汝在功行圓滿之刻。必能光大門戶。知音行正百事莫理若人遇貴無價珍美耶。　\n交易－待時　婚姻－滯　求財－阻　自身－小人　家宅－慎出　六畜－損　田蠶－少　尋人－動　行人－動　六甲－有女　山墳－改吉　訟詞－如意　疾病－阻隔　失物－連尋　移徒－不利"
+ },
+ {
+  "id": 95,
+  "title": "劉太尉聞雞起舞",
+  "level": "上上",
+  "levelRaw": "劉太尉聞雞起舞　　　上上",
+  "poem": [
+   "事業功勤暮與朝",
+   "榮華物態不勝饒",
+   "報君記取金雞鬥",
+   "福祿聲名價自超"
+  ],
+  "gloss": "早晚在事業上積極奮鬥，獲取的榮華物質必定豐盈；請你記得當年雞鳴即起的初衷，自然能更進一步，超越顛峰。",
+  "xiang": "此籤功名待時之象，凡事必就大利。",
+  "commentary": "本籤者。功名待時之象。凡百事必就大利者耶。上上之籤。百事皆有遂意之可能。繇於祖德之深。君爾又順理而行。益加倍植。則天之報應。具有復泰之象。占此籤之君慎守之。易言之。爾之今也。事業功名守己待時金雞終叫即時亨通之刻耶。",
+  "items": {
+   "交易": "早斷",
+   "婚姻": "有成",
+   "求財": "勞力",
+   "自身": "中平",
+   "家宅": "祈保",
+   "六畜": "成",
+   "田蠶": "晚勝",
+   "尋人": "難",
+   "行人": "動",
+   "六甲": "安",
+   "山墳": "大吉",
+   "訟詞": "急斷",
+   "疾病": "延纏",
+   "失物": "遠",
+   "移徒": "守舊"
+  },
+  "raw": "第九十五首：劉太尉聞雞起舞　　　上上　\n事業功勤暮與朝，榮華物態不勝饒　　\n報君記取金雞鬥，福祿聲名價自超　\n（四句淺釋：早晚在事業上積極奮鬥，獲取的榮華物質必定豐盈；請你記得當年雞鳴即起的初衷，自然能更進一步，超越顛峰。）\n事業功名，守己待時，金雞終叫，即時亨通。此籤功名待時之象，凡事必就大利。　\n靈籤之曰：本籤者。功名待時之象。凡百事必就大利者耶。上上之籤。百事皆有遂意之可能。繇於祖德之深。君爾又順理而行。益加倍植。則天之報應。具有復泰之象。占此籤之君慎守之。易言之。爾之今也。事業功名守己待時金雞終叫即時亨通之刻耶。　\n交易－早斷　婚姻－有成　求財－勞力　自身－中平　家宅－祈保　六畜－成　田蠶－晚勝　尋人－難　行人－動　六甲－安　山墳－大吉　訟詞－急斷　疾病－延纏　失物－遠　移徒－守舊"
+ },
+ {
+  "id": 96,
+  "title": "汾陽王七夕天孫",
+  "level": "上上",
+  "levelRaw": "汾陽王七夕天孫　　上上",
+  "poem": [
+   "巍巍寶塔不尋常",
+   "八面玲瓏盡放光",
+   "勸汝志心勤頂禮",
+   "天龍擁護降千祥"
+  ],
+  "gloss": "高大的寶塔非比尋常，四周晶瑩剔透精雕細琢；勸你誠心祈禱膜拜，必有萬神降瑞，擁護吉祥。",
+  "xiang": "此籤福德顯現之象，凡事營謀吉利。",
+  "commentary": "本籤者。福德顯現之象也。凡百事營謀可獲利者耶。君之前。此寶塔為聳立雲霄巍巍者。八面均放出異彩。啻要君志心勤頂禮。天龍。此吉祥之天獸。為君汝降天祥者。易言之。這此福田諸人皆現可用誠心福德即到。",
+  "items": {
+   "交易": "大吉",
+   "婚姻": "和合",
+   "求財": "正勝",
+   "自身": "許經",
+   "家宅": "許經",
+   "六畜": "欠利",
+   "田蠶": "半",
+   "尋人": "遇",
+   "行人": "動",
+   "六甲": "喜",
+   "山墳": "大吉",
+   "訟詞": "和",
+   "疾病": "祭星",
+   "失物": "難",
+   "移徒": "吉"
+  },
+  "raw": "第九十六首：汾陽王七夕天孫　　上上　\n巍巍寶塔不尋常，八面玲瓏盡放光　　\n勸汝志心勤頂禮，天龍擁護降千祥　\n（四句淺釋：高大的寶塔非比尋常，四周晶瑩剔透精雕細琢；勸你誠心祈禱膜拜，必有萬神降瑞，擁護吉祥。）\n這此福田，諸人皆現，可用誠心，福德即到。此籤福德顯現之象，凡事營謀吉利。　\n靈籤之曰：本籤者。福德顯現之象也。凡百事營謀可獲利者耶。君之前。此寶塔為聳立雲霄巍巍者。八面均放出異彩。啻要君志心勤頂禮。天龍。此吉祥之天獸。為君汝降天祥者。易言之。這此福田諸人皆現可用誠心福德即到。　\n交易－大吉　婚姻－和合　求財－正勝　自身－許經　家宅－許經　六畜－欠利　田蠶－半　尋人－遇　行人－動　六甲－喜　山墳－大吉　訟詞－和　疾病－祭星　失物－難　移徒－吉"
+ },
+ {
+  "id": 97,
+  "title": "鄧通銅鑄錢",
+  "level": "",
+  "levelRaw": "鄧通銅鑄錢",
+  "poem": [
+   "園林月色搖疎影",
+   "恍若鋪成滿地瓊",
+   "幾度兒童來收拾",
+   "豈知收拾總無成"
+  ],
+  "gloss": "園林中的樹枝因風吹拂搖擺，透過月光的照射，彷彿在地上鋪滿了整片晶瑩的美玉；幾次想要叫童子來打掃乾淨，但地上的影子哪裡能夠收拾得起來呢？",
+  "xiang": "此籤虛名薄利之象，凡事不宜貪求。",
+  "commentary": "本籤者。虛名薄利之象。凡百事不得貪求者也。詩曰：恍若鋪成滿地瓊。豈知收拾總無成。如君之行動不緊速。將鬧得無法收拾。謠言四播。到頭來將陷入羅網中自拔不得。如此苦境只有幾人知。易言之。君目下之運也。該知富貴在天。貧窮由命不用機謀。皆有分定者耶。",
+  "items": {
+   "交易": "慎重",
+   "婚姻": "中平",
+   "求財": "得利",
+   "自身": "謹防",
+   "家宅": "祈福",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "無跡",
+   "行人": "杳",
+   "六甲": "有驚",
+   "山墳": "大吉",
+   "訟詞": "虧",
+   "疾病": "犯陰",
+   "失物": "凶",
+   "移徒": "守舊"
+  },
+  "raw": "第九十七首：鄧通銅鑄錢　　\n園林月色搖疎影，恍若鋪成滿地瓊　\n幾度兒童來收拾，豈知收拾總無成　\n（四句淺釋：園林中的樹枝因風吹拂搖擺，透過月光的照射，彷彿在地上鋪滿了整片晶瑩的美玉；幾次想要叫童子來打掃乾淨，但地上的影子哪裡能夠收拾得起來呢？）\n富貴在天，貧窮由命，不用機謀，皆有分定。此籤虛名薄利之象，凡事不宜貪求。　\n靈籤之曰：本籤者。虛名薄利之象。凡百事不得貪求者也。詩曰：恍若鋪成滿地瓊。豈知收拾總無成。如君之行動不緊速。將鬧得無法收拾。謠言四播。到頭來將陷入羅網中自拔不得。如此苦境只有幾人知。易言之。君目下之運也。該知富貴在天。貧窮由命不用機謀。皆有分定者耶。　\n交易－慎重　婚姻－中平　求財－得利　自身－謹防　家宅－祈福　六畜－損　田蠶－損　尋人－無跡　行人－杳　六甲－有驚　山墳－大吉　訟詞－虧　疾病－犯陰　失物－凶　移徒－守舊"
+ },
+ {
+  "id": 98,
+  "title": "陶淵明三徑關門",
+  "level": "",
+  "levelRaw": "陶淵明三徑關門",
+  "poem": [
+   "經商出入事遲疑",
+   "恐惹閑愁與是非",
+   "如鳥飛投羅網陷",
+   "相看能有幾人知"
+  ],
+  "gloss": "經商求謀疑東疑西，恐怕遭致不必要的困擾與是非；就似飛鳥陷入羅網之中，這種情境能有幾人了解呢？",
+  "xiang": "此籤禽遭羅網之象，凡事守舊則安。",
+  "commentary": "本籤者。禽遭羅網之象。凡百事守舊可獲安者。詩曰。經商出入事遲疑。也因此惹閑愁。不必要之愁爭。聽了是是非非。謠言四播。逢遇如此羅網苦境中。必須多修福。積德方能脫離險境者耶。易言之。君之今也。禽遭羅網有理難分。隨緣守舊遇貴乃成之命耶。",
+  "items": {
+   "交易": "損失",
+   "婚姻": "不長",
+   "求財": "破財",
+   "自身": "小人",
+   "家宅": "憂疑",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "杳",
+   "行人": "困難",
+   "六甲": "刑傷",
+   "山墳": "絕",
+   "訟詞": "虧",
+   "疾病": "羅網",
+   "失物": "凶",
+   "移徒": "勿動"
+  },
+  "raw": "第九十八首：陶淵明三徑關門　　\n經商出入事遲疑，恐惹閑愁與是非　　\n如鳥飛投羅網陷，相看能有幾人知　\n(四句淺釋：經商求謀疑東疑西，恐怕遭致不必要的困擾與是非；就似飛鳥陷入羅網之中，這種情境能有幾人了解呢？）\n禽遭羅網，有理難分，隨緣守舊，遇貴乃成。此籤禽遭羅網之象，凡事守舊則安。\n靈籤之曰：本籤者。禽遭羅網之象。凡百事守舊可獲安者。詩曰。經商出入事遲疑。也因此惹閑愁。不必要之愁爭。聽了是是非非。謠言四播。逢遇如此羅網苦境中。必須多修福。積德方能脫離險境者耶。易言之。君之今也。禽遭羅網有理難分。隨緣守舊遇貴乃成之命耶。　\n交易－損失　婚姻－不長　求財－破財　自身－小人　家宅－憂疑　六畜－損　田蠶－損　尋人－杳　行人－困難　六甲－刑傷　山墳－絕　訟詞－虧　疾病－羅網　失物－凶　移徒－勿動"
+ },
+ {
+  "id": 99,
+  "title": "塞翁失馬",
+  "level": "中平",
+  "levelRaw": "塞翁失馬　　　中平",
+  "poem": [
+   "等閑騎馬著鞭來",
+   "半有憂危半有財",
+   "似火方燒頭上屋",
+   "天教一雨蕩殃災"
+  ],
+  "gloss": "閒來無事抽鞭駕馬而來，是福是禍還難以預料；就好像大火剛燒至屋頂，誰能知忽然上天降了場及時雨，把火勢給澆熄了。",
+  "xiang": "此籤凶危有財之象，凡事先凶後吉。",
+  "commentary": "本籤示之於弟子曰。凶危有財之象。凡事凶後吉耶。等閑騎馬著鞭來。半有憂危半有財。似火方燒頭上屋。正受災殃之刻。一場大雨來了之後。方可將災厄洗清而去。目下雖事難成。勞心勞力之後。必有轉安之時。易言之。君汝也。知如不知不管是非身臨枷鎖恩赦放歸。",
+  "items": {
+   "交易": "阻",
+   "婚姻": "刑剋",
+   "求財": "破財",
+   "自身": "守謹",
+   "家宅": "祈保",
+   "六畜": "損",
+   "田蠶": "損",
+   "尋人": "招非",
+   "行人": "困難",
+   "六甲": "險",
+   "山墳": "敗地",
+   "訟詞": "虧",
+   "疾病": "憂危險",
+   "失物": "凶",
+   "移徏": "守舊"
+  },
+  "raw": "第九十九首：塞翁失馬　　　中平　\n等閑騎馬著鞭來，半有憂危半有財　\n似火方燒頭上屋，天教一雨蕩殃災　\n（四句淺釋：閒來無事抽鞭駕馬而來，是福是禍還難以預料；就好像大火剛燒至屋頂，誰能知忽然上天降了場及時雨，把火勢給澆熄了。）\n知如不知，不管是非，身臨枷鎖，恩赦放歸。此籤凶危有財之象，凡事先凶後吉。　\n靈籤之曰：本籤示之於弟子曰。凶危有財之象。凡事凶後吉耶。等閑騎馬著鞭來。半有憂危半有財。似火方燒頭上屋。正受災殃之刻。一場大雨來了之後。方可將災厄洗清而去。目下雖事難成。勞心勞力之後。必有轉安之時。易言之。君汝也。知如不知不管是非身臨枷鎖恩赦放歸。　\n交易－阻　婚姻－刑剋　求財－破財　自身－守謹　家宅－祈保　六畜－損　田蠶－損　尋人－招非　行人－困難　六甲－險　山墳－敗地　訟詞－虧　疾病－憂危險　失物－凶　移徏－守舊"
+ },
+ {
+  "id": 100,
+  "title": "楚襄王陽臺夢醒",
+  "level": "",
+  "levelRaw": "楚襄王陽臺夢醒",
+  "poem": [
+   "欲就東兮欲就西",
+   "逢人說事轉癡迷",
+   "登山不見神仙面",
+   "莫若歸休更勿提"
+  ],
+  "gloss": "一下想往東，一下又想要向西，遇人說話反覆無常；就似爬上了高山，終究找不到神仙的蹤影，倒不如回去吧，別再提這件事了。",
+  "xiang": "此籤無常無定之象，凡事多虛少實。",
+  "commentary": "本籤者。無常無定之象。外虛少實者也。第一百首。是盈數。為全數之末。亦即言。它是前數之終。後數之始。易言之。黑暗將去。黎明到來之徵。表面上是沒落之相。其實是通亨衢之意。唯集福之本。宜小心集之。及百祈之未然營謀用事費力流連。",
+  "items": {},
+  "raw": "第一百首：楚襄王陽臺夢醒　 　\n欲就東兮欲就西，逢人說事轉癡迷　\n登山不見神仙面，莫若歸休更勿提　\n（四句淺釋：一下想往東，一下又想要向西，遇人說話反覆無常；就似爬上了高山，終究找不到神仙的蹤影，倒不如回去吧，別再提這件事了。）\n此籤及百，祈之未然，營謀用事，費力流連。此籤無常無定之象，凡事多虛少實。　\n靈籤之曰：本籤者。無常無定之象。外虛少實者也。第一百首。是盈數。為全數之末。亦即言。它是前數之終。後數之始。易言之。黑暗將去。黎明到來之徵。表面上是沒落之相。其實是通亨衢之意。唯集福之本。宜小心集之。及百祈之未然營謀用事費力流連。"
+ }
+];
+
+</script>
+  <script>
+  (function(){
+    "use strict";
+
+    const CATS = {
+      "感情婚姻": ["婚姻"],
+      "事业财运": ["交易", "求財", "求财", "自身"],
+      "健康心态": ["疾病", "自身"],
+      "家庭关系": ["家宅", "六畜"],
+      "纠纷诉讼": ["訟詞", "讼词"],
+      "出行搬迁": ["行人", "移徒", "移徙", "移徏"],
+      "寻人失物": ["尋人", "寻人", "失物"],
+      "生育": ["六甲"]
+    };
+
+    const STORAGE_KEY = "gysign_hist";
+    const catBox = document.getElementById("cats");
+    const drawBtn = document.getElementById("drawBtn");
+    const drawLabel = document.getElementById("drawLabel");
+    const drawHint = document.getElementById("drawHint");
+    const questionInput = document.getElementById("question");
+    const questionCount = document.getElementById("questionCount");
+    const resultBox = document.getElementById("result");
+    const emptyState = document.getElementById("emptyState");
+    const oraclePanel = document.getElementById("oraclePanel");
+    const histBox = document.getElementById("hist");
+    const clearHistoryBtn = document.getElementById("clearHistory");
+
+    let selectedCat = null;
+    let drawing = false;
+
+    function escapeHtml(value){
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function readHistory(){
+      try{
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(data) ? data.slice(0, 10) : [];
+      }catch(error){
+        return [];
+      }
+    }
+
+    function writeHistory(history){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(0, 10)));
+      }catch(error){
+        // The reading remains usable when storage is unavailable.
+      }
+    }
+
+    function renderHistory(){
+      const history = readHistory();
+      clearHistoryBtn.hidden = history.length === 0;
+
+      if (!history.length){
+        histBox.textContent = "尚无记录";
+        return;
+      }
+
+      histBox.innerHTML = history.map((entry) => `
+        <span class="history-chip" title="${escapeHtml(entry.title || "")}">
+          <b>第${escapeHtml(entry.id)}签</b>${escapeHtml(entry.cat)}
+        </span>
+      `).join("");
+    }
+
+    function normalizeKey(key){
+      return String(key)
+        .replace(/財/g, "财")
+        .replace(/詞/g, "词")
+        .replace(/尋/g, "寻")
+        .replace(/徏/g, "徙");
+    }
+
+    function pickItems(sign, category){
+      const wanted = (CATS[category] || []).map(normalizeKey);
+      const items = [];
+
+      Object.entries(sign.items || {}).forEach(([key, value]) => {
+        if (wanted.includes(normalizeKey(key))){
+          items.push({ key, value });
+        }
+      });
+
+      return items;
+    }
+
+    function interpret(sign, items){
+      const level = sign.level || "";
+      const values = items.map((item) => item.value).join(" ");
+      const fullText = `${values} ${sign.xiang || ""} ${sign.commentary || ""}`;
+
+      const good = /上上|大吉|上吉|中上|中吉|上$/.test(level);
+      const soft = /中平|中中|平平|中$|平$/.test(level);
+      const bad = /下下|下|凶/.test(level);
+      const hasGood = /吉|成|合|利|旺|安|胜|見|见|至|得|好|順|顺|如意|成交|就/.test(values);
+      const hasBad = /难|難|阻|亏|虧|凶|损|損|不利|欠|破|空|滞|滯|危|惊|驚|未合|不就|未成/.test(values);
+      const wait = /待時|待时|宜遲|宜迟|守舊|守旧|守份|谨慎|謹慎|忍耐/.test(fullText);
+      const noble = /貴人|贵人|高人|良匠/.test(fullText);
+
+      let tone = "签意中性，更多取决于你接下来的选择与准备。";
+      if (good && !hasBad) tone = "整体象意偏顺，所问之事有推进空间。";
+      else if (good && hasBad) tone = "整体偏吉，但你所问的这一项有需要留意之处，不宜只看总评。";
+      else if (soft) tone = "这一签偏向「暂缓与观察」，不是否定，而是提示节奏。";
+      else if (bad || hasBad) tone = "这一签提示阻力较多，宜降低预期、先求稳。";
+
+      let action = "不妨把签意转成一次自问：此刻最值得守住的是什么，下一步最小的行动又是什么。";
+      if (wait) action = "签中反复出现「守旧、待时、忍耐」，可理解为：先不急着做不可逆的决定，把信息补齐、把情绪放稳，再行动。";
+      else if (noble) action = "签中提到「贵人、高人」，可转成一个具体动作：找一位你信得过、有经验的人请教，而不是独自反复纠结。";
+      else if (hasGood) action = "可把「顺」理解为一个窗口：列出下一步最小可行的一步，先做起来，再根据反馈调整。";
+      else if (hasBad) action = "可把「阻」理解为风险清单：把最坏情况写下来，逐项准备应对，避免在情绪高点做决定。";
+
+      return { tone, action };
+    }
+
+    function levelClass(level){
+      if (!level) return "is-low";
+      if (/上|吉/.test(level)) return "";
+      if (/下|凶/.test(level)) return "is-low";
+      return "is-mid";
+    }
+
+    function drawIndex(length){
+      if (!window.crypto || typeof window.crypto.getRandomValues !== "function"){
+        return Math.floor(Math.random() * length);
+      }
+
+      const buffer = new Uint32Array(1);
+      const limit = Math.floor(0xFFFFFFFF / length) * length;
+      let value;
+
+      do{
+        window.crypto.getRandomValues(buffer);
+        value = buffer[0];
+      }while (value >= limit);
+
+      return value % length;
+    }
+
+    function renderSign(sign, category, question){
+      const items = pickItems(sign, category);
+      const reading = interpret(sign, items);
+      const levelText = sign.level || "原本未标";
+      const safeQuestion = question ? escapeHtml(question) : "";
+      const poem = (sign.poem || []).map((line) =>
+        `<div class="poem-line">${escapeHtml(line)}</div>`
+      ).join("");
+
+      const itemMarkup = items.length
+        ? items.map((item) => `
+            <div class="item-row">
+              <span class="item-key">${escapeHtml(item.key)}</span>
+              <span class="item-value">${escapeHtml(item.value)}</span>
+            </div>
+          `).join("")
+        : `
+            <div class="item-row">
+              <span class="item-key">此项</span>
+              <span class="item-value">此本未列，宜参考整体象意</span>
+            </div>
+          `;
+
+      resultBox.innerHTML = `
+        <article class="sign-paper">
+          <div class="paper-topline">慈航普渡 · 静观己心</div>
+
+          <header class="sign-header">
+            <div class="number-seal">
+              <span>第</span>
+              <strong>${escapeHtml(sign.id)}</strong>
+              <span>签</span>
+            </div>
+            <div class="title-wrap">
+              <p>觀音靈籤</p>
+              <h2>${escapeHtml(sign.title)}</h2>
+              <span class="level-tag ${levelClass(sign.level)}">${escapeHtml(levelText)}</span>
+            </div>
+            <div class="title-stamp" aria-hidden="true">觀音<br>靈籤</div>
+          </header>
+
+          <div class="poem-block">
+            ${poem}
+            ${sign.xiang ? `<p class="xiang">${escapeHtml(sign.xiang)}</p>` : ""}
+          </div>
+
+          <div class="query-echo">
+            <span>所问</span>
+            <p>${escapeHtml(category)}${safeQuestion ? ` · ${safeQuestion}` : ""}</p>
+          </div>
+
+          <section class="reading-section" aria-label="${escapeHtml(category)}对应断语">
+            <div class="reading-title">
+              <b>断</b>
+              <h3>${escapeHtml(category)}所应</h3>
+            </div>
+            <div class="item-grid">${itemMarkup}</div>
+          </section>
+
+          <div class="advice">
+            <span class="advice-mark" aria-hidden="true">劝</span>
+            <p>${escapeHtml(reading.tone)}</p>
+            <p>${escapeHtml(reading.action)}</p>
+          </div>
+
+          ${sign.gloss || sign.commentary ? `
+            <div class="detail-stack">
+              ${sign.gloss ? `
+                <details class="detail-item">
+                  <summary>四句浅释</summary>
+                  <p>${escapeHtml(sign.gloss)}</p>
+                </details>
+              ` : ""}
+              ${sign.commentary ? `
+                <details class="detail-item">
+                  <summary>灵签之曰</summary>
+                  <p>${escapeHtml(sign.commentary)}</p>
+                </details>
+              ` : ""}
+            </div>
+          ` : ""}
+
+          <p class="result-note">签文为民间流传整理本，未作严格校勘；解读仅作支持性反思提示，并非预测。</p>
+        </article>
+      `;
+
+      emptyState.classList.add("hide");
+      resultBox.classList.add("show");
+      oraclePanel.querySelector(".panel-rule span:first-child").textContent = `第${sign.id}签`;
+
+      const history = readHistory();
+      history.unshift({
+        id: sign.id,
+        title: sign.title,
+        cat: category,
+        t: Date.now()
+      });
+      writeHistory(history);
+      renderHistory();
+
+      requestAnimationFrame(() => {
+        resultBox.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
+    function renderCategories(){
+      Object.keys(CATS).forEach((name, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "cat";
+        button.setAttribute("aria-pressed", "false");
+        button.innerHTML = `
+          <span class="cat-index">${String(index + 1).padStart(2, "0")}</span>
+          <span class="cat-name">${escapeHtml(name)}</span>
+        `;
+        button.addEventListener("click", () => {
+          catBox.querySelectorAll(".cat").forEach((item) => {
+            item.classList.remove("on");
+            item.setAttribute("aria-pressed", "false");
+          });
+          button.classList.add("on");
+          button.setAttribute("aria-pressed", "true");
+          selectedCat = name;
+          drawBtn.disabled = false;
+          drawHint.textContent = "签筒已候";
+        });
+        catBox.appendChild(button);
+      });
+    }
+
+    function resetDrawButton(){
+      drawing = false;
+      drawBtn.classList.remove("is-loading");
+      oraclePanel.classList.remove("is-drawing");
+      oraclePanel.removeAttribute("aria-busy");
+      drawBtn.disabled = !selectedCat;
+      drawLabel.textContent = "静心，抽一签";
+      drawHint.textContent = selectedCat ? "签筒已候" : "先择所问之事";
+    }
+
+    function startDraw(){
+      if (drawing || !selectedCat) return;
+
+      if (!window.SIGNS || !window.SIGNS.length){
+        alert("签库未加载，请确认 data.js 与 index.html 位于同一目录。");
+        return;
+      }
+
+      drawing = true;
+      const sign = window.SIGNS[drawIndex(window.SIGNS.length)];
+      const question = questionInput.value.trim().slice(0, 60);
+      const category = selectedCat;
+
+      drawBtn.disabled = true;
+      drawBtn.classList.add("is-loading");
+      drawLabel.textContent = "静候签应";
+      drawHint.textContent = "心定，则签明";
+      oraclePanel.classList.add("is-drawing");
+      oraclePanel.setAttribute("aria-busy", "true");
+
+      window.setTimeout(() => {
+        renderSign(sign, category, question);
+        resetDrawButton();
+      }, 920);
+    }
+
+    drawBtn.addEventListener("click", startDraw);
+
+    questionInput.addEventListener("input", () => {
+      questionCount.textContent = `${questionInput.value.length} / 60`;
+    });
+
+    questionInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && (event.ctrlKey || event.metaKey)){
+        event.preventDefault();
+        startDraw();
+      }
+    });
+
+    clearHistoryBtn.addEventListener("click", () => {
+      writeHistory([]);
+      renderHistory();
+      clearHistoryBtn.textContent = "已清空";
+      window.setTimeout(() => {
+        clearHistoryBtn.textContent = "清空";
+      }, 900);
+    });
+
+    renderCategories();
+    renderHistory();
+  })();
+  </script>
+</body>
+</html>
