@@ -1,0 +1,67 @@
+name: 问题反馈
+description: 反馈页面显示、交互、兼容性或无障碍问题
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请先确认问题不是由于浏览器扩展、用户自定义脚本或旧版本文件导致。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 请清楚说明实际表现和预期表现。
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开 index.html
+        2. 选择某类别
+        3. 点击抽签
+        4. 看到...
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: 浏览器与版本
+      placeholder: Chrome 141 / Edge 141 / Safari 26
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: 设备与系统
+      placeholder: Windows 11 / iPhone 17 / Android 16
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 截图或录屏
+      description: 可直接拖入图片，或粘贴相关控制台错误。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已使用最新版本
+          required: true
+        - label: 我已在无痕窗口或禁用扩展后复测
+          required: false
+        - label: 我已搜索现有 Issue，未发现重复问题
+          required: true
+

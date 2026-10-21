@@ -1,0 +1,67 @@
+name: 签文纠错
+description: 提交带来源依据的签文修订
+title: "[Data]: 第 X 首 - 字段 - 问题摘要"
+labels:
+  - data
+body:
+  - type: markdown
+    attributes:
+      value: |
+        数据修订需要可核验来源。请勿仅凭其他网站的相同错误文本互相引用。
+
+  - type: input
+    id: sign_number
+    attributes:
+      label: 签号
+      placeholder: 第 25 首
+    validations:
+      required: true
+
+  - type: dropdown
+    id: field
+    attributes:
+      label: 字段
+      options:
+        - 签题
+        - 等级
+        - 签诗
+        - 四句浅释
+        - 象辞
+        - 灵签之曰
+        - 分项断语
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: 当前内容
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: 建议内容
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: 来源依据
+      description: 请给出书名、版次、页码、馆藏链接、庙宇签谱照片或其他可核验依据。
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 版本差异说明
+      description: 如果其他版本存在不同写法，请在这里说明。
+    validations:
+      required: false
+
