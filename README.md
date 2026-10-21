@@ -31,10 +31,10 @@
 
 ## 在线演示
 
-部署到 GitHub Pages 后，将下面的占位地址替换为实际地址：
+站点已通过 GitHub Pages 发布：
 
 ```text
-https://<your-username>.github.io/<repo-name>/
+https://yumi966.github.io/guanyin-lingqian/
 ```
 
 也可以直接下载 `index.html`，用现代浏览器打开，完全离线使用。
